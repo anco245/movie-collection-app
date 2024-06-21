@@ -1,5 +1,6 @@
+import React, { useEffect, useState } from 'react';
 import './App.css';
-//import BasicTable from './database.js';
+import axios from 'axios';
 
 function SearchContainer() {
   return (
@@ -35,9 +36,27 @@ function IconAndTitle() {
 function CollectionContainer() {
   return (
     <div className="collection">
-      {/* <BasicTable /> */}
+      <Display1080Movies />
     </div>
   );
+}
+
+function Display1080Movies() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+      // Make an HTTP GET request to the backend
+      axios.get('http://localhost:5000/api/get1080UsbMovies')
+          .then(response => {
+              // Set the users state with the response data
+              setUsers(response.data);
+          })
+          .catch(error => {
+              console.error('There was an error fetching the users!', error);
+          });
+  }, []);
+
+  console.log(users);
 }
 
 export default function RootContainer() {
