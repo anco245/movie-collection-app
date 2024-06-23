@@ -1,11 +1,16 @@
 Acts as an API to the sql server (i.e. allows one to access data in database)
-
 Here, express is being used which is a framework of Node.js. Node.js is commonly used for 
 
+Things to keep in mind:
+- need to put in this command "> npm i -D nodemon" to automatically restart the node server 
+everytime a change is made, otherwise the results won't be reflected. Then add
+"scripts": {
+    "dev": "npx nodemon app.js"
+  }, 
+to package.json
+Then run "npm run dev" 
 
-Chain of command (starting at entry point):
-- server.js
-- userRoutes.js
-- userController.ks
-- database.js
-
+update dependency in package.json
+delete node_modules
+delete package-lock.json
+npm install

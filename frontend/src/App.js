@@ -36,20 +36,20 @@ function IconAndTitle() {
 function CollectionContainer() {
   return (
     <div className="collection">
-      <Display1080Movies />
+      <DisplayCollection />
     </div>
   );
 }
 
-function Display1080Movies() {
+function DisplayCollection() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
       // Make an HTTP GET request to the backend
-      axios.get('http://localhost:5000/api/get1080UsbMovies')
+      axios.get('http://localhost:8080/movies/3')
           .then(response => {
               // Set the users state with the response data
-              setUsers(response.data);
+              setUsers(response);
           })
           .catch(error => {
               console.error('There was an error fetching the users!', error);
