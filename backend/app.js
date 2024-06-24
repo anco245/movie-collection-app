@@ -1,9 +1,9 @@
 import express from 'express';
 import {getCollection, getMovieById} from './database.js'
 import cors from 'cors';
-app.use(cors());
 
 const app = express();
+app.use(cors());
 
 app.get("/movies", async (req, res) => {
     const movies = await getCollection();

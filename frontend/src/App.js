@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import axios from 'axios';
 
 function SearchContainer() {
   return (
@@ -42,21 +41,27 @@ function CollectionContainer() {
 }
 
 function DisplayCollection() {
-  const [users, setUsers] = useState([]);
+  const [data, setData] = useState(null);
 
-  useEffect(() => {
-      // Make an HTTP GET request to the backend
-      axios.get('http://localhost:8080/movies/3')
-          .then(response => {
-              // Set the users state with the response data
-              setUsers(response);
-          })
-          .catch(error => {
-              console.error('There was an error fetching the users!', error);
-          });
-  }, []);
+  function getInfo() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://localhost:8080/movies');
 
-  console.log(users);
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        setData(JSON.parse(xhr.responseText));
+      }
+    };
+
+    xhr.send();
+  }
+
+  return (
+    <div>
+      {getInfo()}
+      {data ? <div>{JSON.stringify(data)}</div> : <div>Loading...</div>}
+    </div>
+  );
 }
 
 export default function RootContainer() {
