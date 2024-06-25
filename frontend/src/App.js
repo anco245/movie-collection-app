@@ -59,14 +59,30 @@ function DisplayCollection() {
   useEffect(() => {
     getInfo();
   }, []);
-  
+
   return (
     <div>
-      {data.map((movie, index) => (
-        <div key={index}>
-          {movie.title}
-        </div>
-      ))}
+      <table>
+          <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Release Year</th>
+              <th>Length</th>
+              <th>Rating</th>
+          </tr>
+
+          {data.map((movie, index) => {
+            return (
+              <tr key={index}>
+                <td>{movie.title}</td>
+                <td>{movie.description}</td>
+                <td>{movie.release_year}</td>
+                <td>{movie.length}</td>
+                <td>{movie.rating}</td>
+              </tr>
+            )
+          })}
+        </table>
     </div>
   );
 }
