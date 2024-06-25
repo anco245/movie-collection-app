@@ -59,8 +59,6 @@ body, html {
 
 .title {
   background-color: rgb(34, 33, 33);
-  border-radius: 25px;
-  height: 75px;
   position: absolute;
   left: 100px;
 }
