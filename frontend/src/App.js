@@ -81,16 +81,16 @@ function DisplayCollection() {
           {data.map((movie, index) => {
             return (
               <tr key={index}>
-                <td>{movie.title}</td>
-                <td>{movie.year}</td>
-                <td>{movie.runtime}</td>
-                <td>{movie.quality}</td>
-                <td>{movie.Location}</td>
-                <td>{movie.pack}</td>
-                <td>{movie.edition}</td>
-                <td>{movie.genre}</td>
-                <td>{movie.seen}</td>
-                <td>{movie.type}</td>
+                <td id="title">{movie.title}</td>
+                <td id="year">{movie.year}</td>
+                <td id="runtime">{movie.runtime}</td>
+                <td id="quality">{movie.quality}</td>
+                <td id="location">{movie.Location}</td>
+                <td id="pack">{movie.pack}</td>
+                <td id="edition">{movie.edition}</td>
+                <td id="genre">{movie.genre}</td>
+                <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
+                <td id="type">{movie.type}</td>
               </tr>
             )
           })}

@@ -113,3 +113,7 @@ body, html {
   padding: 8px;  /* Add padding for better readability */
   text-align: left;  /* Align text to the left */
 }
+
+#runtime, #quality, #location, #pack, #edition, #seen, #type {
+  text-align: center;
+}
