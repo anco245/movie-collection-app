@@ -61,24 +61,34 @@ function DisplayCollection() {
   }, []);
 
   return (
-    <div>
-      <table>
+    <div id="movie-container">
+      <table id="movie-table">
           <tr>
               <th>Title</th>
-              <th>Description</th>
-              <th>Release Year</th>
-              <th>Length</th>
-              <th>Rating</th>
+              <th>Year</th>
+              <th>Runtime</th>
+              <th>Quality</th>
+              <th>Location</th>
+              <th>Pack</th>
+              <th>Edition</th>
+              <th>Genre</th>
+              <th>Seen</th>
+              <th>Type</th>
           </tr>
 
           {data.map((movie, index) => {
             return (
               <tr key={index}>
                 <td>{movie.title}</td>
-                <td>{movie.description}</td>
-                <td>{movie.release_year}</td>
-                <td>{movie.length}</td>
-                <td>{movie.rating}</td>
+                <td>{movie.year}</td>
+                <td>{movie.runtime}</td>
+                <td>{movie.quality}</td>
+                <td>{movie.Location}</td>
+                <td>{movie.pack}</td>
+                <td>{movie.edition}</td>
+                <td>{movie.genre}</td>
+                <td>{movie.seen}</td>
+                <td>{movie.type}</td>
               </tr>
             )
           })}

@@ -94,6 +94,21 @@ body, html {
   animation: iconSpin infinite 5s linear;
 }
 
+#movie-container {
+  height: 100%;
+  width: 98%;
+  overflow-y: auto;  /* Enable vertical scrolling */
+  color: white;
+  border: 1px solid #ccc;  /* Optional: Add a border for better visibility */
+  padding: 10px;  /* Optional: Add padding inside the container */
+}
+
+#movies-table th, #movies-table td {
+  border: 1px solid #ddd;  /* Add border to each cell */
+  padding: 8px;  /* Add padding for better readability */
+  text-align: left;  /* Align text to the left */
+}
+
 @keyframes iconSpin {
   from {
     transform: rotate(0deg);
