@@ -93,17 +93,19 @@ body, html {
 
 .collection {
   height: 100%;
-  width: 80%;
-  margin-left: 400px;
+  left: 400px;
+  right: 0;
   position: fixed;
   background-color: rgb(34, 33, 33);
 }
 
 #movie-container {
   overflow-y: auto;  /* Enable vertical scrolling */
+  width: 100%;
   color: white;
-  border: 1px solid #ccc;  /* Optional: Add a border for better visibility */
+  border: 1px solid #9b8f8f;  /* Optional: Add a border for better visibility */
   padding: 10px;  /* Optional: Add padding inside the container */
+  height: 100%;
 }
 
 #movies-table th, #movies-table td {
