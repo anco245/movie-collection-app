@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function SearchContainer() {
@@ -41,7 +41,7 @@ function CollectionContainer() {
 }
 
 function DisplayCollection() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   function getInfo() {
     const xhr = new XMLHttpRequest();
@@ -56,10 +56,17 @@ function DisplayCollection() {
     xhr.send();
   }
 
+  useEffect(() => {
+    getInfo();
+  }, []);
+  
   return (
     <div>
-      {getInfo()}
-      {data ? <div>{JSON.stringify(data)}</div> : <div>Loading...</div>}
+      {data.map((movie, index) => (
+        <div key={index}>
+          {movie.title}
+        </div>
+      ))}
     </div>
   );
 }

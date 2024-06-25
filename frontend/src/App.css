@@ -81,6 +81,10 @@ body, html {
   text-align: center;
 }
 
+#entryText {
+  color: white;
+}
+
 .icon {
   /*height: 40vmin;*/
   position: absolute;
