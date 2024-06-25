@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-function SearchContainer() {
-  return (
-    <div className="search">
-      <input type="text" placeholder="Search for a movie" spellCheck="false" />
-      <button></button>
-    </div>
-  )
-}
 
 function SidePanelContainer() {
   return (
     <div className="sidePanel">
       <IconAndTitle />
+      <SearchContainer />
     </div>
   );
 }
@@ -28,6 +21,15 @@ function IconAndTitle() {
       <div className="title">
         <p id="p1">John's Movie Collection</p>
       </div>
+    </div>
+  )
+}
+
+function SearchContainer() {
+  return (
+    <div className="search">
+      <input type="text" placeholder="Search for a movie" spellCheck="false" />
+      <button></button>
     </div>
   )
 }
@@ -100,7 +102,6 @@ function DisplayCollection() {
 export default function RootContainer() {
   return (
     <>
-      <SearchContainer />
       <SidePanelContainer />
       <CollectionContainer />
     </>
