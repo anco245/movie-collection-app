@@ -1,5 +1,5 @@
 import express from 'express';
-import {getCollection, getMovieById} from './database.js'
+import {getCollection} from './database.js'
 import cors from 'cors';
 
 const app = express();

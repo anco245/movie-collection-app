@@ -112,6 +112,10 @@ body, html {
   text-align: left;  /* Align text to the left */
 }
 
+#movies-table tr {
+  border: 1px solid #ddd;  /* Add border to each cell */
+}
+
 #runtime, #quality, #location, #pack, #edition, #seen, #type {
   text-align: center;
 }

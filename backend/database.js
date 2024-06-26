@@ -69,16 +69,11 @@ export async function getCollection() {
             FROM usbs
             UNION
             SELECT title, year, runtime, NULL AS quality, format, pack, edition, genre, seen, type
-            FROM collection) as completeCollection;
+            FROM collection) as completeCollection
+        order by title ASC;
         `);
     return rows;    
 }
 
-export async function getMovieById(id) {
-    const [entry] = await pool.query("SELECT * FROM film WHERE film_id = ?", [id]);
-    return entry[0];
-}
-
-//const movie = await getMovieById(5);
 const movies = await getCollection();
 console.log(movies);
