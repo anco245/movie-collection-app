@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-
 function SidePanelContainer() {
   return (
     <div className="sidePanel">
@@ -28,8 +27,8 @@ function IconAndTitle() {
 function SearchContainer() {
   return (
     <div className="search">
-      <input type="text" placeholder="Search for a movie" spellCheck="false" />
-      <button></button>
+      <input type="text" placeholder="Search title" spellCheck="false" />
+      <button onClick=""></button>
     </div>
   )
 }
