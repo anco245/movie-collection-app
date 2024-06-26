@@ -75,5 +75,16 @@ export async function getCollection() {
     return rows;    
 }
 
-const movies = await getCollection();
-console.log(movies);
+export async function getRandomMovie() {
+    const [entry] = await pool.query(`
+        SELECT * FROM (
+            SELECT title, year, runtime, quality, usb AS 'Location', NULL AS pack, NULL AS edition, genre, seen, type
+            FROM usbs
+            UNION
+            SELECT title, year, runtime, NULL AS quality, format, pack, edition, genre, seen, type
+            FROM collection) as completeCollection
+        order By RAND() LIMIT 1;
+        `);
+    return entry;
+}
+
