@@ -25,23 +25,16 @@ function IconAndTitle() {
 }
 
 function SearchContainer() {
+
   return (
     <div className="search">
-      <input type="text" placeholder="Search title" spellCheck="false" />
-      <button onClick=""></button>
+      <input type="text" placeholder="Search title..." spellCheck="false" />
+      <button onClick={()=>{alert("Pressed Button")}}></button>
     </div>
   )
-}
+}  
 
-function CollectionContainer() {
-  return (
-    <div className="collection">
-      <DisplayCollection />
-    </div>
-  );
-}
-
-function DisplayCollection() {
+const Collection = () => {
   const [data, setData] = useState([]);
 
   function getInfo() {
@@ -94,6 +87,14 @@ function DisplayCollection() {
             )
           })}
         </table>
+    </div>
+  );
+}
+
+function CollectionContainer() {
+  return (
+    <div className="collection">
+      <Collection />
     </div>
   );
 }
