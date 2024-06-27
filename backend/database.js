@@ -26,13 +26,32 @@ export async function createTemp() {
 }
 
 export async function getCollection() {
-    const [rows] = await pool.query("SELECT * FROM temp");
+    const [rows] = await pool.query("SELECT * FROM temp ORDER BY title ASC");
     return rows;    
 }
 
 export async function getRandomMovie() {
     const [entry] = await pool.query("SELECT * FROM temp WHERE type = ? order By RAND() LIMIT 1", ["Movie"]);
     return entry;
+}
+
+export async function addPhysicalEntry(
+    title, 
+    format,
+    pack,
+    edition,
+    year, 
+    director,
+    runtime,
+    genre,
+    seen,
+    country,
+    type) {
+
+    };
+
+export async function addUsbEntry() {
+
 }
 
 const result = await createTemp();
