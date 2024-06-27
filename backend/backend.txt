@@ -1,16 +1,18 @@
-Acts as an API to the sql server (i.e. allows one to access data in database)
-Here, express is being used which is a framework of Node.js. Node.js is commonly used for 
+Backend acts as an API to the sql server (i.e. allows one to access data in database)
+Here, express is being used which is a framework of Node.js. Node.js is commonly used for server side actions
+in javascript applications
 
 Things to keep in mind:
 - need to put in this command "> npm i -D nodemon" to automatically restart the node server 
-everytime a change is made, otherwise the results won't be reflected. Then add
+everytime a change is made, otherwise the results won't be reflected. TO not have to do this everytime, add
 "scripts": {
     "dev": "npx nodemon app.js"
   }, 
 to package.json
 Then run "npm run dev" 
 
-update dependency in package.json
-delete node_modules
-delete package-lock.json
-npm install
+- change dependency
+  update dependency in package.json
+  delete node_modules
+  delete package-lock.json
+  npm install
