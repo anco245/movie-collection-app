@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-function SidePanelContainer() {
+function SidePanelContainer(data, setData) {
   return (
     <div className="sidePanel">
       <IconAndTitle />
@@ -25,20 +25,20 @@ function IconAndTitle() {
 }
 
 function SearchContainer() {
-
   return (
     <div className="search">
       <input type="text" placeholder="Search title..." spellCheck="false" />
-      <button onClick={()=>{alert("Pressed Button")}}></button>
+      <button></button>
     </div>
   )
-}  
+}
 
 const Collection = () => {
   const [data, setData] = useState([]);
 
   function getInfo() {
     const xhr = new XMLHttpRequest();
+
     xhr.open('GET', 'http://localhost:8080/movies');
 
     xhr.onload = function() {
@@ -82,7 +82,7 @@ const Collection = () => {
                 <td id="edition">{movie.edition}</td>
                 <td id="genre">{movie.genre}</td>
                 <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
-                <td id="type">{movie.type}</td>
+                <td id="type">{movie.type}</td>  
               </tr>
             )
           })}
@@ -91,19 +91,32 @@ const Collection = () => {
   );
 }
 
+/*
 function CollectionContainer() {
   return (
-    <div className="collection">
+    <div className="collectionContainer">
       <Collection />
     </div>
   );
+}
+  */
+
+
+
+function MainAreaContainer(props) {
+  if (props === "http://localhost:8080/movies")
+  {
+    return <Collection />
+  } else if (props === "http://localhost:8080/movies") {
+    return <RandomMovie />
+  }
 }
 
 export default function RootContainer() {
   return (
     <>
       <SidePanelContainer />
-      <CollectionContainer />
+      <MainAreaContainer />
     </>
   )
 }
