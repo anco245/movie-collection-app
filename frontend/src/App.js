@@ -91,32 +91,19 @@ const Collection = () => {
   );
 }
 
-/*
 function CollectionContainer() {
   return (
-    <div className="collectionContainer">
+    <div className="collection">
       <Collection />
     </div>
   );
-}
-  */
-
-
-
-function MainAreaContainer(props) {
-  if (props === "http://localhost:8080/movies")
-  {
-    return <Collection />
-  } else if (props === "http://localhost:8080/movies") {
-    return <RandomMovie />
-  }
 }
 
 export default function RootContainer() {
   return (
     <>
       <SidePanelContainer />
-      <MainAreaContainer />
+      <CollectionContainer />
     </>
   )
 }

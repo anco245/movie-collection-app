@@ -35,6 +35,7 @@ export async function getRandomMovie() {
     return entry;
 }
 
+/*
 export async function addPhysicalEntry(
     title, 
     format,
@@ -48,10 +49,11 @@ export async function addPhysicalEntry(
     country,
     type) {
 
-    };
+};
 
 export async function addUsbEntry() {
 
 }
+*/
 
 const result = await createTemp();
