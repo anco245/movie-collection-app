@@ -5,18 +5,23 @@ import './App.css';
 function SidePanelContainer({url, setUrl}) {
   return (
     <div className="sidePanel">
-      <IconAndTitle />
+      <IconAndTitle url={url} setUrl={setUrl} />
       <SearchContainer url={url} setUrl={setUrl}/>
       <GetRandomMovieButton url={url} setUrl={setUrl}/>
     </div>
   );
 }
 
-function IconAndTitle() {
+function IconAndTitle({url, setUrl}) {
+
+  const handleClick = () => {
+    setUrl("http://localhost:8080/movies")
+  }
+
   return (
     <div className="iconandtitle">
       <div className="icon">
-        <img src="https://www.e-cookietins.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/1/s/1s_115_movie_reel.png" alt="minimal film reel" height="50px" width="50px" />
+        <img onClick={handleClick} src="https://www.e-cookietins.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/1/s/1s_115_movie_reel.png" alt="minimal film reel" height="50px" width="50px" />
       </div>
 
       <div className="title">

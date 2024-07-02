@@ -29,6 +29,8 @@ body, html {
   top: 0;
   left: 0;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .iconandtitle {
@@ -118,4 +120,8 @@ body, html {
 
 #runtime, #quality, #location, #pack, #edition, #seen, #type {
   text-align: center;
+}
+
+.getRandomMovieButton {
+  
 }
