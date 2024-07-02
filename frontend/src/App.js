@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
-function SidePanelContainer(data, setData) {
+function SidePanelContainer({url, setUrl}) {
   return (
     <div className="sidePanel">
       <IconAndTitle />
-      <SearchContainer />
+      <SearchContainer url={url} setUrl={setUrl}/>
     </div>
   );
 }
@@ -24,35 +24,38 @@ function IconAndTitle() {
   )
 }
 
-function SearchContainer() {
+function SearchContainer({url, setUrl}) {
+
+  function handleNewRandomMovie() {
+    setUrl("http://localhost:8080/movies/getRandomMovie");
+  }
+
   return (
     <div className="search">
       <input type="text" placeholder="Search title..." spellCheck="false" />
-      <button></button>
+      <button onClick={handleNewRandomMovie}></button>
+      <button onClick={() => setUrl("http://localhost:8080/movies")}>Back</button>
     </div>
   )
 }
 
-const Collection = () => {
+function Collection({url, setUrl}) {
   const [data, setData] = useState([]);
 
-  function getInfo() {
+  const getInfo = useCallback(() => {
     const xhr = new XMLHttpRequest();
-
-    xhr.open('GET', 'http://localhost:8080/movies');
-
+    xhr.open('GET', url);
     xhr.onload = function() {
       if (xhr.status === 200) {
         setData(JSON.parse(xhr.responseText));
       }
     };
-
     xhr.send();
-  }
+  }, [url]);
 
   useEffect(() => {
     getInfo();
-  }, []);
+  }, [getInfo]);
 
   return (
     <div id="movie-container">
@@ -91,19 +94,21 @@ const Collection = () => {
   );
 }
 
-function CollectionContainer() {
+function CollectionContainer({url, setUrl}) {
   return (
     <div className="collection">
-      <Collection />
+      <Collection url={url} setUrl={setUrl}/>
     </div>
   );
 }
 
 export default function RootContainer() {
+  const [url, setUrl] = useState("http://localhost:8080/movies");
+
   return (
     <>
-      <SidePanelContainer />
-      <CollectionContainer />
+      <SidePanelContainer url={url} setUrl={setUrl}/>
+      <CollectionContainer url={url} setUrl={setUrl}/>
     </>
   )
 }
