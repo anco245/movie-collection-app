@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import GetRandomMovieButton from "./GetRandomMovieButton";
 import './App.css';
 
 function SidePanelContainer({url, setUrl}) {
@@ -6,6 +7,7 @@ function SidePanelContainer({url, setUrl}) {
     <div className="sidePanel">
       <IconAndTitle />
       <SearchContainer url={url} setUrl={setUrl}/>
+      <GetRandomMovieButton url={url} setUrl={setUrl}/>
     </div>
   );
 }
@@ -26,15 +28,21 @@ function IconAndTitle() {
 
 function SearchContainer({url, setUrl}) {
 
-  function handleNewRandomMovie() {
-    setUrl("http://localhost:8080/movies/getRandomMovie");
+  const [inputValue, setInput] = useState('');
+
+  const handleSearch = () => {
+    url = "http://localhost:8080/movies/" + inputValue;
+    setUrl(url);
+  }
+
+  const handleInputChange = (event) => {
+    setInput(event.target.value)
   }
 
   return (
     <div className="search">
-      <input type="text" placeholder="Search title..." spellCheck="false" />
-      <button onClick={handleNewRandomMovie}></button>
-      <button onClick={() => setUrl("http://localhost:8080/movies")}>Back</button>
+      <input type="text" placeholder="Search title..." spellCheck="false" value={inputValue} onChange={handleInputChange}/>
+      <button onClick={handleSearch}></button>
     </div>
   )
 }

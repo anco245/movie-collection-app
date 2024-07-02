@@ -1,5 +1,5 @@
 import express from 'express';
-import { getCollection, getRandomMovie } from './database.js'
+import { getCollection, getRandomMovie, getMovieByTitle } from './database.js'
 import cors from 'cors';
 
 const app = express();
@@ -13,6 +13,12 @@ app.get("/movies", async (req, res) => {
 app.get("/movies/getRandomMovie", async (req, res) => {
     const movie = await getRandomMovie();
     res.send(movie);
+})
+
+app.get("/movies/:title", async (req, res) => {
+    const movieTitle = req.params.title;
+    const entry = await getMovieByTitle(movieTitle);
+    res.send(entry);
 })
 
 

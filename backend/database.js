@@ -35,6 +35,23 @@ export async function getRandomMovie() {
     return entry;
 }
 
+export async function getMovieByTitle(givenTitle) {
+    const [entry] = await pool.query("SELECT * FROM temp WHERE title = ?", [givenTitle]);
+    return entry;
+}
+
+/*
+export async function getMovieByTitle(givenTitle) {
+
+    const likeQuery = `%${givenTitle}%`;
+
+    const [entry] = await pool.query(`
+        SELECT * FROM temp WHERE title like ?
+        `, [likeQuery]);
+    return entry;
+}
+*/
+
 /*
 export async function addPhysicalEntry(
     title, 
