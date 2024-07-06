@@ -75,12 +75,8 @@ body, html {
 }
 
 .search input {
-  width: 90%;
-}
-
-.search button {
-  width: 20px;
-  cursor: pointer;
+  width: 95%;
+  padding: 10px;
 }
 
 #p1 {

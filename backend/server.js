@@ -17,7 +17,8 @@ app.get("/movies/getRandomMovie", async (req, res) => {
 
 app.get("/movies/:title", async (req, res) => {
     const movieTitle = req.params.title;
-    const entry = await getMovieByTitle(movieTitle);
+    let entry = await getMovieByTitle(movieTitle);
+
     res.send(entry);
 })
 

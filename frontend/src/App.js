@@ -35,11 +35,6 @@ function SearchContainer({url, setUrl}) {
 
   const [inputValue, setInput] = useState('');
 
-  const handleSearch = () => {
-    url = "http://localhost:8080/movies/" + inputValue;
-    setUrl(url);
-  }
-
   const handleInputChange = (event) => {
     setInput(event.target.value)
     url = "http://localhost:8080/movies/" + inputValue;
@@ -49,7 +44,6 @@ function SearchContainer({url, setUrl}) {
   return (
     <div className="search">
       <input type="text" placeholder="Search title..." spellCheck="false" value={inputValue} onChange={handleInputChange}/>
-      {/*<button onClick={handleSearch}></button> -->*/};
     </div>
   )
 }
@@ -72,16 +66,6 @@ function Collection({url, setUrl}) {
     getInfo();
   }, [getInfo]);
 
-  const handleHover = (index) => {
-    const id = "row" + index;
-    //document.getElementById(id).style.backgroundColor("black");
-  }
-
-  const handleOut = (index) => {
-    const id = "row" + index;
-    //document.getElementById(id).style.backgroundColor("rgb(34, 33, 33)");
-  }
-
   return (
     <div id="movie-container">
       <table id="movie-table">
@@ -100,7 +84,7 @@ function Collection({url, setUrl}) {
 
           {data.map((movie, index) => {
             return (
-              <tr id={"row" + index} onmouseover={handleHover({index})} onmouseout={handleOut({index})}>
+              <tr id={"row" + index}>
                 <td id="title">{movie.title}</td>
                 <td id="year">{movie.year}</td>
                 <td id="runtime">{movie.runtime}</td>
