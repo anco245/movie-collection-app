@@ -21,15 +21,6 @@ app.get("/movies/:title", async (req, res) => {
     res.send(entry);
 })
 
-
-/*
-app.get("/movies/:id", async (req, res) => {
-    const num = req.params.id;
-    const movie = await getMovieById(num);
-    res.send(movie);
-})
-*/
-
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
