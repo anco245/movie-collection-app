@@ -99,8 +99,6 @@ body, html {
   overflow-y: auto;  /* Enable vertical scrolling */
   width: 100%;
   color: white;
-  border: 1px solid #9b8f8f;  /* Optional: Add a border for better visibility */
-  padding: 10px;  /* Optional: Add padding inside the container */
   height: 100%;
 }
 
@@ -115,5 +113,9 @@ body, html {
 }
 
 th, td {
-  border: 1px solid #9b8f8f;
+  border: 1px solid #3a3939;
+}
+
+th {
+  font-size: 30px;
 }
