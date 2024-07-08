@@ -68,8 +68,8 @@ function Collection({url, setUrl}) {
 
   return (
     <div id="movie-container">
-      <table id="movie-table">
-          <tr>
+      <table className="movie-table">
+          <tr className="movieRow">
               <th>Title</th>
               <th>Year</th>
               <th>Runtime</th>
@@ -84,7 +84,7 @@ function Collection({url, setUrl}) {
 
           {data.map((movie, index) => {
             return (
-              <tr id={"row" + index}>
+              <tr id={"row" + index} key={index}>
                 <td id="title">{movie.title}</td>
                 <td id="year">{movie.year}</td>
                 <td id="runtime">{movie.runtime}</td>
