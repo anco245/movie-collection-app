@@ -107,8 +107,13 @@ body, html {
 .movie-table {
   table-layout: fixed;
   width: 100%;
+  border-collapse: collapse;
 }
 
 #year, #runtime, #quality, #location, #pack, #edition, #seen, #type {
   text-align: center;
+}
+
+th, td {
+  border: 1px solid #9b8f8f;
 }
