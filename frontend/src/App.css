@@ -20,6 +20,15 @@ body, html {
   height: 100%;
 }
 
+
+
+
+/*--------side Panel and contents--------*/
+
+.iconandtitle, .icon, .title, .search, .customQuery, #getRandomMovieButton {
+  position: absolute;
+}
+
 .sidePanel {
   width: 400px;
   height: 100%;
@@ -30,20 +39,17 @@ body, html {
   left: 0;
   overflow-x: hidden;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 .iconandtitle {
   height: 75px;
   width: 400px;
   display: flex; /* Enable flexbox */
-  position: absolute;
   top: 10px;
 }
 
 .icon {
-  /*height: 40vmin;*/
-  position: absolute;
   left: 20px;
   top: 10px;
   transform-origin: center;
@@ -61,7 +67,6 @@ body, html {
 
 .title {
   background-color: rgb(34, 33, 33);
-  position: absolute;
   left: 100px;
 }
 
@@ -69,7 +74,6 @@ body, html {
   top: 100px;
   width: 100%;
   height: 20px;
-  position: absolute;
   display: flex;
   margin: 10px;
 }
@@ -86,6 +90,33 @@ body, html {
   padding-left: 10px;
   text-align: center;
 }
+
+.customQuery {
+  top: 150px;
+  width: 95%;
+  display: flex;
+  margin: 10px;
+}
+
+.queryInput {
+  width: 100%;
+}
+
+.customQuery input {
+  width: 100%;
+}
+
+#getRandomMovieButton {
+  top: 95%;
+  width: 95%;
+  margin: 10px;
+  display: flex;
+}
+
+
+
+
+/*-------collection--------*/
 
 .collection {
   height: 100%;
@@ -118,8 +149,4 @@ th, td {
 
 th {
   font-size: 20px;
-}
-
-#getRandomMovieButton {
-  margin: 10px;
 }

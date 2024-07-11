@@ -41,6 +41,11 @@ export async function getMovieByTitle(givenTitle) {
     return entry;
 }
 
+export async function filterByQuery(givenQuery) {
+    const [entry] = await pool.query("?", [givenQuery]);
+    return entry;
+}
+
 /*
 export async function getMovieByTitle(givenTitle) {
 

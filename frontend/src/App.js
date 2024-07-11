@@ -6,8 +6,9 @@ function SidePanelContainer({url, setUrl}) {
   return (
     <div className="sidePanel">
       <IconAndTitle url={url} setUrl={setUrl} />
-      <SearchContainer url={url} setUrl={setUrl}/>
-      <GetRandomMovieButton url={url} setUrl={setUrl}/>
+      <SearchContainer url={url} setUrl={setUrl} />
+      <CustomQueryContainer url={url} setUrl={setUrl} />
+      <GetRandomMovieButton url={url} setUrl={setUrl} />
     </div>
   );
 }
@@ -32,7 +33,6 @@ function IconAndTitle({url, setUrl}) {
 }
 
 function SearchContainer({url, setUrl}) {
-
   const [inputValue, setInput] = useState('');
 
   const handleInputChange = (event) => {
@@ -44,6 +44,30 @@ function SearchContainer({url, setUrl}) {
   return (
     <div className="search">
       <input type="text" placeholder="Search title..." spellCheck="false" value={inputValue} onChange={handleInputChange}/>
+    </div>
+  )
+}
+
+function CustomQueryContainer({url, setUrl})
+{
+  const [inputValue, setInput] = useState('');
+
+  const handleSubmit = () => {
+    setInput(inputValue);
+
+    url = "http://localhost:8080/movies/" + inputValue;
+    setUrl(url);
+  }
+
+  return (
+    <div className="customQuery">
+      <div className="queryInput">
+        <input type="text" placeholder="Custom Query..." spellCheck="false" value={inputValue}/>
+      </div>
+
+      <div className="querySubmit">
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
     </div>
   )
 }
