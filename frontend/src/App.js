@@ -50,7 +50,34 @@ function SearchContainer({url, setUrl}) {
 function FiltersContainer({url, setUrl}) {
   return (
     <div className="filters">
+      <BlurayFilter url={url} setUrl={setUrl} />
+    </div>
+  );
+}
 
+function BlurayFilter({url, setUrl}) {
+
+  const [checkBoxValue, setValue] = useState(true);
+
+  const handleChange = (event) => {
+
+    setValue(event.target.checked);
+
+    if(checkBoxValue === true)
+    {
+      console.log("in here");
+      url = "http://localhost:8080/movies/bluray";
+      setUrl(url);
+    } else if (checkBoxValue === false) {
+      url = "http://localhost:8080/movies";
+      setUrl(url);
+    }
+  }
+
+  return (
+    <div className="checkBox">
+      <input type="checkbox" id="blurayCheck" name="blurayCheck" onChange={handleChange}/>
+      <label for="blurayCheck">Bluray</label>
     </div>
   );
 }

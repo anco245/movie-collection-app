@@ -41,6 +41,11 @@ export async function getMovieByTitle(givenTitle) {
     return entry;
 }
 
+export async function getBlurays() {
+    const [entry] = await pool.query("SELECT * FROM temp WHERE Location = ?", ["bluray"]);
+    return entry;
+}
+
 /*
 export async function getMovieByTitle(givenTitle) {
 

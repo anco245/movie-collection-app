@@ -111,6 +111,10 @@ body, html {
   width: 100%;
 }
 
+.checkBox label {
+  color: white;
+}
+
 
 
 
