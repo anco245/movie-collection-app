@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import GetRandomMovieButton from "./GetRandomMovieButton";
 import './App.css';
 
 function SidePanelContainer({url, setUrl}) {
@@ -53,6 +52,19 @@ function FiltersContainer({url, setUrl}) {
     <div className="filters">
 
     </div>
+  );
+}
+
+function GetRandomMovieButton({url, setUrl}) {
+
+  function handleClick() {
+      setUrl("http://localhost:8080/movies/getRandomMovie")
+  }
+
+  return (
+      <div className="getRandomMovieButton">
+          <button onClick={handleClick}>Press for Random Movie</button>
+      </div>
   );
 }
 

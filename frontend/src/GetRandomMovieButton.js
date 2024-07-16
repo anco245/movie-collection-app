@@ -6,5 +6,9 @@ export default function GetRandomMovieButton({url, setUrl}) {
         setUrl("http://localhost:8080/movies/getRandomMovie")
     }
 
-    return <button id="getRandomMovieButton" onClick={handleClick}>Press for Random Movie</button>;
+    return (
+        <div id="movieButtonDiv">
+            <button id="getRandomMovieButton" onClick={handleClick}>Press for Random Movie</button>
+        </div>
+    );
 }
