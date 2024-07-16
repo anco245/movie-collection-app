@@ -79,7 +79,7 @@ function BlurayFilter({url, setUrl}) {
   return (
     <div className="checkBox">
       <input type="checkbox" id="blurayCheck" name="blurayCheck" onChange={handleChange}/>
-      <label for="blurayCheck">Bluray</label>
+      <label htmlFor="blurayCheck">Bluray</label>
     </div>
   );
 }
