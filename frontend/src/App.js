@@ -60,7 +60,7 @@ function BlurayFilter({url, setUrl}) {
   const [checkBoxValue, setValue] = useState(false);
 
   console.log(checkBoxValue);
-  
+
   const handleChange = (event) => {
 
     setValue(event.target.checked);
@@ -120,19 +120,22 @@ function Collection({url, setUrl}) {
   return (
     <div id="movie-container">
       <table className="movie-table">
-          <tr>
-              <th>Title</th>
-              <th>Year</th>
-              <th>Runtime</th>
-              <th>Quality</th>
-              <th>Location</th>
-              <th>Pack</th>
-              <th>Edition</th>
-              <th>Genre</th>
-              <th>Seen</th>
-              <th>Type</th>
-          </tr>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Runtime</th>
+                <th>Quality</th>
+                <th>Location</th>
+                <th>Pack</th>
+                <th>Edition</th>
+                <th>Genre</th>
+                <th>Seen</th>
+                <th>Type</th>
+            </tr>
+        </thead>
 
+        <tbody>
           {data.map((movie, index) => {
             return (
               <tr key={index}>
@@ -149,7 +152,8 @@ function Collection({url, setUrl}) {
               </tr>
             )
           })}
-        </table>
+        </tbody>
+      </table>
     </div>
   );
 }
