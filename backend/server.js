@@ -22,13 +22,6 @@ app.get("/movies/:title", async (req, res) => {
     res.send(entry);
 })
 
-app.get("/movies/:query", async (req, res) => {
-    const givenQuery = req.params.query;
-    let entry = await filterByQuery(givenQuery);
-
-    res.send(entry);
-})
-
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');

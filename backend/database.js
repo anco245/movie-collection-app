@@ -41,11 +41,6 @@ export async function getMovieByTitle(givenTitle) {
     return entry;
 }
 
-export async function filterByQuery(givenQuery) {
-    const [entry] = await pool.query("?", [givenQuery]);
-    return entry;
-}
-
 /*
 export async function getMovieByTitle(givenTitle) {
 
@@ -69,6 +64,38 @@ export async function addPhysicalEntry(
     seen,
     country,
     type) {
+
+    let query = "";
+
+    if(title != null)
+    {
+        query = query + ""
+    } else if (format != null) {
+
+    } else if (pack != null) {
+     
+    } else if (edition != null) {
+     
+    } else if (year != null) {
+     
+    } else if (director != null) {
+     
+    } else if (runtime != null) {
+     
+    } else if (genre != null) {
+     
+    } else if (seen != null) {
+     
+    } else if (country != null) {
+     
+    } else if (type != null) {
+     
+    }
+
+    if(query != null)
+    {
+
+    }
 
 };
 

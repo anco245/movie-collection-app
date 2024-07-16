@@ -25,7 +25,7 @@ body, html {
 
 /*--------side Panel and contents--------*/
 
-.iconandtitle, .icon, .title, .search, .customQuery, #getRandomMovieButton {
+.iconandtitle, .icon, .title, .search, .customQuery, .filters, #getRandomMovieButton {
   position: absolute;
 }
 
@@ -70,19 +70,6 @@ body, html {
   left: 100px;
 }
 
-.search {
-  top: 100px;
-  width: 100%;
-  height: 20px;
-  display: flex;
-  margin: 10px;
-}
-
-.search input {
-  width: 95%;
-  padding: 10px;
-}
-
 #p1 {
   color: white;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -91,20 +78,28 @@ body, html {
   text-align: center;
 }
 
-.customQuery {
-  top: 150px;
+.search {
+  top: 100px;
   width: 95%;
+  height: 20px;
   display: flex;
   margin: 10px;
 }
 
-.queryInput {
+.search input {
+  padding: 10px;
   width: 100%;
 }
 
-.customQuery input {
-  width: 100%;
+.filters {
+  display: flex;
+  top: 150px;
+  margin: 10px;
+  border: 1px solid #3a3939;
+  width: 95%;
+  height: 60%;
 }
+
 
 #getRandomMovieButton {
   top: 95%;

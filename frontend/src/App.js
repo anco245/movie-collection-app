@@ -7,7 +7,7 @@ function SidePanelContainer({url, setUrl}) {
     <div className="sidePanel">
       <IconAndTitle url={url} setUrl={setUrl} />
       <SearchContainer url={url} setUrl={setUrl} />
-      <CustomQueryContainer url={url} setUrl={setUrl} />
+      <FiltersContainer url={url} setUrl={setUrl} />
       <GetRandomMovieButton url={url} setUrl={setUrl} />
     </div>
   );
@@ -48,29 +48,15 @@ function SearchContainer({url, setUrl}) {
   )
 }
 
-function CustomQueryContainer({url, setUrl})
-{
-  const [inputValue, setInput] = useState('');
-
-  const handleSubmit = () => {
-    setInput(inputValue);
-
-    url = "http://localhost:8080/movies/" + inputValue;
-    setUrl(url);
-  }
-
+function FiltersContainer({url, setUrl}) {
   return (
-    <div className="customQuery">
-      <div className="queryInput">
-        <input type="text" placeholder="Custom Query..." spellCheck="false" value={inputValue}/>
-      </div>
+    <div className="filters">
 
-      <div className="querySubmit">
-        <button onClick={handleSubmit}>Submit</button>
-      </div>
     </div>
-  )
+  );
 }
+
+
 
 function Collection({url, setUrl}) {
   const [data, setData] = useState([]);
