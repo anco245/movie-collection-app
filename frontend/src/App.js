@@ -57,8 +57,10 @@ function FiltersContainer({url, setUrl}) {
 
 function BlurayFilter({url, setUrl}) {
 
-  const [checkBoxValue, setValue] = useState(true);
+  const [checkBoxValue, setValue] = useState(false);
 
+  console.log(checkBoxValue);
+  
   const handleChange = (event) => {
 
     setValue(event.target.checked);
