@@ -42,7 +42,7 @@ export async function getMovieByTitle(givenTitle) {
 }
 
 export async function getBlurays() {
-    const [entry] = await pool.query("SELECT * FROM temp WHERE Location = ?", ["bluray"]);
+    const [entry] = await pool.query("SELECT * FROM temp WHERE location = ? ORDER BY title ASC", ["bluray"]);
     return entry;
 }
 

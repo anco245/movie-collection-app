@@ -15,7 +15,7 @@ app.get("/movies/getRandomMovie", async (req, res) => {
     res.send(movie);
 })
 
-app.get("/movies/:title", async (req, res) => {
+app.get("/movies/titleOfMovie/:title", async (req, res) => {
     const movieTitle = req.params.title;
     let entry = await getMovieByTitle(movieTitle);
 
@@ -23,8 +23,8 @@ app.get("/movies/:title", async (req, res) => {
 })
 
 app.get("/movies/bluray", async (req, res) => {
-    const movie = await getBlurays();
-    res.send(movie);
+    const movies = await getBlurays();
+    res.send(movies);
 })
 
 app.use((err, req, res, next) => {

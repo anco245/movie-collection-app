@@ -36,7 +36,7 @@ function SearchContainer({url, setUrl}) {
 
   const handleInputChange = (event) => {
     setInput(event.target.value)
-    url = "http://localhost:8080/movies/" + inputValue;
+    url = "http://localhost:8080/movies/titleOfMovie/" + inputValue;
     setUrl(url);
   }
 
@@ -59,18 +59,22 @@ function BlurayFilter({url, setUrl}) {
 
   const [checkBoxValue, setValue] = useState(false);
 
-  console.log(checkBoxValue);
-
   const handleChange = (event) => {
 
     setValue(event.target.checked);
 
-    if(checkBoxValue === true)
+    /*
+    console.log("something changed");
+    console.log("value of newVal: " + newVal);
+    console.log("checkBox value Is True: " + (checkBoxValue === true));
+    */
+
+    if(!checkBoxValue)
     {
       console.log("in here");
       url = "http://localhost:8080/movies/bluray";
       setUrl(url);
-    } else if (checkBoxValue === false) {
+    } else if (checkBoxValue) {
       url = "http://localhost:8080/movies";
       setUrl(url);
     }
@@ -78,7 +82,7 @@ function BlurayFilter({url, setUrl}) {
 
   return (
     <div className="checkBox">
-      <input type="checkbox" id="blurayCheck" name="blurayCheck" onChange={handleChange}/>
+      <input type="checkbox" id="blurayCheck" name="blurayCheck" checked={checkBoxValue} onChange={handleChange}/>
       <label htmlFor="blurayCheck">Bluray</label>
     </div>
   );
