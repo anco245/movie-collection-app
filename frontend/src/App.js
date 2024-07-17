@@ -1,15 +1,37 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
+import Graph from './graphs';
 
-function SidePanelContainer({url, setUrl}) {
+function SidePanelContainer({url, setUrl, currentDisplay, setDisplay}) {
   return (
     <div className="sidePanel">
       <IconAndTitle url={url} setUrl={setUrl} />
       <SearchContainer url={url} setUrl={setUrl} />
       <FiltersContainer url={url} setUrl={setUrl} />
+      <GraphButton currentDisplay={currentDisplay} setDisplay={setDisplay} />
       <GetRandomMovieButton url={url} setUrl={setUrl} />
     </div>
   );
+}
+
+function GraphButton ({currentDisplay, setDisplay}) {
+
+  const handleButton = (event) => {
+
+    console.log("in handle")
+    console.log(currentDisplay);
+
+    if(currentDisplay === "graph")
+    {
+      setDisplay("collection");
+    } else if (currentDisplay === "collection") {
+      setDisplay("graph");
+    }
+  }
+
+  return (
+    <button id="switchToGraphs" onClick={handleButton}>{currentDisplay === "collection" ? "Switch to Graph" : "Switch to Collection"}</button>
+  )
 }
 
 function IconAndTitle({url, setUrl}) {
@@ -62,12 +84,6 @@ function BlurayFilter({url, setUrl}) {
   const handleChange = (event) => {
 
     setValue(event.target.checked);
-
-    /*
-    console.log("something changed");
-    console.log("value of newVal: " + newVal);
-    console.log("checkBox value Is True: " + (checkBoxValue === true));
-    */
 
     if(!checkBoxValue)
     {
@@ -162,21 +178,31 @@ function Collection({url, setUrl}) {
   );
 }
 
-function CollectionContainer({url, setUrl}) {
-  return (
+function MainContainer({url, setUrl, currentDisplay, setDisplay}) {
+
+  if(currentDisplay === "collection") {
+    return (
+      <div className="collection">
+        <Collection url={url} setUrl={setUrl}/>
+      </div>
+    );
+  } else if (currentDisplay === "graph") {
+    return (
     <div className="collection">
-      <Collection url={url} setUrl={setUrl}/>
+      <Graph />
     </div>
-  );
+    );
+  }
 }
 
 export default function RootContainer() {
   const [url, setUrl] = useState("http://localhost:8080/movies");
+  const [currentDisplay, setDisplay] = useState("collection");
 
   return (
     <>
-      <SidePanelContainer url={url} setUrl={setUrl}/>
-      <CollectionContainer url={url} setUrl={setUrl}/>
+      <SidePanelContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay}/>
+      <MainContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay}/>
     </>
   )
 }

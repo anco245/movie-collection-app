@@ -11,8 +11,7 @@ everytime a change is made, otherwise the results won't be reflected. TO not hav
 to package.json
 Then run "npm run dev" 
 
-- change dependency
-  update dependency in package.json
+- download dependency
   delete node_modules
   delete package-lock.json
   npm install
