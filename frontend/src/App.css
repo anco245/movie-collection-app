@@ -67,15 +67,19 @@ body, html {
 
 .title {
   background-color: rgb(34, 33, 33);
-  left: 100px;
+  left: 95px;
+  margin: 10px;
+  height: 80%;
+  width: 65%;
 }
 
 #p1 {
   color: white;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 25px;
-  padding-left: 10px;
+  font-size: 30px;
+  padding: 10px;
   text-align: center;
+  margin: 0px;
 }
 
 .search {

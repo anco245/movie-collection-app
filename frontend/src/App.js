@@ -17,10 +17,6 @@ function SidePanelContainer({url, setUrl, currentDisplay, setDisplay}) {
 function GraphButton ({currentDisplay, setDisplay}) {
 
   const handleButton = (event) => {
-
-    console.log("in handle")
-    console.log(currentDisplay);
-
     if(currentDisplay === "graph")
     {
       setDisplay("collection");
@@ -47,7 +43,7 @@ function IconAndTitle({url, setUrl}) {
       </div>
 
       <div className="title">
-        <p id="p1">John's Movie Collection</p>
+        <p id="p1">Movie Collection</p>
       </div>
     </div>
   )
