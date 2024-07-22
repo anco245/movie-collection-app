@@ -46,6 +46,12 @@ export async function getBlurays() {
     return entry;
 }
 
+export async function getGraphData() {
+    const [data] = await pool.query("SELECT FLOOR( year / 10) * 10 AS decade, COUNT(*) AS movie_count FROM temp GROUP BY decade order by decade asc");
+    //const [data] = await pool.query("SELECT count(*) from temp where year > 1979 and year < 1990");
+    return data;
+}
+
 /*
 export async function getMovieByTitle(givenTitle) {
 
