@@ -18,7 +18,7 @@ const options = {
   },
 };
 
-const data = {
+const initialData = {
   labels: ['1920-1929', '1930-1939', '1940-1949', '1950-1959', '1960-1969', '1970-1979', '1980-1989', '1990-1999', '2000-2009', '2010-2019', '2020-2029'],
   datasets: [
     {
@@ -33,22 +33,9 @@ const data = {
   ],
 };
 
-function addData(results, setResults) {
-  let postResults = [];
-
-  console.log("results: " + results.);
-
-  results.forEach(element => {
-    postResults.push(element["movie_count"]);
-  });
-
-  data.datasets[0].data = postResults;
-}
-
 export default function Graph() {
 
-  const [results, setResults] = useState([]);
-
+  const [data, setData] = useState(initialData);
   const url = "http://localhost:8080/movies/graphdata";
 
   const getInfo = useCallback(() => {
@@ -56,17 +43,25 @@ export default function Graph() {
     xhr.open('GET', url);
     xhr.onload = function() {
       if (xhr.status === 200) {
-        setResults(JSON.parse(xhr.responseText));
+        const results = JSON.parse(xhr.responseText);
+        const hold = results.map(element => element.movie_count);
+
+        setData(prevData => ({
+          ...prevData,
+          datasets: [{
+            ...prevData.datasets[0],
+            data: hold,
+          }]
+        }));
+
       }
     };
     xhr.send();
-  }, url);
+  }, [url]);
 
   useEffect(() => {
     getInfo();
   }, [getInfo]);
-
-  addData({results}, {setResults});
 
   return (
     <div className="barGraph">
