@@ -3,31 +3,19 @@ import './App.css';
 import Graph from './graphs';
 
 function SidePanelContainer({url, setUrl, currentDisplay, setDisplay}) {
+
+  const [currentAdd, setAdd] = useState("physical");
+
   return (
     <div className="sidePanel">
       <IconAndTitle url={url} setUrl={setUrl} />
       <SearchContainer url={url} setUrl={setUrl} />
       <FiltersContainer url={url} setUrl={setUrl} />
+      <AddEntryContainer currentAdd={currentAdd} setAdd={setAdd}/>
       <GraphButton currentDisplay={currentDisplay} setDisplay={setDisplay} />
       <GetRandomMovieButton url={url} setUrl={setUrl} />
     </div>
   );
-}
-
-function GraphButton ({currentDisplay, setDisplay}) {
-
-  const handleButton = (event) => {
-    if(currentDisplay === "graph")
-    {
-      setDisplay("collection");
-    } else if (currentDisplay === "collection") {
-      setDisplay("graph");
-    }
-  }
-
-  return (
-    <button id="switchToGraphs" onClick={handleButton}>{currentDisplay === "collection" ? "Switch to Graph" : "Switch to Collection"}</button>
-  )
 }
 
 function IconAndTitle({url, setUrl}) {
@@ -54,6 +42,7 @@ function SearchContainer({url, setUrl}) {
 
   const handleInputChange = (event) => {
     setInput(event.target.value)
+    
     url = "http://localhost:8080/movies/titleOfMovie/" + inputValue;
     setUrl(url);
   }
@@ -78,12 +67,10 @@ function BlurayFilter({url, setUrl}) {
   const [checkBoxValue, setValue] = useState(false);
 
   const handleChange = (event) => {
-
     setValue(event.target.checked);
 
     if(!checkBoxValue)
     {
-      console.log("in here");
       url = "http://localhost:8080/movies/bluray";
       setUrl(url);
     } else if (checkBoxValue) {
@@ -98,6 +85,72 @@ function BlurayFilter({url, setUrl}) {
       <label htmlFor="blurayCheck">Bluray</label>
     </div>
   );
+}
+
+function AddEntryContainer({currentAdd, setAdd}) {
+  return (
+    <div className="addEntry">
+      <ChooseType currentAdd={currentAdd} setAdd={setAdd} />
+      <AddEntry currentAdd={currentAdd} setAdd={setAdd} />
+    </div>
+  );
+}
+
+function ChooseType({currentAdd, setAdd}) {
+
+  const [selectedOption, setSelectedOption] = useState('physical');
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    setAdd(selectedOption);
+  }
+    
+  return (
+    <div className="radioSelect">
+      <label><input type="radio" className="typeOfMedia" name="typeOfMedia" value="physical" checked={selectedOption === 'physical'} onChange={handleOptionChange} />Physical</label>
+      <label><input type="radio" className="typeOfMedia" name="typeOfMedia" value="usb" checked={selectedOption === 'usb'} onChange={handleOptionChange}/>USB</label>
+    </div>
+  );
+}
+
+function AddEntry({currentAdd, setAdd}) {
+
+  if(currentAdd === 'physical') {
+    return <button>Physical</button>;
+  } else if (currentAdd === "usb") {
+    return <button>USBS</button>;
+  }
+/*
+  return (
+    <div className="addEntry">
+      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
+      <input type="text" placeholder="Director..." spellCheck="false" value={inputValue} />
+      <input type="text" placeholder="Year Released..." spellCheck="false" value={inputValue} />
+      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
+      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
+      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
+      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
+      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
+
+    </div>
+  );
+  */
+}
+
+function GraphButton ({currentDisplay, setDisplay}) {
+
+  const handleButton = (event) => {
+    if(currentDisplay === "graph")
+    {
+      setDisplay("collection");
+    } else if (currentDisplay === "collection") {
+      setDisplay("graph");
+    }
+  }
+
+  return (
+    <button id="switchToGraphs" onClick={handleButton}>{currentDisplay === "collection" ? "Switch to Graph" : "Switch to Collection"}</button>
+  )
 }
 
 function GetRandomMovieButton({url, setUrl}) {

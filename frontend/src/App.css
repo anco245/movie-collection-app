@@ -25,7 +25,7 @@ body, html {
 
 /*--------side Panel and contents--------*/
 
-.iconandtitle, .icon, .title, .search, .customQuery, .filters, .getRandomMovieButton {
+.iconandtitle, .icon, .title, .search, .customQuery, .filters, .getRandomMovieButton, .addEntry{
   position: absolute;
 }
 
@@ -104,6 +104,15 @@ body, html {
   height: 20%;
 }
 
+.addEntry {
+  display: flex;
+  top: 375px;
+  margin: 10px;
+  border: 1px solid #3a3939;
+  width: 95%;
+  height: 20%;
+}
+
 .getRandomMovieButton {
   top: 95%;
   width: 95%;
@@ -116,6 +125,10 @@ body, html {
 }
 
 .checkBox label {
+  color: white;
+}
+
+.radioSelect label {
   color: white;
 }
 
