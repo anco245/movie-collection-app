@@ -102,7 +102,7 @@ function ChooseType({currentAdd, setAdd}) {
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    setAdd(selectedOption);
+    setAdd(event.target.value);
   }
     
   return (
@@ -115,26 +115,35 @@ function ChooseType({currentAdd, setAdd}) {
 
 function AddEntry({currentAdd, setAdd}) {
 
-  if(currentAdd === 'physical') {
-    return <button>Physical</button>;
-  } else if (currentAdd === "usb") {
-    return <button>USBS</button>;
-  }
-/*
-  return (
-    <div className="addEntry">
-      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
-      <input type="text" placeholder="Director..." spellCheck="false" value={inputValue} />
-      <input type="text" placeholder="Year Released..." spellCheck="false" value={inputValue} />
-      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
-      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
-      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
-      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
-      <input type="text" placeholder="Title..." spellCheck="false" value={inputValue} />
+  const [titleValue, setTitle] = useState("");
+  const [directorValue, setDirector] = useState("");
+  const [yearValue, setYear] = useState("");
 
-    </div>
-  );
-  */
+  function handleSubmit() {
+
+    //url might look like http://localhost:8080/movies/addMovie/title=(title)?director=(director)?year=?
+  }
+
+  //Make info box appear when sucessfully submitted
+
+  if(currentAdd === 'physical') {
+    return (
+      <div className="mediaTypeDisplay">
+        <form>
+          <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
+          <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
+          <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
+          <button onClick={handleSubmit}>Submit</button>
+        </form>
+      </div>
+    );
+  } else if (currentAdd === "usb") {
+    return (
+      <div className="mediaTypeDisplay">
+        <button>USBS</button>
+      </div>
+    );
+  }
 }
 
 function GraphButton ({currentDisplay, setDisplay}) {

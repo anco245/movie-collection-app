@@ -52,24 +52,52 @@ export async function getGraphData() {
 }
 
 /*
-export async function addPhysicalEntry(
-    title, 
-    format,
-    pack,
-    edition,
-    year, 
-    director,
-    runtime,
-    genre,
-    seen,
-    country,
-    type) {
+export async function addPhysicalEntry(given) {
 
-    let query = "";
+    //parse string and store it as object
+    //might be able to use loop to look for key value pairs
 
-    if(title != null)
+    const substrings = given.split('?');
+    let infoObject = {};
+
+    substrings.forEach((pair) => {
+        const [key, value] = pair.split('=');
+        infoObject[key] = value;
+    }); 
+
+    let insertInto = "";
+    let values = "";
+    let query = "INSERT INTO collection ({insertInto}) VALUES ({values})";
+
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(200) NOT NULL,
+    format VARCHAR(20) NOT NULL,
+    pack VARCHAR(100),
+    edition VARCHAR(50),
+    year INT NOT NULL, 
+    director VARCHAR(100),
+    runtime INT NOT NULL,
+    genre VARCHAR(100),
+    seen boolean default true,
+    country VARCHAR(50) default "USA",
+    -- franchise VARCHAR(100),
+    type VARCHAR(20) default "Movie"
+
+    for(let i = 0; i < infoObject.length; i++)
     {
-        query = query + ""
+        insertInto+=infoObject+
+    }
+
+    insertInto = insertInto + infoObject["title"]
+    if(infoObject["title"] !== null)
+    {
+        insertInto+=infoObject[];
+        values+=""
+    }
+
+    if(infoObject["title"] != null)
+    {
+        insertInto+=""
     } else if (format != null) {
 
     } else if (pack != null) {
@@ -96,6 +124,19 @@ export async function addPhysicalEntry(
     {
 
     }
+
+    (
+    title, 
+    format,
+    pack,
+    edition,
+    year, 
+    director,
+    runtime,
+    genre,
+    seen,
+    country,
+    type)
 
 };
 */

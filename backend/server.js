@@ -22,6 +22,17 @@ app.get("/movies/titleOfMovie/:title", async (req, res) => {
     res.send(entry);
 })
 
+/*
+app.get("/movies/addMovie/:physicalEntryInfo", async (req, res) => {
+
+    //initially stored as string
+    const given = req.params.entryInfo;
+
+    const entryObject = await addPhysicalEntry(given);
+    res.send(entryObject);
+})
+*/
+
 app.get("/movies/bluray", async (req, res) => {
     const movies = await getBlurays();
     res.send(movies);

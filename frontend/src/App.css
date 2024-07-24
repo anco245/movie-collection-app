@@ -111,6 +111,17 @@ body, html {
   border: 1px solid #3a3939;
   width: 95%;
   height: 20%;
+  flex-direction: column;
+}
+
+.radioSelect {
+  display: flex;
+}
+
+.mediaTypeDisplay {
+  display: flex;
+  top: 20px;
+  margin: 10px;
 }
 
 .getRandomMovieButton {
