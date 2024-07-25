@@ -102,7 +102,13 @@ function ChooseType({currentAdd, setAdd}) {
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    setAdd(event.target.value);
+
+    if(event.target.value === "physical")
+    {
+      setAdd(event.target.value);
+    } else if (event.target.value === "usb") {
+
+    }
   }
     
   return (
@@ -116,31 +122,83 @@ function ChooseType({currentAdd, setAdd}) {
 function AddEntry({currentAdd, setAdd}) {
 
   const [titleValue, setTitle] = useState("");
-  const [directorValue, setDirector] = useState("");
+  const [formatValue, setFormat] = useState("");
+  const [packValue, setPack] = useState("");
+  const [editionValue, setEdition] = useState("");
   const [yearValue, setYear] = useState("");
+  const [directorValue, setDirector] = useState("");
+  const [runtimeValue, setRuntime] = useState("");
+  const [genreValue, setGenre] = useState("");
+  const [seenValue, setSeen] = useState(true);
+  const [countryValue, setCountry] = useState("USA");
+  const [typeValue, setType] = useState("Movie");
+
+  const [qualityValue, setQuality] = useState("");
+  const [usbValue, setUsb] = useState("");
+
+  let url = "";
 
   function handleSubmit() {
-
-    //url might look like http://localhost:8080/movies/addMovie/title=(title)?director=(director)?year=?
+    if(currentAdd === "physical") {
+      url = "http://localhost:8080/movies/addPhysicalEntry/title=" + titleValue + "?format=" + formatValue + "?pack=" + packValue +
+              "?edition=" + editionValue + "?year=" + yearValue + "?director=" + directorValue + "?runtime=" + runtimeValue +
+              "?genre=" + genreValue + "?seen=" + seenValue + "?country=" + countryValue + "?type=" + typeValue;
+    } else if (currentAdd === "usb") {
+      url = "http://localhost:8080/movies/addUsbEntry/title=" + titleValue + "?quality=" + qualityValue + 
+              "?usb=" + usbValue + "?director=" + directorValue + "?year=" + yearValue + "?runtime=" + runtimeValue + "?genre=" + 
+              genreValue + "?seen=" + seenValue + "?type=" + typeValue;
+    }
   }
 
+  const getInfo = useCallback(() => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        JSON.parse(xhr.responseText);
+      }
+    };
+    xhr.send();
+  }, [url]);
+
+  useEffect(() => {
+    getInfo();
+  }, [getInfo]);
+
   //Make info box appear when sucessfully submitted
+
+
+  //make button or radio button
+  //<input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
 
   if(currentAdd === 'physical') {
     return (
       <div className="mediaTypeDisplay">
-        <form>
-          <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
-          <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
-          <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
-          <button onClick={handleSubmit}>Submit</button>
-        </form>
+        <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
+        <input type="text" placeholder="Format..." spellCheck="false" value={formatValue} onChange={(e) => setFormat(e.target.value)}/>
+        <input type="text" placeholder="Pack..." spellCheck="false" value={packValue} onChange={(e) => setPack(e.target.value)}/>
+        <input type="text" placeholder="Edition..." spellCheck="false" value={editionValue} onChange={(e) => setEdition(e.target.value)}/>
+        <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
+        <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
+        <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
+        <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
+        <input type="text" placeholder="Country..." spellCheck="false" value={countryValue} onChange={(e) => setCountry(e.target.value)}/>
+        <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
+        <button onClick={handleSubmit}>Submit</button>
       </div>
     );
   } else if (currentAdd === "usb") {
     return (
       <div className="mediaTypeDisplay">
-        <button>USBS</button>
+        <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
+        <input type="text" placeholder="Quality..." spellCheck="false" value={qualityValue} onChange={(e) => setQuality(e.target.value)}/>
+        <input type="text" placeholder="Usb..." spellCheck="false" value={usbValue} onChange={(e) => setUsb(e.target.value)}/>
+        <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
+        <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
+        <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
+        <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
+        <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
+        <button onClick={handleSubmit}>Submit</button>
       </div>
     );
   }
