@@ -102,13 +102,7 @@ function ChooseType({currentAdd, setAdd}) {
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-
-    if(event.target.value === "physical")
-    {
-      setAdd(event.target.value);
-    } else if (event.target.value === "usb") {
-
-    }
+    setAdd(event.target.value);
   }
     
   return (
@@ -136,9 +130,10 @@ function AddEntry({currentAdd, setAdd}) {
   const [qualityValue, setQuality] = useState("");
   const [usbValue, setUsb] = useState("");
 
-  let url = "";
 
   function handleSubmit() {
+    let url = "";
+
     if(currentAdd === "physical") {
       url = "http://localhost:8080/movies/addPhysicalEntry/title=" + titleValue + "?format=" + formatValue + "?pack=" + packValue +
               "?edition=" + editionValue + "?year=" + yearValue + "?director=" + directorValue + "?runtime=" + runtimeValue +
@@ -148,22 +143,18 @@ function AddEntry({currentAdd, setAdd}) {
               "?usb=" + usbValue + "?director=" + directorValue + "?year=" + yearValue + "?runtime=" + runtimeValue + "?genre=" + 
               genreValue + "?seen=" + seenValue + "?type=" + typeValue;
     }
-  }
-
-  const getInfo = useCallback(() => {
+  
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
+    xhr.open('POST', url);
+
     xhr.onload = function() {
       if (xhr.status === 200) {
         JSON.parse(xhr.responseText);
       }
     };
-    xhr.send();
-  }, [url]);
 
-  useEffect(() => {
-    getInfo();
-  }, [getInfo]);
+    xhr.send();
+  }
 
   //Make info box appear when sucessfully submitted
 
@@ -182,6 +173,7 @@ function AddEntry({currentAdd, setAdd}) {
         <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
         <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
         <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
+        <input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
         <input type="text" placeholder="Country..." spellCheck="false" value={countryValue} onChange={(e) => setCountry(e.target.value)}/>
         <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
         <button onClick={handleSubmit}>Submit</button>
@@ -197,6 +189,7 @@ function AddEntry({currentAdd, setAdd}) {
         <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
         <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
         <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
+        <input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
         <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
         <button onClick={handleSubmit}>Submit</button>
       </div>

@@ -110,7 +110,12 @@ body, html {
   margin: 10px;
   border: 1px solid #3a3939;
   width: 95%;
-  height: 20%;
+  height: 32%;
+  flex-direction: column;
+}
+
+.mediaTypeDisplay {
+  display: flex;
   flex-direction: column;
 }
 
