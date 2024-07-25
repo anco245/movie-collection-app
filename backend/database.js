@@ -51,11 +51,7 @@ export async function getGraphData() {
     return data;
 }
 
-/*
 export async function addPhysicalEntry(given) {
-
-    //parse string and store it as object
-    //might be able to use loop to look for key value pairs
 
     const substrings = given.split('?');
     let infoObject = {};
@@ -67,78 +63,74 @@ export async function addPhysicalEntry(given) {
 
     let insertInto = "";
     let values = "";
-    let query = "INSERT INTO collection ({insertInto}) VALUES ({values})";
+    let query = "INSERT INTO collection (" + insertInto + ") VALUES (" + values + ")";
 
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	title VARCHAR(200) NOT NULL,
-    format VARCHAR(20) NOT NULL,
-    pack VARCHAR(100),
-    edition VARCHAR(50),
-    year INT NOT NULL, 
-    director VARCHAR(100),
-    runtime INT NOT NULL,
-    genre VARCHAR(100),
-    seen boolean default true,
-    country VARCHAR(50) default "USA",
-    -- franchise VARCHAR(100),
-    type VARCHAR(20) default "Movie"
-
-    for(let i = 0; i < infoObject.length; i++)
+    if(infoObject["title"] !== undefined)
     {
-        insertInto+=infoObject+
+        insertInto+="title,";
+        values+=infoObject["title"] + ",";
     }
 
-    insertInto = insertInto + infoObject["title"]
-    if(infoObject["title"] !== null)
-    {
-        insertInto+=infoObject[];
-        values+=""
+    if (infoObject["format"] != undefined) {
+        insertInto+="format,";
+        values+=infoObject["format"] + ",";
+    }
+    
+    if (infoObject["pack"] != undefined) {
+        insertInto+="pack,";
+        values+=infoObject["pack"] + ",";
+    }
+    
+    if (infoObject["edition"] != undefined) {
+        insertInto+="edition,";
+        values+=infoObject["edition"] + ",";
+    }
+    
+    if (infoObject["year"] != undefined) {
+        insertInto+="year,";
+        values+=infoObject["year"] + ",";
+    }
+    
+    if (infoObject["director"] != undefined) {
+        insertInto+="director,";
+        values+=infoObject["director"] + ",";
+    }
+    
+    if (infoObject["runtime"] != undefined) {
+        insertInto+="runtime,";
+        values+=infoObject["runtime"] + ",";
+    }
+    
+    if (infoObject["genre"] != undefined) {
+        insertInto+="genre,";
+        values+=infoObject["genre"] + ",";
+    }
+    
+    if (infoObject["seen"] != undefined) {
+        insertInto+="seen,";
+        values+=infoObject["seen"] + ",";
+    }
+    
+    if (infoObject["country"] != undefined) {
+        insertInto+="country,";
+        values+=infoObject["country"] + ",";
+    }
+    
+    if (infoObject["type"] != undefined) {
+        insertInto+="type,";
+        values+=infoObject["type"] + ",";
     }
 
-    if(infoObject["title"] != null)
+    insertInto = insertInto.substring(0, insertInto.length() - 1);
+    values = values.substring(0, values.length() - 1);
+
+    const [data] = await pool.query(query);
+
+    if(data !== null)
     {
-        insertInto+=""
-    } else if (format != null) {
-
-    } else if (pack != null) {
-     
-    } else if (edition != null) {
-     
-    } else if (year != null) {
-     
-    } else if (director != null) {
-     
-    } else if (runtime != null) {
-     
-    } else if (genre != null) {
-     
-    } else if (seen != null) {
-     
-    } else if (country != null) {
-     
-    } else if (type != null) {
-     
+        return infoObject;
     }
-
-    if(query != null)
-    {
-
-    }
-
-    (
-    title, 
-    format,
-    pack,
-    edition,
-    year, 
-    director,
-    runtime,
-    genre,
-    seen,
-    country,
-    type)
 
 };
-*/
 
 const result = await createTemp();

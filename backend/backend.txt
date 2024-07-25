@@ -15,3 +15,6 @@ Then run "npm run dev"
   delete node_modules
   delete package-lock.json
   npm install
+
+
+http://localhost:8080/movies/addPhysicalEntry/title=Clown?format=bluray?pack=undefined?edition=undefined?year=2014?director=undefined?runtime=100?genre=Horror?seen=true?country=USA?type=Movie;

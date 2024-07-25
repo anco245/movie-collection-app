@@ -22,16 +22,18 @@ app.get("/movies/titleOfMovie/:title", async (req, res) => {
     res.send(entry);
 })
 
-/*
-app.get("/movies/addMovie/:physicalEntryInfo", async (req, res) => {
+app.post("/movies/addPhysicalEntry/:physicalEntryInfo", async (req, res) => {
 
+    console.log("here");
     //initially stored as string
-    const given = req.params.entryInfo;
+    const given = req.params.physicalEntryInfo;
+    res.send(given);
 
-    const entryObject = await addPhysicalEntry(given);
-    res.send(entryObject);
+    //res.send(given);
+
+    //const entryObject = await addPhysicalEntry(given);
+    //res.send(entryObject);
 })
-*/
 
 app.get("/movies/bluray", async (req, res) => {
     const movies = await getBlurays();

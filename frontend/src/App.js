@@ -117,10 +117,10 @@ function AddEntry({currentAdd, setAdd}) {
 
   const [titleValue, setTitle] = useState("");
   const [formatValue, setFormat] = useState("");
-  const [packValue, setPack] = useState("");
-  const [editionValue, setEdition] = useState("");
+  const [packValue, setPack] = useState(undefined);
+  const [editionValue, setEdition] = useState(undefined);
   const [yearValue, setYear] = useState("");
-  const [directorValue, setDirector] = useState("");
+  const [directorValue, setDirector] = useState(undefined);
   const [runtimeValue, setRuntime] = useState("");
   const [genreValue, setGenre] = useState("");
   const [seenValue, setSeen] = useState(true);
@@ -129,7 +129,6 @@ function AddEntry({currentAdd, setAdd}) {
 
   const [qualityValue, setQuality] = useState("");
   const [usbValue, setUsb] = useState("");
-
 
   function handleSubmit() {
     let url = "";
@@ -145,15 +144,18 @@ function AddEntry({currentAdd, setAdd}) {
     }
   
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
+    xhr.open('POST', url, true);
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        JSON.parse(xhr.responseText);
+        const response = JSON.parse(xhr.responseText);
+        console.log(response);
       }
     };
 
     xhr.send();
+
+    console.log("Submitted");
   }
 
   //Make info box appear when sucessfully submitted
