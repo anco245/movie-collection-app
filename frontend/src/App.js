@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import Graph from './graphs';
 
-function SidePanelContainer({url, setUrl, currentDisplay, setDisplay}) {
+function SidePanelContainer({url, setUrl, currentDisplay, setDisplay, data, setData}) {
 
   const [currentAdd, setAdd] = useState("physical");
 
@@ -11,7 +11,7 @@ function SidePanelContainer({url, setUrl, currentDisplay, setDisplay}) {
       <IconAndTitle url={url} setUrl={setUrl} />
       <SearchContainer url={url} setUrl={setUrl} />
       <FiltersContainer url={url} setUrl={setUrl} />
-      <AddEntryContainer currentAdd={currentAdd} setAdd={setAdd}/>
+      <AddEntryContainer currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData}/>
       <GraphButton currentDisplay={currentDisplay} setDisplay={setDisplay} />
       <GetRandomMovieButton url={url} setUrl={setUrl} />
     </div>
@@ -87,11 +87,11 @@ function BlurayFilter({url, setUrl}) {
   );
 }
 
-function AddEntryContainer({currentAdd, setAdd}) {
+function AddEntryContainer({currentAdd, setAdd, data, setData}) {
   return (
     <div className="addEntry">
       <ChooseType currentAdd={currentAdd} setAdd={setAdd} />
-      <AddEntry currentAdd={currentAdd} setAdd={setAdd} />
+      <AddEntry currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData}/>
     </div>
   );
 }
@@ -113,7 +113,7 @@ function ChooseType({currentAdd, setAdd}) {
   );
 }
 
-function AddEntry({currentAdd, setAdd}) {
+function AddEntry({currentAdd, setAdd, data, setData}) {
 
   const [titleValue, setTitle] = useState("");
   const [formatValue, setFormat] = useState("");
@@ -134,28 +134,34 @@ function AddEntry({currentAdd, setAdd}) {
     let url = "";
 
     if(currentAdd === "physical") {
-      url = "http://localhost:8080/movies/addPhysicalEntry/title=" + titleValue + "?format=" + formatValue + "?pack=" + packValue +
-              "?edition=" + editionValue + "?year=" + yearValue + "?director=" + directorValue + "?runtime=" + runtimeValue +
-              "?genre=" + genreValue + "?seen=" + seenValue + "?country=" + countryValue + "?type=" + typeValue;
+      url = "http://localhost:8080/movies/addPhysicalEntry/title=" + titleValue + "&format=" + formatValue + "&pack=" + packValue +
+              "&edition=" + editionValue + "&year=" + yearValue + "&director=" + directorValue + "&runtime=" + runtimeValue +
+              "&genre=" + genreValue + "&seen=" + seenValue + "&country=" + countryValue + "&type=" + typeValue;
     } else if (currentAdd === "usb") {
-      url = "http://localhost:8080/movies/addUsbEntry/title=" + titleValue + "?quality=" + qualityValue + 
-              "?usb=" + usbValue + "?director=" + directorValue + "?year=" + yearValue + "?runtime=" + runtimeValue + "?genre=" + 
-              genreValue + "?seen=" + seenValue + "?type=" + typeValue;
+      url = "http://localhost:8080/movies/addUsbEntry/title=" + titleValue + "&quality=" + qualityValue + 
+              "&usb=" + usbValue + "&director=" + directorValue + "&year=" + yearValue + "&runtime=" + runtimeValue + "&genre=" + 
+              genreValue + "&seen=" + seenValue + "&type=" + typeValue;
     }
   
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', url, true);
-
+    xhr.open('GET', url);
     xhr.onload = function() {
       if (xhr.status === 200) {
-        const response = JSON.parse(xhr.responseText);
-        console.log(response);
+        JSON.parse(xhr.responseText);
       }
     };
-
     xhr.send();
 
-    console.log("Submitted");
+    const xhr2 = new XMLHttpRequest();
+    xhr2.open('GET', "http://localhost:8080/movies");
+    xhr2.onload = function() {
+      if (xhr2.status === 200) {
+        setData(JSON.parse(xhr2.responseText));
+      }
+    };
+    xhr2.send();
+
+
   }
 
   //Make info box appear when sucessfully submitted
@@ -230,8 +236,7 @@ function GetRandomMovieButton({url, setUrl}) {
 
 
 
-function Collection({url, setUrl}) {
-  const [data, setData] = useState([]);
+function Collection({url, setUrl, data, setData}) {
 
   const getInfo = useCallback(() => {
     const xhr = new XMLHttpRequest();
@@ -242,7 +247,7 @@ function Collection({url, setUrl}) {
       }
     };
     xhr.send();
-  }, [url]);
+  }, [url, setData]);
 
   useEffect(() => {
     getInfo();
@@ -289,12 +294,12 @@ function Collection({url, setUrl}) {
   );
 }
 
-function MainContainer({url, setUrl, currentDisplay, setDisplay}) {
+function MainContainer({url, setUrl, currentDisplay, setDisplay, data, setData}) {
 
   if(currentDisplay === "collection") {
     return (
       <div className="collection">
-        <Collection url={url} setUrl={setUrl}/>
+        <Collection url={url} setUrl={setUrl} data={data} setData={setData}/>
       </div>
     );
   } else if (currentDisplay === "graph") {
@@ -309,11 +314,12 @@ function MainContainer({url, setUrl, currentDisplay, setDisplay}) {
 export default function RootContainer() {
   const [url, setUrl] = useState("http://localhost:8080/movies");
   const [currentDisplay, setDisplay] = useState("collection");
+  const [data, setData] = useState([]);
 
   return (
     <>
-      <SidePanelContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay}/>
-      <MainContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay}/>
+      <SidePanelContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay} data={data} setData={setData}/>
+      <MainContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay} data={data} setData={setData}/>
     </>
   )
 }

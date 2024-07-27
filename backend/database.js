@@ -53,7 +53,7 @@ export async function getGraphData() {
 
 export async function addPhysicalEntry(given) {
 
-    const substrings = given.split('?');
+    const substrings = given.split('&');
     let infoObject = {};
 
     substrings.forEach((pair) => {
@@ -61,76 +61,81 @@ export async function addPhysicalEntry(given) {
         infoObject[key] = value;
     }); 
 
-    let insertInto = "";
-    let values = "";
-    let query = "INSERT INTO collection (" + insertInto + ") VALUES (" + values + ")";
+    let insertInto = [];
+    let values = [];
 
-    if(infoObject["title"] !== undefined)
+    if(infoObject["title"] !== "undefined")
     {
-        insertInto+="title,";
-        values+=infoObject["title"] + ",";
+        insertInto.push("title");
+        values.push(infoObject["title"]);
     }
 
-    if (infoObject["format"] != undefined) {
-        insertInto+="format,";
-        values+=infoObject["format"] + ",";
+    if (infoObject["format"] !== "undefined") {
+        insertInto.push("format");
+        values.push(infoObject["format"]);
     }
     
-    if (infoObject["pack"] != undefined) {
-        insertInto+="pack,";
-        values+=infoObject["pack"] + ",";
+    if (infoObject["pack"] !== "undefined") {
+        insertInto.push("pack");
+        values.push(infoObject["pack"]);
     }
     
-    if (infoObject["edition"] != undefined) {
-        insertInto+="edition,";
-        values+=infoObject["edition"] + ",";
+    if (infoObject["edition"] !== "undefined") {
+        insertInto.push("edition");
+        values.push(infoObject["edition"]);
     }
     
-    if (infoObject["year"] != undefined) {
-        insertInto+="year,";
-        values+=infoObject["year"] + ",";
+    if (infoObject["year"] !== "undefined") {
+        insertInto.push("year");
+        values.push(Number(infoObject["year"]));
     }
     
-    if (infoObject["director"] != undefined) {
-        insertInto+="director,";
-        values+=infoObject["director"] + ",";
-    }
-    
-    if (infoObject["runtime"] != undefined) {
-        insertInto+="runtime,";
-        values+=infoObject["runtime"] + ",";
-    }
-    
-    if (infoObject["genre"] != undefined) {
-        insertInto+="genre,";
-        values+=infoObject["genre"] + ",";
-    }
-    
-    if (infoObject["seen"] != undefined) {
-        insertInto+="seen,";
-        values+=infoObject["seen"] + ",";
-    }
-    
-    if (infoObject["country"] != undefined) {
-        insertInto+="country,";
-        values+=infoObject["country"] + ",";
-    }
-    
-    if (infoObject["type"] != undefined) {
-        insertInto+="type,";
-        values+=infoObject["type"] + ",";
+    if (infoObject["director"] !== "undefined") {
+        insertInto.push("director");
+        values.push(infoObject["director"]);
     }
 
-    insertInto = insertInto.substring(0, insertInto.length() - 1);
-    values = values.substring(0, values.length() - 1);
+    if (infoObject["runtime"] !== "undefined") {
+        insertInto.push("runtime");
+        values.push(Number(infoObject["runtime"]));
+    }
+    
+    if (infoObject["genre"] !== "undefined") {
+        insertInto.push("genre");
+        values.push(infoObject["genre"]);
+    }
+    
+    if (infoObject["seen"] !== "undefined") {
+        insertInto.push("seen");
+        values.push(infoObject["seen"]==="true");
+    }
+    
+    if (infoObject["country"] !== "undefined") {
+        insertInto.push("country")
+        values.push(infoObject["country"]);
+    }
+    
+    if (infoObject["type"] !== "undefined") {
+        insertInto.push("type");
+        values.push(infoObject["type"]);
+    }
 
-    const [data] = await pool.query(query);
+    let questions = [];
+    insertInto.map(() => {questions.push("?")});
+
+    let q = `INSERT INTO collection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
+
+    const [entry] = await pool.query(q, values);
+
+    return entry;
+    /*
 
     if(data !== null)
     {
         return infoObject;
     }
 
+    */
 };
 
 const result = await createTemp();
