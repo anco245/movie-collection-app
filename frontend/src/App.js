@@ -152,6 +152,9 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
     };
     xhr.send();
 
+    getMovies(setData);
+
+    /*
     const xhr2 = new XMLHttpRequest();
     xhr2.open('GET', "http://localhost:8080/movies");
     xhr2.onload = function() {
@@ -160,6 +163,7 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
       }
     };
     xhr2.send();
+    */
 
 
   }
@@ -232,6 +236,17 @@ function GetRandomMovieButton({url, setUrl}) {
           <button onClick={handleClick}>Press for Random Movie</button>
       </div>
   );
+}
+
+function getMovies(setData) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', "http://localhost:8080/movies");
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      setData(JSON.parse(xhr.responseText));
+    }
+  };
+  xhr.send();
 }
 
 

@@ -127,6 +127,8 @@ export async function addPhysicalEntry(given) {
 
     const [entry] = await pool.query(q, values);
 
+    const r = await createTemp();
+    
     return entry;
     /*
 
