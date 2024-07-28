@@ -9,7 +9,7 @@ function SidePanelContainer({url, setUrl, currentDisplay, setDisplay, data, setD
   return (
     <div className="sidePanel">
       <IconAndTitle url={url} setUrl={setUrl} />
-      <SearchContainer url={url} setUrl={setUrl} />
+      <SearchContainer url={url} setUrl={setUrl} data={data} setData={setData} />
       <FiltersContainer url={url} setUrl={setUrl} />
       <AddEntryContainer currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData}/>
       <GraphButton currentDisplay={currentDisplay} setDisplay={setDisplay} />
@@ -37,7 +37,7 @@ function IconAndTitle({url, setUrl}) {
   )
 }
 
-function SearchContainer({url, setUrl}) {
+function SearchContainer({url, setUrl, data, setData}) {
   const [inputValue, setInput] = useState('');
 
   const handleInputChange = (event) => {
@@ -45,6 +45,8 @@ function SearchContainer({url, setUrl}) {
     
     url = "http://localhost:8080/movies/titleOfMovie/" + inputValue;
     setUrl(url);
+
+    getMovies(setData, url);
   }
 
   return (
@@ -238,9 +240,9 @@ function GetRandomMovieButton({url, setUrl}) {
   );
 }
 
-function getMovies(setData) {
+function getMovies(setData, url) {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', "http://localhost:8080/movies");
+  xhr.open('GET', url);
   xhr.onload = function() {
     if (xhr.status === 200) {
       setData(JSON.parse(xhr.responseText));
@@ -254,15 +256,8 @@ function getMovies(setData) {
 function Collection({url, setUrl, data, setData}) {
 
   const getInfo = useCallback(() => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        setData(JSON.parse(xhr.responseText));
-      }
-    };
-    xhr.send();
-  }, [url, setData]);
+    getMovies(setData, url);
+  }, [setData, url]);
 
   useEffect(() => {
     getInfo();
