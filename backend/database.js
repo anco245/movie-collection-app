@@ -21,7 +21,8 @@ export async function createTemp() {
             FROM usbs
             UNION
             SELECT title, year, runtime, NULL AS quality, format, pack, edition, genre, seen, type
-            FROM collection) as completeCollection;
+            FROM collection
+        ) as completeCollection;
     `);
 }
 
@@ -90,7 +91,7 @@ export async function addPhysicalEntry(given) {
         values.push(Number(infoObject["year"]));
     }
     
-    if (infoObject["director"] !== "undefined") {
+    if (infoObject["director"] !== "") {
         insertInto.push("director");
         values.push(infoObject["director"]);
     }
@@ -127,7 +128,7 @@ export async function addPhysicalEntry(given) {
 
     const [entry] = await pool.query(q, values);
 
-    return entry;
+    console.log(entryObject);
     /*
 
     if(data !== null)

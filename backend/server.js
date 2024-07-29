@@ -23,9 +23,8 @@ app.get("/movies/titleOfMovie/:title", async (req, res) => {
 })
 
 app.get("/movies/addPhysicalEntry/:entryInfo", async (req, res) => {
-    console.log("paramters: " + req.params.entryInfo);
     const entryObject = await addPhysicalEntry(req.params.entryInfo);
-    res.send(entryObject);
+    return entryObject;
 })
 
 app.get("/movies/bluray", async (req, res) => {

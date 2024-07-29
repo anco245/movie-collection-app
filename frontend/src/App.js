@@ -139,6 +139,20 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
       url = "http://localhost:8080/movies/addPhysicalEntry/title=" + titleValue + "&format=" + formatValue + "&pack=" + packValue +
               "&edition=" + editionValue + "&year=" + yearValue + "&director=" + directorValue + "&runtime=" + runtimeValue +
               "&genre=" + genreValue + "&seen=" + seenValue + "&country=" + countryValue + "&type=" + typeValue;
+
+      setTitle("");
+      setTitle("");
+      setFormat("");
+      setPack(undefined);
+      setEdition(undefined);
+      setYear("");
+      setDirector("");
+      setRuntime("");
+      setGenre("");
+      setSeen(true);
+      setCountry("USA");
+      setType("Movie");
+
     } else if (currentAdd === "usb") {
       url = "http://localhost:8080/movies/addUsbEntry/title=" + titleValue + "&quality=" + qualityValue + 
               "&usb=" + usbValue + "&director=" + directorValue + "&year=" + yearValue + "&runtime=" + runtimeValue + "&genre=" + 
@@ -154,24 +168,11 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
     };
     xhr.send();
 
-    getMovies(setData);
 
-    /*
-    const xhr2 = new XMLHttpRequest();
-    xhr2.open('GET', "http://localhost:8080/movies");
-    xhr2.onload = function() {
-      if (xhr2.status === 200) {
-        setData(JSON.parse(xhr2.responseText));
-      }
-    };
-    xhr2.send();
-    */
-
-
+    getMovies(setData, "http://localhost:8080/movies");
   }
 
   //Make info box appear when sucessfully submitted
-
 
   //make button or radio button
   //<input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
@@ -187,7 +188,7 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
         <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
         <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
         <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
-        <input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
+        <input type="text" placeholder={seenValue} spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
         <input type="text" placeholder="Country..." spellCheck="false" value={countryValue} onChange={(e) => setCountry(e.target.value)}/>
         <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
         <button onClick={handleSubmit}>Submit</button>
