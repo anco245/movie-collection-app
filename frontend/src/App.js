@@ -194,7 +194,7 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
         <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
         <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
         <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
-        <input type="text" placeholder={seenValue} spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
+        <input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
         <input type="text" placeholder="Country..." spellCheck="false" value={countryValue} onChange={(e) => setCountry(e.target.value)}/>
         <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
         <button onClick={handleSubmit}>Submit</button>
@@ -237,7 +237,9 @@ function GraphButton ({currentDisplay, setDisplay}) {
 function GetRandomMovieButton({url, setUrl}) {
 
   function handleClick() {
-      setUrl("http://localhost:8080/movies/getRandomMovie")
+    const randomEntryUrl = 'http://localhost:8080/movies/getRandomMovie';
+    const uniqueUrl = `${randomEntryUrl}?t=${new Date().getTime()}`;
+    setUrl(uniqueUrl);
   }
 
   return (
