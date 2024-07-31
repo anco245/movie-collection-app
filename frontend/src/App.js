@@ -42,8 +42,14 @@ function SearchContainer({url, setUrl, data, setData}) {
 
   const handleInputChange = (event) => {
     setInput(event.target.value)
-    
-    url = "http://localhost:8080/movies/titleOfMovie/" + inputValue;
+
+    if(event.target.value !== "")
+    {
+      url = "http://localhost:8080/movies/titleOfMovie/" + inputValue;
+    } else {
+      url = "http://localhost:8080/movies";
+    }
+
     setUrl(url);
 
     getMovies(setData, url);
