@@ -106,17 +106,14 @@ function AddEntryContainer({currentAdd, setAdd, data, setData}) {
 
 function ChooseType({currentAdd, setAdd}) {
 
-  const [selectedOption, setSelectedOption] = useState('physical');
-
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
     setAdd(event.target.value);
   }
     
   return (
     <div className="radioSelect">
-      <label><input type="radio" className="typeOfMedia" name="typeOfMedia" value="physical" checked={selectedOption === 'physical'} onChange={handleOptionChange} />Physical</label>
-      <label><input type="radio" className="typeOfMedia" name="typeOfMedia" value="usb" checked={selectedOption === 'usb'} onChange={handleOptionChange}/>USB</label>
+      <label><input type="radio" className="typeOfMedia" name="typeOfMedia" value="physical" checked={currentAdd === 'physical'} onChange={handleOptionChange} />Physical</label>
+      <label><input type="radio" className="typeOfMedia" name="typeOfMedia" value="other" checked={currentAdd === 'other'} onChange={handleOptionChange}/>Other</label>
     </div>
   );
 }
@@ -136,7 +133,7 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
   const [typeValue, setType] = useState("Movie");
 
   const [qualityValue, setQuality] = useState("");
-  const [usbValue, setUsb] = useState("");
+  const [otherFormatValue, setOtherFormat] = useState("");
 
   function handleSubmit() {
     let url = "";
@@ -159,9 +156,9 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
       setCountry("USA");
       setType("Movie");
 
-    } else if (currentAdd === "usb") {
+    } else if (currentAdd === "other") {
       url = "http://localhost:8080/movies/addUsbEntry/title=" + titleValue + "&quality=" + qualityValue + 
-              "&usb=" + usbValue + "&director=" + directorValue + "&year=" + yearValue + "&runtime=" + runtimeValue + "&genre=" + 
+              "&usb=" + otherFormatValue + "&director=" + directorValue + "&year=" + yearValue + "&runtime=" + runtimeValue + "&genre=" + 
               genreValue + "&seen=" + seenValue + "&type=" + typeValue;
     }
   
@@ -200,12 +197,12 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
         <button onClick={handleSubmit}>Submit</button>
       </div>
     );
-  } else if (currentAdd === "usb") {
+  } else if (currentAdd === "other") {
     return (
       <div className="mediaTypeDisplay">
         <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
         <input type="text" placeholder="Quality..." spellCheck="false" value={qualityValue} onChange={(e) => setQuality(e.target.value)}/>
-        <input type="text" placeholder="Usb..." spellCheck="false" value={usbValue} onChange={(e) => setUsb(e.target.value)}/>
+        <input type="text" placeholder="Non-physical format..." spellCheck="false" value={otherFormatValue} onChange={(e) => setOtherFormat(e.target.value)}/>
         <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
         <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
         <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
