@@ -14,6 +14,7 @@ const pool = mysql.createPool({
 }).promise();
 
 export async function createTemp() {
+    /*
     await pool.query(`
     CREATE TEMPORARY TABLE temp AS
         SELECT * FROM (
@@ -22,9 +23,17 @@ export async function createTemp() {
             UNION
             SELECT title, year, runtime, NULL AS quality, format, pack, edition, genre, seen, type
             FROM collection
-        ) as completeCollection;
+        ) as movieCollection;
     `);
+    */
+    await pool.query(`
+        CREATE TEMPORARY TABLE temp AS
+            SELECT * FROM testcollection;
+        `);
+
 }
+
+const result = await createTemp();
 
 export async function getCollection() {
     const [rows] = await pool.query("SELECT * FROM temp ORDER BY title ASC");
@@ -124,19 +133,10 @@ export async function addPhysicalEntry(given) {
     let questions = [];
     insertInto.map(() => {questions.push("?")});
 
-    let q = `INSERT INTO collection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
+    //let q = `INSERT INTO collection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
+    let q = `INSERT INTO testcollection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
 
     const [entry] = await pool.query(q, values);
 
-    console.log(entryObject);
-    /*
-
-    if(data !== null)
-    {
-        return infoObject;
-    }
-
-    */
+    return infoObject;
 };
-
-const result = await createTemp();
