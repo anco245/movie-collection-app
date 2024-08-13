@@ -43,14 +43,28 @@ export default function Graph() {
     xhr.open('GET', url);
     xhr.onload = function() {
       if (xhr.status === 200) {
+        const decades = {1920: 0,
+                      1930: 0,
+                      1940: 0,
+                      1950: 0,
+                      1960: 0,
+                      1970: 0,
+                      1980: 0,
+                      1990: 0,
+                      2000: 0,
+                      2010: 0,
+                      2020: 0};
+
         const results = JSON.parse(xhr.responseText);
-        const hold = results.map(element => element.movie_count);
+        results.forEach(element => (decades[element["decade"]] = element["movie_count"]));
+
+        const arrayOfDecadesValues = Object.values(decades);
 
         setData(prevData => ({
           ...prevData,
           datasets: [{
             ...prevData.datasets[0],
-            data: hold,
+            data: arrayOfDecadesValues,
           }]
         }));
 

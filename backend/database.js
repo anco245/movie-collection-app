@@ -28,12 +28,10 @@ export async function createTemp() {
     */
     await pool.query(`
         CREATE TEMPORARY TABLE temp AS
-            SELECT * FROM testcollection;
+            SELECT * FROM testcollection as tcollection;
         `);
 
 }
-
-const result = await createTemp();
 
 export async function getCollection() {
     const [rows] = await pool.query("SELECT * FROM temp ORDER BY title ASC");
@@ -140,3 +138,5 @@ export async function addPhysicalEntry(given) {
 
     return infoObject;
 };
+
+const result = await createTemp();
