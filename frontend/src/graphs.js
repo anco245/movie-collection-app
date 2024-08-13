@@ -59,11 +59,10 @@ export default function Graph() {
           When response from httprequest is returned, the results are an object array:
           [{decade: x, movie_count: y}...];
 
-          Where the decades are only as much as is in the collection. For example,
-          if the collection doesn't have any movies from the 70s, there won't be
-          an object: {decade: 1970, movie_count: y}. Because of this, values from
+          If the collection doesn't have any movies from the 70s, there won't be
+          an object like: {decade: 1970, movie_count: y}. Because of this, values from
           response are added to decades object so when the graph is finally displayed,
-          movie count for decades not existant in collection are represented by 0.
+          the movie count for decades not existant in collection are represented by 0.
         */
         const results = JSON.parse(xhr.responseText);
         results.forEach(element => (decades[element["decade"]] = element["movie_count"]));
@@ -77,7 +76,6 @@ export default function Graph() {
             data: arrayOfDecadesValues,
           }]
         }));
-
       }
     };
     xhr.send();
