@@ -363,7 +363,7 @@ function MainContainer({url, setUrl, currentDisplay, setDisplay, data, setData})
 
 export default function RootContainer() {
   const [url, setUrl] = useState("http://localhost:8080/movies");
-  const [currentDisplay, setDisplay] = useState("addEntryNotice");
+  const [currentDisplay, setDisplay] = useState("collection");
   const [data, setData] = useState([]);
 
   return (

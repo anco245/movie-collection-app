@@ -2,7 +2,7 @@
   /*Makes it so that padding and margin and included in size*/
   /*Applies to everything*/
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 body, html {
@@ -20,8 +20,6 @@ body, html {
   /*was 100px*/
   height: 100%;
 }
-
-
 
 
 /*--------side Panel and contents--------*/
