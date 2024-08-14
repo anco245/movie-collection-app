@@ -38,21 +38,19 @@ function IconAndTitle({url, setUrl}) {
 }
 
 function SearchContainer({url, setUrl, data, setData}) {
-  const [inputValue, setInput] = useState('');
+  const [inputValue, setInput] = useState("");
+  let newUrl = "http://localhost:8080/movies";
 
   const handleInputChange = (event) => {
-    setInput(event.target.value)
+    let newValue = event.target.value;
+    setInput(newValue);
 
-    if(event.target.value !== "")
+    if(newValue !== "")
     {
-      url = "http://localhost:8080/movies/titleOfMovie/" + inputValue;
-    } else {
-      url = "http://localhost:8080/movies";
+      newUrl = newUrl + "/titleOfMovie/" + newValue;
     }
 
-    setUrl(url);
-
-    getMovies(setData, url);
+    setUrl(newUrl);
   }
 
   return (
