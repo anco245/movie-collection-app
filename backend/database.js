@@ -139,4 +139,4 @@ export async function addPhysicalEntry(given) {
     return infoObject;
 };
 
-const result = await createTemp();
+createTemp();

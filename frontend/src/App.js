@@ -11,7 +11,7 @@ function SidePanelContainer({url, setUrl, currentDisplay, setDisplay, data, setD
       <IconAndTitle url={url} setUrl={setUrl} />
       <SearchContainer url={url} setUrl={setUrl} data={data} setData={setData} />
       <FiltersContainer url={url} setUrl={setUrl} />
-      <AddEntryContainer currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData}/>
+      <AddEntryContainer currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData} setDisplay={setDisplay}/>
       <GraphButton currentDisplay={currentDisplay} setDisplay={setDisplay} />
       <GetRandomMovieButton url={url} setUrl={setUrl} />
     </div>
@@ -95,11 +95,11 @@ function BlurayFilter({url, setUrl}) {
   );
 }
 
-function AddEntryContainer({currentAdd, setAdd, data, setData}) {
+function AddEntryContainer({currentAdd, setAdd, data, setData, setDisplay}) {
   return (
     <div className="addEntry">
       <ChooseType currentAdd={currentAdd} setAdd={setAdd} />
-      <AddEntry currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData}/>
+      <AddEntry currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData} setDisplay={setDisplay}/>
     </div>
   );
 }
@@ -118,7 +118,7 @@ function ChooseType({currentAdd, setAdd}) {
   );
 }
 
-function AddEntry({currentAdd, setAdd, data, setData}) {
+function AddEntry({currentAdd, setAdd, data, setData, setDisplay}) {
 
   const [titleValue, setTitle] = useState("");
   const [formatValue, setFormat] = useState("");
@@ -171,11 +171,11 @@ function AddEntry({currentAdd, setAdd, data, setData}) {
     };
     xhr.send();
 
+    refreshTemp();
 
-    getMovies(setData, "http://localhost:8080/movies");
+    //getMovies(setData, "http://localhost:8080/movies");
+    setDisplay("addEntryNotice");
   }
-
-  //Make info box appear when sucessfully submitted
 
   //make button or radio button
   //<input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
@@ -257,10 +257,24 @@ function getMovies(setData, url) {
   xhr.send();
 }
 
+function refreshTemp() {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', "http://localhost:8080/movies/createTemp");
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      console.log(JSON.parse(xhr.responseText));
+    }
+  };
+  xhr.send();
+}
 
 
 function Collection({url, setUrl, data, setData}) {
 
+  /*
+    useCallback is necessary in order to efficently update what has been changed
+    without rerendering the entire page.
+  */
   const getInfo = useCallback(() => {
     getMovies(setData, url);
   }, [setData, url]);
@@ -310,6 +324,20 @@ function Collection({url, setUrl, data, setData}) {
   );
 }
 
+function AddEntryNotice({setDisplay}) {
+
+  function handleClick() {
+    setDisplay("collection");
+  }
+
+  return (
+    <div>
+      <p>Sucessfully Submitted New Entry</p>
+      <button onClick={handleClick}>Go Back</button>
+    </div>
+  )
+}
+
 function MainContainer({url, setUrl, currentDisplay, setDisplay, data, setData}) {
 
   if(currentDisplay === "collection") {
@@ -323,6 +351,12 @@ function MainContainer({url, setUrl, currentDisplay, setDisplay, data, setData})
     <div className="collection">
       <Graph />
     </div>
+    );
+  } else if (currentDisplay === "addEntryNotice") {
+    return (
+      <div className="collection">
+        <AddEntryNotice setDisplay={setDisplay}/>
+      </div>
     );
   }
 }

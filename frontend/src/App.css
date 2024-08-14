@@ -159,6 +159,7 @@ body, html {
   right: 0;
   position: fixed;
   background-color: rgb(34, 33, 33);
+  color: white;
 }
 
 #movie-container {
