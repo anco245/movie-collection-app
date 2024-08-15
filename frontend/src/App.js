@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+/* eslint-disable no-octal-escape */
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Graph from './graphs';
 
 function SidePanelContainer({url, setUrl, currentDisplay, setDisplay, data, setData}) {
 
-  const [currentAdd, setAdd] = useState("physical");
+  console.log("SidePanelContainer rendered");
 
   return (
     <div className="sidePanel">
       <IconAndTitle url={url} setUrl={setUrl} />
       <SearchContainer url={url} setUrl={setUrl} data={data} setData={setData} />
       <FiltersContainer url={url} setUrl={setUrl} />
-      <AddEntryContainer currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData} setDisplay={setDisplay}/>
+      <AddEntryContainer data={data} setData={setData} setDisplay={setDisplay}/>
       <GraphButton currentDisplay={currentDisplay} setDisplay={setDisplay} />
       <GetRandomMovieButton url={url} setUrl={setUrl} />
     </div>
@@ -19,6 +20,8 @@ function SidePanelContainer({url, setUrl, currentDisplay, setDisplay, data, setD
 }
 
 function IconAndTitle({url, setUrl}) {
+
+  console.log("IconAndTitle rendered");
 
   const handleClick = () => {
     setUrl("http://localhost:8080/movies")
@@ -38,6 +41,9 @@ function IconAndTitle({url, setUrl}) {
 }
 
 function SearchContainer({url, setUrl, data, setData}) {
+  
+  console.log("SearchContainer rendered");
+  
   const [inputValue, setInput] = useState("");
   let newUrl = "http://localhost:8080/movies";
 
@@ -61,6 +67,8 @@ function SearchContainer({url, setUrl, data, setData}) {
 }
 
 function FiltersContainer({url, setUrl}) {
+  console.log("FiltersContainer rendered");
+  
   return (
     <div className="filters">
       <BlurayFilter url={url} setUrl={setUrl} />
@@ -69,6 +77,7 @@ function FiltersContainer({url, setUrl}) {
 }
 
 function BlurayFilter({url, setUrl}) {
+  console.log("BlurayFilter rendered");
 
   const [checkBoxValue, setValue] = useState(false);
 
@@ -94,29 +103,19 @@ function BlurayFilter({url, setUrl}) {
 }
 
 function AddEntryContainer({currentAdd, setAdd, data, setData, setDisplay}) {
+  
+  console.log("AddEntryContainer rendered");
+
   return (
     <div className="addEntry">
-      <ChooseType currentAdd={currentAdd} setAdd={setAdd} />
       <AddEntry currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData} setDisplay={setDisplay}/>
     </div>
   );
 }
 
-function ChooseType({currentAdd, setAdd}) {
+function AddEntry({data, setData, setDisplay}) {
 
-  const handleOptionChange = (event) => {
-    setAdd(event.target.value);
-  }
-    
-  return (
-    <div className="radioSelect">
-      <label><input type="radio" className="typeOfMedia" name="typeOfMedia" value="physical" checked={currentAdd === 'physical'} onChange={handleOptionChange} />Physical</label>
-      <label><input type="radio" className="typeOfMedia" name="typeOfMedia" value="other" checked={currentAdd === 'other'} onChange={handleOptionChange}/>Other</label>
-    </div>
-  );
-}
-
-function AddEntry({currentAdd, setAdd, data, setData, setDisplay}) {
+  console.log("AddEntry rendered");
 
   const [titleValue, setTitle] = useState("");
   const [formatValue, setFormat] = useState("");
@@ -130,35 +129,23 @@ function AddEntry({currentAdd, setAdd, data, setData, setDisplay}) {
   const [countryValue, setCountry] = useState("USA");
   const [typeValue, setType] = useState("Movie");
 
-  const [qualityValue, setQuality] = useState("");
-  const [otherFormatValue, setOtherFormat] = useState("");
-
   function handleSubmit() {
-    let url = "";
-
-    if(currentAdd === "physical") {
-      url = "http://localhost:8080/movies/addPhysicalEntry/title=" + titleValue + "&format=" + formatValue + "&pack=" + packValue +
+    let url = "http://localhost:8080/movies/addPhysicalEntry/title=" + titleValue + "&format=" + formatValue + "&pack=" + packValue +
               "&edition=" + editionValue + "&year=" + yearValue + "&director=" + directorValue + "&runtime=" + runtimeValue +
               "&genre=" + genreValue + "&seen=" + seenValue + "&country=" + countryValue + "&type=" + typeValue;
 
-      setTitle("");
-      setTitle("");
-      setFormat("");
-      setPack(undefined);
-      setEdition(undefined);
-      setYear("");
-      setDirector("");
-      setRuntime("");
-      setGenre("");
-      setSeen(true);
-      setCountry("USA");
-      setType("Movie");
-
-    } else if (currentAdd === "other") {
-      url = "http://localhost:8080/movies/addUsbEntry/title=" + titleValue + "&quality=" + qualityValue + 
-              "&usb=" + otherFormatValue + "&director=" + directorValue + "&year=" + yearValue + "&runtime=" + runtimeValue + "&genre=" + 
-              genreValue + "&seen=" + seenValue + "&type=" + typeValue;
-    }
+    setTitle("");
+    setTitle("");
+    setFormat("");
+    setPack(undefined);
+    setEdition(undefined);
+    setYear("");
+    setDirector("");
+    setRuntime("");
+    setGenre("");
+    setSeen(true);
+    setCountry("USA");
+    setType("Movie");
   
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -170,50 +157,33 @@ function AddEntry({currentAdd, setAdd, data, setData, setDisplay}) {
     xhr.send();
 
     refreshTemp();
-
-    //getMovies(setData, "http://localhost:8080/movies");
     setDisplay("addEntryNotice");
   }
 
   //make button or radio button
   //<input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
 
-  if(currentAdd === 'physical') {
-    return (
-      <div className="mediaTypeDisplay">
-        <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
-        <input type="text" placeholder="Format..." spellCheck="false" value={formatValue} onChange={(e) => setFormat(e.target.value)}/>
-        <input type="text" placeholder="Pack..." spellCheck="false" value={packValue} onChange={(e) => setPack(e.target.value)}/>
-        <input type="text" placeholder="Edition..." spellCheck="false" value={editionValue} onChange={(e) => setEdition(e.target.value)}/>
-        <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
-        <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
-        <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
-        <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
-        <input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
-        <input type="text" placeholder="Country..." spellCheck="false" value={countryValue} onChange={(e) => setCountry(e.target.value)}/>
-        <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
-        <button onClick={handleSubmit}>Submit</button>
-      </div>
-    );
-  } else if (currentAdd === "other") {
-    return (
-      <div className="mediaTypeDisplay">
-        <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
-        <input type="text" placeholder="Quality..." spellCheck="false" value={qualityValue} onChange={(e) => setQuality(e.target.value)}/>
-        <input type="text" placeholder="Non-physical format..." spellCheck="false" value={otherFormatValue} onChange={(e) => setOtherFormat(e.target.value)}/>
-        <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
-        <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
-        <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
-        <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
-        <input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
-        <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
-        <button onClick={handleSubmit}>Submit</button>
-      </div>
-    );
-  }
+  return (
+    <div className="mediaTypeDisplay">
+      <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
+      <input type="text" placeholder="Format..." spellCheck="false" value={formatValue} onChange={(e) => setFormat(e.target.value)}/>
+      <input type="text" placeholder="Pack..." spellCheck="false" value={packValue} onChange={(e) => setPack(e.target.value)}/>
+      <input type="text" placeholder="Edition..." spellCheck="false" value={editionValue} onChange={(e) => setEdition(e.target.value)}/>
+      <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
+      <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
+      <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
+      <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
+      <input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
+      <input type="text" placeholder="Country..." spellCheck="false" value={countryValue} onChange={(e) => setCountry(e.target.value)}/>
+      <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
+      <button onClick={handleSubmit}>Submit</button>
+    </div>
+  );
 }
 
 function GraphButton ({currentDisplay, setDisplay}) {
+
+  console.log("GraphButton rendered");
 
   const handleButton = (event) => {
     if(currentDisplay === "graph")
@@ -230,6 +200,8 @@ function GraphButton ({currentDisplay, setDisplay}) {
 }
 
 function GetRandomMovieButton({url, setUrl}) {
+
+  console.log("GetRandomMovieButton rendered");
 
   function handleClick() {
     const randomEntryUrl = 'http://localhost:8080/movies/getRandomMovie';
@@ -269,17 +241,12 @@ function refreshTemp() {
 
 function Collection({url, setUrl, data, setData}) {
 
-  /*
-    useCallback is necessary in order to efficently update what has been changed
-    without rerendering the entire page.
-  */
-  const getInfo = useCallback(() => {
+  console.log("Collection rendered");
+
+  //every time url is updated, the data that's displayed on screen is also updated.
+  useEffect(() => {
     getMovies(setData, url);
   }, [setData, url]);
-
-  useEffect(() => {
-    getInfo();
-  }, [getInfo]);
 
   return (
     <div id="movie-container">
@@ -324,6 +291,8 @@ function Collection({url, setUrl, data, setData}) {
 
 function AddEntryNotice({setDisplay}) {
 
+  console.log("AddEntryNotice rendered");
+  
   function handleClick() {
     setDisplay("collection");
   }
@@ -337,6 +306,8 @@ function AddEntryNotice({setDisplay}) {
 }
 
 function MainContainer({url, setUrl, currentDisplay, setDisplay, data, setData}) {
+
+  console.log("MainContainer rendered");
 
   if(currentDisplay === "collection") {
     return (
@@ -363,6 +334,8 @@ export default function RootContainer() {
   const [url, setUrl] = useState("http://localhost:8080/movies");
   const [currentDisplay, setDisplay] = useState("collection");
   const [data, setData] = useState([]);
+
+  console.log("RootContainer rendered");
 
   return (
     <>
