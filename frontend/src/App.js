@@ -1,25 +1,25 @@
 /* eslint-disable no-octal-escape */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallBack } from 'react';
 import './App.css';
 import Graph from './graphs';
 
-function SidePanelContainer({url, setUrl, currentDisplay, setDisplay, data, setData}) {
+function SidePanelContainer({url, setUrl, currentDisplay, setDisplay}) {
 
   console.log("SidePanelContainer rendered");
 
   return (
     <div className="sidePanel">
-      <IconAndTitle url={url} setUrl={setUrl} />
-      <SearchContainer url={url} setUrl={setUrl} data={data} setData={setData} />
+      <IconAndTitle setUrl={setUrl} />
+      <SearchContainer setUrl={setUrl} />
       <FiltersContainer url={url} setUrl={setUrl} />
-      <AddEntryContainer data={data} setData={setData} setDisplay={setDisplay}/>
+      <AddEntryContainer setDisplay={setDisplay}/>
       <GraphButton currentDisplay={currentDisplay} setDisplay={setDisplay} />
-      <GetRandomMovieButton url={url} setUrl={setUrl} />
+      <GetRandomMovieButton setUrl={setUrl} />
     </div>
   );
 }
 
-function IconAndTitle({url, setUrl}) {
+function IconAndTitle({setUrl}) {
 
   console.log("IconAndTitle rendered");
 
@@ -40,7 +40,7 @@ function IconAndTitle({url, setUrl}) {
   )
 }
 
-function SearchContainer({url, setUrl, data, setData}) {
+function SearchContainer({setUrl}) {
   
   console.log("SearchContainer rendered");
   
@@ -102,18 +102,18 @@ function BlurayFilter({url, setUrl}) {
   );
 }
 
-function AddEntryContainer({currentAdd, setAdd, data, setData, setDisplay}) {
+function AddEntryContainer({setDisplay}) {
   
   console.log("AddEntryContainer rendered");
 
   return (
     <div className="addEntry">
-      <AddEntry currentAdd={currentAdd} setAdd={setAdd} data={data} setData={setData} setDisplay={setDisplay}/>
+      <AddEntry setDisplay={setDisplay}/>
     </div>
   );
 }
 
-function AddEntry({data, setData, setDisplay}) {
+function AddEntry({setDisplay}) {
 
   console.log("AddEntry rendered");
 
@@ -199,7 +199,7 @@ function GraphButton ({currentDisplay, setDisplay}) {
   )
 }
 
-function GetRandomMovieButton({url, setUrl}) {
+function GetRandomMovieButton({setUrl}) {
 
   console.log("GetRandomMovieButton rendered");
 
@@ -239,7 +239,7 @@ function refreshTemp() {
 }
 
 
-function Collection({url, setUrl, data, setData}) {
+function Collection({url, data, setData}) {
 
   console.log("Collection rendered");
 
@@ -305,14 +305,14 @@ function AddEntryNotice({setDisplay}) {
   )
 }
 
-function MainContainer({url, setUrl, currentDisplay, setDisplay, data, setData}) {
+function MainContainer({url, currentDisplay, setDisplay, data, setData}) {
 
   console.log("MainContainer rendered");
 
   if(currentDisplay === "collection") {
     return (
       <div className="collection">
-        <Collection url={url} setUrl={setUrl} data={data} setData={setData}/>
+        <Collection url={url} data={data} setData={setData}/>
       </div>
     );
   } else if (currentDisplay === "graph") {
@@ -335,12 +335,24 @@ export default function RootContainer() {
   const [currentDisplay, setDisplay] = useState("collection");
   const [data, setData] = useState([]);
 
+  const memoizedSetUrl = useCallBack((newUrl) => {
+    setUrl(newUrl);
+  }, [setUrl]);
+
+  const memoizedSetDisplay = useCallBack((newDisplay) => {
+    setDisplay(newDisplay);
+  }, [setDisplay]);
+
+  const memoizedSetData = useCallBack((newData) => {
+    setData(newData);
+  }, [setData]);
+
   console.log("RootContainer rendered");
 
   return (
     <>
-      <SidePanelContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay} data={data} setData={setData}/>
-      <MainContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay} data={data} setData={setData}/>
+      <SidePanelContainer url={url} setUrl={memoizedSetUrl} currentDisplay={currentDisplay} setDisplay={memoizedSetDisplay}/>
+      <MainContainer url={url} currentDisplay={currentDisplay} setDisplay={memoizedSetDisplay} data={data} setData={memoizedSetData}/>
     </>
   )
 }
