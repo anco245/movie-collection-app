@@ -1,27 +1,31 @@
 /* eslint-disable no-octal-escape */
-import React, { useState, useEffect, useCallBack } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import './App.css';
 import Graph from './graphs';
 
-function SidePanelContainer({url, setUrl, currentDisplay, setDisplay}) {
+export const MyContext = createContext();
+
+function SidePanelContainer() {
 
   console.log("SidePanelContainer rendered");
 
   return (
     <div className="sidePanel">
-      <IconAndTitle setUrl={setUrl} />
-      <SearchContainer setUrl={setUrl} />
-      <FiltersContainer url={url} setUrl={setUrl} />
-      <AddEntryContainer setDisplay={setDisplay}/>
-      <GraphButton currentDisplay={currentDisplay} setDisplay={setDisplay} />
-      <GetRandomMovieButton setUrl={setUrl} />
+      <IconAndTitle />
+      <SearchContainer />
+      <FiltersContainer />
+      <AddEntryContainer />
+      <GraphButton />
+      <GetRandomMovieButton />
     </div>
   );
 }
 
-function IconAndTitle({setUrl}) {
+function IconAndTitle() {
 
   console.log("IconAndTitle rendered");
+
+  const{setUrl} = useContext(MyContext);
 
   const handleClick = () => {
     setUrl("http://localhost:8080/movies")
@@ -40,9 +44,11 @@ function IconAndTitle({setUrl}) {
   )
 }
 
-function SearchContainer({setUrl}) {
+function SearchContainer() {
   
   console.log("SearchContainer rendered");
+
+  const {setUrl} = useContext(MyContext);
   
   const [inputValue, setInput] = useState("");
   let newUrl = "http://localhost:8080/movies";
@@ -66,20 +72,22 @@ function SearchContainer({setUrl}) {
   )
 }
 
-function FiltersContainer({url, setUrl}) {
+function FiltersContainer() {
   console.log("FiltersContainer rendered");
   
   return (
     <div className="filters">
-      <BlurayFilter url={url} setUrl={setUrl} />
+      <BlurayFilter />
     </div>
   );
 }
 
-function BlurayFilter({url, setUrl}) {
+function BlurayFilter() {
   console.log("BlurayFilter rendered");
 
   const [checkBoxValue, setValue] = useState(false);
+  const {setUrl} = useContext(MyContext);
+  let {url} = useContext(MyContext);
 
   const handleChange = (event) => {
     setValue(event.target.checked);
@@ -102,20 +110,22 @@ function BlurayFilter({url, setUrl}) {
   );
 }
 
-function AddEntryContainer({setDisplay}) {
+function AddEntryContainer() {
   
   console.log("AddEntryContainer rendered");
 
   return (
     <div className="addEntry">
-      <AddEntry setDisplay={setDisplay}/>
+      <AddEntry />
     </div>
   );
 }
 
-function AddEntry({setDisplay}) {
+function AddEntry() {
 
   console.log("AddEntry rendered");
+
+  const {setDisplay} = useContext(MyContext);
 
   const [titleValue, setTitle] = useState("");
   const [formatValue, setFormat] = useState("");
@@ -181,9 +191,11 @@ function AddEntry({setDisplay}) {
   );
 }
 
-function GraphButton ({currentDisplay, setDisplay}) {
+function GraphButton() {
 
   console.log("GraphButton rendered");
+
+  const {currentDisplay, setDisplay} = useContext(MyContext);
 
   const handleButton = (event) => {
     if(currentDisplay === "graph")
@@ -199,9 +211,11 @@ function GraphButton ({currentDisplay, setDisplay}) {
   )
 }
 
-function GetRandomMovieButton({setUrl}) {
+function GetRandomMovieButton() {
 
   console.log("GetRandomMovieButton rendered");
+
+  const {setUrl} = useContext(MyContext);
 
   function handleClick() {
     const randomEntryUrl = 'http://localhost:8080/movies/getRandomMovie';
@@ -239,11 +253,12 @@ function refreshTemp() {
 }
 
 
-function Collection({url, data, setData}) {
+function Collection() {
 
   console.log("Collection rendered");
 
-  //every time url is updated, the data that's displayed on screen is also updated.
+  const {url, data, setData} = useContext(MyContext);
+
   useEffect(() => {
     getMovies(setData, url);
   }, [setData, url]);
@@ -305,14 +320,16 @@ function AddEntryNotice({setDisplay}) {
   )
 }
 
-function MainContainer({url, currentDisplay, setDisplay, data, setData}) {
+function MainContainer() {
+
+  const {currentDisplay} = useContext(MyContext);
 
   console.log("MainContainer rendered");
 
   if(currentDisplay === "collection") {
     return (
       <div className="collection">
-        <Collection url={url} data={data} setData={setData}/>
+        <Collection />
       </div>
     );
   } else if (currentDisplay === "graph") {
@@ -324,7 +341,7 @@ function MainContainer({url, currentDisplay, setDisplay, data, setData}) {
   } else if (currentDisplay === "addEntryNotice") {
     return (
       <div className="collection">
-        <AddEntryNotice setDisplay={setDisplay}/>
+        <AddEntryNotice />
       </div>
     );
   }
@@ -335,24 +352,19 @@ export default function RootContainer() {
   const [currentDisplay, setDisplay] = useState("collection");
   const [data, setData] = useState([]);
 
-  const memoizedSetUrl = useCallBack((newUrl) => {
-    setUrl(newUrl);
-  }, [setUrl]);
-
-  const memoizedSetDisplay = useCallBack((newDisplay) => {
-    setDisplay(newDisplay);
-  }, [setDisplay]);
-
-  const memoizedSetData = useCallBack((newData) => {
-    setData(newData);
-  }, [setData]);
+  /*
+      <UrlContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData }}>
+      <SidePanelContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay}/>
+      <MainContainer url={url} currentDisplay={currentDisplay} setDisplay={setDisplay} data={data} setData={setData}/>
+    </UrlContext.Provider>
+  */
 
   console.log("RootContainer rendered");
 
   return (
-    <>
-      <SidePanelContainer url={url} setUrl={memoizedSetUrl} currentDisplay={currentDisplay} setDisplay={memoizedSetDisplay}/>
-      <MainContainer url={url} currentDisplay={currentDisplay} setDisplay={memoizedSetDisplay} data={data} setData={memoizedSetData}/>
-    </>
+    <MyContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData }}>
+      <SidePanelContainer />
+      <MainContainer />
+    </MyContext.Provider>
   )
 }
