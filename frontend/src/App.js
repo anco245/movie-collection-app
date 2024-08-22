@@ -77,7 +77,7 @@ function FiltersContainer() {
   
   return (
     <div className="filters">
-      <BlurayFilter />
+      {/*<BlurayFilter*/}
     </div>
   );
 }
@@ -140,38 +140,45 @@ function AddEntry() {
   const [typeValue, setType] = useState("Movie");
 
   function handleSubmit() {
-    let url = "http://localhost:8080/movies/addPhysicalEntry/title=" + titleValue + "&format=" + formatValue + "&pack=" + packValue +
-              "&edition=" + editionValue + "&year=" + yearValue + "&director=" + directorValue + "&runtime=" + runtimeValue +
-              "&genre=" + genreValue + "&seen=" + seenValue + "&country=" + countryValue + "&type=" + typeValue;
 
-    setTitle("");
-    setTitle("");
-    setFormat("");
-    setPack(undefined);
-    setEdition(undefined);
-    setYear("");
-    setDirector("");
-    setRuntime("");
-    setGenre("");
-    setSeen(true);
-    setCountry("USA");
-    setType("Movie");
+    let valuesToAdd = JSON.stringify({
+      title: titleValue,
+      format: formatValue,
+      pack: packValue,
+      edition: editionValue,
+      year: yearValue,
+      director: directorValue,
+      runtime: runtimeValue,
+      genre: genreValue,
+      seen: seenValue,
+      country: countryValue,
+      type: typeValue
+    });
   
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.onload = function() {
+    xhr.open('POST', "http://localhost:8080/movies/addPhysicalEntry");
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function () {
       if (xhr.status === 200) {
-        JSON.parse(xhr.responseText);
+        //This resets all the values displayed in the text boxes to their default values, as opposed to what was just written
+        setTitle("");
+        setFormat("");
+        setPack(undefined);
+        setEdition(undefined);
+        setYear("");
+        setDirector("");
+        setRuntime("");
+        setGenre("");
+        setSeen(true);
+        setCountry("USA");
+        setType("Movie");
       }
     };
-    xhr.send();
+    xhr.send(valuesToAdd);
 
     refreshTemp();
     setDisplay("addEntryNotice");
   }
-
-  //make button or radio button
-  //<input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
 
   return (
     <div className="mediaTypeDisplay">
@@ -304,7 +311,9 @@ function Collection() {
   );
 }
 
-function AddEntryNotice({setDisplay}) {
+function AddEntryNotice() {
+
+  const {setDisplay} = useContext(MyContext);
 
   console.log("AddEntryNotice rendered");
   

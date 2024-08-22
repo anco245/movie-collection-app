@@ -57,71 +57,63 @@ export async function getGraphData() {
 
 export async function addPhysicalEntry(given) {
 
-    const substrings = given.split('&');
-    let infoObject = {};
-
-    substrings.forEach((pair) => {
-        const [key, value] = pair.split('=');
-        infoObject[key] = value;
-    }); 
-
     let insertInto = [];
     let values = [];
 
-    if(infoObject["title"] !== "undefined")
+    if(given["title"] !== "undefined")
     {
         insertInto.push("title");
-        values.push(infoObject["title"]);
+        values.push(given["title"]);
     }
 
-    if (infoObject["format"] !== "undefined") {
+    if (given["format"] !== "undefined") {
         insertInto.push("format");
-        values.push(infoObject["format"]);
+        values.push(given["format"]);
     }
     
-    if (infoObject["pack"] !== "undefined") {
+    if (given["pack"] !== "undefined") {
         insertInto.push("pack");
-        values.push(infoObject["pack"]);
+        values.push(given["pack"]);
     }
     
-    if (infoObject["edition"] !== "undefined") {
+    if (given["edition"] !== "undefined") {
         insertInto.push("edition");
-        values.push(infoObject["edition"]);
+        values.push(given["edition"]);
     }
     
-    if (infoObject["year"] !== "undefined") {
+    if (given["year"] !== "undefined") {
         insertInto.push("year");
-        values.push(Number(infoObject["year"]));
+        values.push(Number(given["year"]));
     }
     
-    if (infoObject["director"] !== "") {
+    if (given["director"] !== "") {
         insertInto.push("director");
-        values.push(infoObject["director"]);
+        values.push(given["director"]);
     }
 
-    if (infoObject["runtime"] !== "undefined") {
+    if (given["runtime"] !== "undefined") {
         insertInto.push("runtime");
-        values.push(Number(infoObject["runtime"]));
+        values.push(Number(given["runtime"]));
     }
     
-    if (infoObject["genre"] !== "undefined") {
+    if (given["genre"] !== "undefined") {
         insertInto.push("genre");
-        values.push(infoObject["genre"]);
+        values.push(given["genre"]);
     }
     
-    if (infoObject["seen"] !== "undefined") {
+    if (given["seen"] !== "undefined") {
         insertInto.push("seen");
-        values.push(infoObject["seen"]==="true");
+        values.push(given["seen"]==="true");
     }
     
-    if (infoObject["country"] !== "undefined") {
+    if (given["country"] !== "undefined") {
         insertInto.push("country")
-        values.push(infoObject["country"]);
+        values.push(given["country"]);
     }
     
-    if (infoObject["type"] !== "undefined") {
+    if (given["type"] !== "undefined") {
         insertInto.push("type");
-        values.push(infoObject["type"]);
+        values.push(given["type"]);
     }
 
     let questions = [];
@@ -132,7 +124,7 @@ export async function addPhysicalEntry(given) {
 
     const [entry] = await pool.query(q, values);
 
-    return infoObject;
+    return entry;
 };
 
 createTemp();

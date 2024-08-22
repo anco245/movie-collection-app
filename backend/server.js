@@ -4,6 +4,7 @@ import { getCollection, getRandomMovie, getMovieByTitle, getBlurays,
 import cors from 'cors';
 
 const app = express();
+app.use(express.json());
 app.use(cors());
 
 app.get("/movies", async (req, res) => {
@@ -23,9 +24,9 @@ app.get("/movies/titleOfMovie/:title", async (req, res) => {
     res.send(entry);
 })
 
-app.get("/movies/addPhysicalEntry/:entryInfo", async (req, res) => {
-    const entryObject = await addPhysicalEntry(req.params.entryInfo);
-    return entryObject;
+app.post("/movies/addPhysicalEntry", async (req, res) => {
+    const entryObject = await addPhysicalEntry(req.body);
+    console.log(entryObject);
 })
 
 app.get("/movies/bluray", async (req, res) => {
