@@ -122,9 +122,7 @@ export async function addPhysicalEntry(given) {
     //let q = `INSERT INTO collection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
     let q = `INSERT INTO testcollection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
 
-    const [entry] = await pool.query(q, values);
-
-    return entry;
+    await pool.query(q, values);
 };
 
 createTemp();

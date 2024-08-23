@@ -25,8 +25,7 @@ app.get("/movies/titleOfMovie/:title", async (req, res) => {
 })
 
 app.post("/movies/addPhysicalEntry", async (req, res) => {
-    const entryObject = await addPhysicalEntry(req.body);
-    console.log(entryObject);
+    await addPhysicalEntry(req.body);
 })
 
 app.get("/movies/bluray", async (req, res) => {
