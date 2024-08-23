@@ -9,30 +9,8 @@ const pool = mysql.createPool({
     database: process.env.DATABASE
 }).promise();
 
-export async function createTemp() {
-    /*
-    await pool.query(`
-    CREATE TEMPORARY TABLE temp AS
-        SELECT * FROM (
-            SELECT title, year, runtime, quality, usb AS 'Location', NULL AS pack, NULL AS edition, genre, seen, type
-            FROM usbs
-            UNION
-            SELECT title, year, runtime, NULL AS quality, format, pack, edition, genre, seen, type
-            FROM collection
-        ) as movieCollection;
-    `);
-    */
-
-    await pool.query("DROP TABLE IF EXISTS temp;");
-    await pool.query(`
-        CREATE TEMPORARY TABLE temp AS
-            SELECT * FROM testcollection as tcollection;
-        `);
-
-}
-
 export async function getCollection() {
-    const [rows] = await pool.query("SELECT * FROM temp ORDER BY title ASC");
+    const [rows] = await pool.query("SELECT * FROM testCollection ORDER BY title ASC");
     return rows;    
 }
 
@@ -126,5 +104,3 @@ export async function addPhysicalEntry(given) {
 
     await pool.query(q, values);
 };
-
-createTemp();

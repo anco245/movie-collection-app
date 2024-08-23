@@ -1,6 +1,6 @@
 import express from 'express';
 import { getCollection, getRandomMovie, getMovieByTitle, getBlurays, 
-        getGraphData, addPhysicalEntry, createTemp } from './database.js'
+        getGraphData, addPhysicalEntry } from './database.js'
 import cors from 'cors';
 
 const app = express();
@@ -36,10 +36,6 @@ app.get("/movies/bluray", async (req, res) => {
 app.get("/movies/graphdata", async (req, res) => {
     const data = await getGraphData();
     res.send(data);
-})
-
-app.get("/movies/createTemp", async (req, res) => {
-    await createTemp();
 })
 
 app.use((err, req, res, next) => {

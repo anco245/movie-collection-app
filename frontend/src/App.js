@@ -125,7 +125,7 @@ function AddEntry() {
 
   console.log("AddEntry rendered");
 
-  const {setDisplay} = useContext(MyContext);
+  const {setDisplay, setData} = useContext(MyContext);
 
   const [titleValue, setTitle] = useState("");
   const [formatValue, setFormat] = useState("");
@@ -161,6 +161,7 @@ function AddEntry() {
     xhr.onload = function () {
       if (xhr.status === 200) {
         //This resets all the values displayed in the text boxes to their default values, as opposed to what was just written
+        console.log("here");
         setTitle("");
         setFormat("");
         setPack(undefined);
@@ -176,7 +177,7 @@ function AddEntry() {
     };
     xhr.send(valuesToAdd);
 
-    refreshTemp();
+    getMovies(setData, "http://localhost:8080/movies")
     setDisplay("addEntryNotice");
   }
 
@@ -243,17 +244,6 @@ function getMovies(setData, url) {
   xhr.onload = function() {
     if (xhr.status === 200) {
       setData(JSON.parse(xhr.responseText));
-    }
-  };
-  xhr.send();
-}
-
-function refreshTemp() {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', "http://localhost:8080/movies/createTemp");
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      console.log(JSON.parse(xhr.responseText));
     }
   };
   xhr.send();
