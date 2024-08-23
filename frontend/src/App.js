@@ -154,27 +154,23 @@ function AddEntry() {
       country: countryValue,
       type: typeValue
     });
+
+    console.log("here");
+    setTitle("");
+    setFormat("");
+    setPack(undefined);
+    setEdition(undefined);
+    setYear("");
+    setDirector("");
+    setRuntime("");
+    setGenre("");
+    setSeen(true);
+    setCountry("USA");
+    setType("Movie");
   
     const xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8080/movies/addPhysicalEntry");
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        //This resets all the values displayed in the text boxes to their default values, as opposed to what was just written
-        console.log("here");
-        setTitle("");
-        setFormat("");
-        setPack(undefined);
-        setEdition(undefined);
-        setYear("");
-        setDirector("");
-        setRuntime("");
-        setGenre("");
-        setSeen(true);
-        setCountry("USA");
-        setType("Movie");
-      }
-    };
     xhr.send(valuesToAdd);
 
     getMovies(setData, "http://localhost:8080/movies")
@@ -313,7 +309,8 @@ function AddEntryNotice() {
 
   return (
     <div className="entryNotice">
-      <p>Sucessfully Added!</p>
+      <p id="p1">The Code Abides</p>
+      <p id="p2">Movie Has Been Sucessfully Added!</p>
       <button onClick={handleClick}>Go Back</button>
     </div>
   )

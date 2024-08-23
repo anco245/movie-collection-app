@@ -199,8 +199,8 @@ th {
 /*Entry notice*/
 .entryNotice {
   color: white;
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 450px;
   background-color: black;
   border-radius: 10px;
   padding: 10px;
@@ -208,8 +208,14 @@ th {
   position: absolute;
   left: 500px;
   top: 200px;
+
 }
 
-.entryNotice p {
-  font-size: 50px;
+.entryNotice #p1 {
+  font-size: 70px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.entryNotice #p2 {
+  font-size: 30px;
 }
