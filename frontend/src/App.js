@@ -361,13 +361,6 @@ export default function RootContainer() {
   const [currentDisplay, setDisplay] = useState("collection");
   const [data, setData] = useState([]);
 
-  /*
-      <UrlContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData }}>
-      <SidePanelContainer url={url} setUrl={setUrl} currentDisplay={currentDisplay} setDisplay={setDisplay}/>
-      <MainContainer url={url} currentDisplay={currentDisplay} setDisplay={setDisplay} data={data} setData={setData}/>
-    </UrlContext.Provider>
-  */
-
   console.log("RootContainer rendered");
 
   return (
