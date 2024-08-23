@@ -22,6 +22,8 @@ export async function createTemp() {
         ) as movieCollection;
     `);
     */
+
+    await pool.query("DROP TABLE IF EXISTS temp;");
     await pool.query(`
         CREATE TEMPORARY TABLE temp AS
             SELECT * FROM testcollection as tcollection;
