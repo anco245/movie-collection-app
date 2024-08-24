@@ -1,8 +1,9 @@
 //Acts as entry point to program
-import React, { useState } from "react"
-
+import React, { useState, createContext } from "react"
 import CollectionEntryPoint from "./Collection";
 import MainMenuEntryPoint from "./MainMenu";
+
+export const MyContext = createContext();
 
 export default function AppEntryPoint() {
 
@@ -10,8 +11,16 @@ export default function AppEntryPoint() {
 
     if(isMainMenu)
     {
-        return <MainMenuEntryPoint />;
+        return (
+            <MyContext.Provider value={{setIsMainMenu}}>
+                <MainMenuEntryPoint />;
+            </MyContext.Provider>
+        );
     } else {
-        return <CollectionEntryPoint />
+        return (
+            <MyContext.Provider value={{setIsMainMenu}}>
+                <CollectionEntryPoint />;
+            </MyContext.Provider>
+        );
     }
 }

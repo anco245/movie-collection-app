@@ -1,5 +1,6 @@
-import React from "react"
+import React, {useContext} from "react"
 import './App.css';
+import { MyContext } from "./App";
 
 function NewCollection() {
 
@@ -12,12 +13,14 @@ function NewCollection() {
 }
 
 function LoadCollection() {
+    const {setIsMainMenu} = useContext(MyContext);
+
     const handleClick = () => {
-        
+        setIsMainMenu(false);
     }
 
     return (
-            <button className="loadCollectionButton" type="button" onClick={handleClick}>Load Collection</button>
+        <button className="loadCollectionButton" type="button" onClick={handleClick}>Load Collection</button>
     );
 }
 
