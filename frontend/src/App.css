@@ -176,12 +176,17 @@ body, html {
   text-align: center;
 }
 
-th, td {
+td {
   border: 1px solid #3a3939;
 }
 
 th {
   font-size: 20px;
+}
+
+thead th { 
+  position: sticky; top: 0; 
+  background-color: rgb(34, 33, 33);
 }
 
 #switchToGraphs {
