@@ -195,7 +195,7 @@ th {
   background-color: rgb(31, 30, 30);
 }
 
-/*Entry notice*/
+/*---------Entry notice--------*/
 .entryNotice {
   color: white;
   width: 500px;
@@ -219,6 +219,41 @@ th {
   font-size: 30px;
 }
 
+
+/*------------main menu screen------------*/
+
 .mainMenu {
-  background-color: aqua;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom right, rgb(1, 10, 31), rgb(2, 24, 71));
+}
+
+.mainMenu button {
+  color: white;
+  background-color: black;
+  height: 100%;
+  width: 30%;
+  position: absolute;
+  border-radius: 10%;
+}
+
+.menuOptions {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 30%;
+  width: 60%;
+  height: 30%;
+  right: 20%;
+}
+
+.newCollectionButton {
+  left: 0;
+}
+
+.loadCollectionButton {
+  right: 0;
 }

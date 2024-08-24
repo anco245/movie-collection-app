@@ -1,34 +1,41 @@
 import React from "react"
 import './App.css';
 
-function NewCollection({setIsMainMenu}) {
+function NewCollection() {
 
     const handleClick = () => {
-        setIsMainMenu(false);
     }
 
-    return <button type="button" onClick={handleClick}>New Collection</button>;
+    return (
+            <button className="newCollectionButton" type="button" onClick={handleClick}>New Collection</button>
+    );
 }
 
 function LoadCollection() {
-    return <button type="button">Load Collection</button>;
-}
-
-function MainMenuContainer({setIsMainMenu}) {
+    const handleClick = () => {
+        
+    }
 
     return (
-        <div>
-            <NewCollection setIsMainMenu={setIsMainMenu}/>
+            <button className="loadCollectionButton" type="button" onClick={handleClick}>Load Collection</button>
+    );
+}
+
+function MainMenuContainer() {
+
+    return (
+        <div className="menuOptions">
+            <NewCollection />
             <LoadCollection />
         </div>
     );
 }
 
-export default function MainMenuEntryPoint({setIsMainMenu}) {
+export default function MainMenuEntryPoint() {
 
     return (
         <div className="mainMenu">
-            <MainMenuContainer setIsMainMenu={setIsMainMenu}/>
+            <MainMenuContainer />
         </div>
     );
 }
