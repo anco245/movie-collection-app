@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import RootContainer from './App.js';
+//import MainMenuEntryPoint from './MainMenu.js';
+import AppEntryPoint from './App.js';
 //import reportWebVitals from './reportWebVitals.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RootContainer />
+    <AppEntryPoint />
   </React.StrictMode>
 );
 
