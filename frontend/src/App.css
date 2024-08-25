@@ -204,6 +204,10 @@ thead th {
   top: 80%;
 }
 
+.emptyCol {
+  background-color: #3a3939;
+}
+
 /*------------- graphs ------------*/
 
 .barGraph {

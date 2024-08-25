@@ -251,21 +251,17 @@ function Collection() {
   console.log("Collection rendered");
 
   const {url, data, setData} = useContext(MyContext);
-  const [isTextBox, setToTextBox] = useState(false);
 
   useEffect(() => {
     getMovies(setData, url);
   }, [setData, url]);
-
-  const changeToTextBox = () => {
-    setToTextBox(true);
-  }
 
   return (
     <div id="movie-container">
       <table className="movie-table">
         <thead>
             <tr>
+                <th className="emptyCol"></th>
                 <th>Title</th>
                 <th>Year</th>
                 <th>Runtime</th>
@@ -277,10 +273,9 @@ function Collection() {
 
         <tbody>
           {data.map((movie, index) => {
-            if(isTextBox)
-            {
               return (
-                <tr key={index} onClick={changeToTextBox}>
+                <tr key={index}>
+                  <td id="checkBox"><input type="checkbox"/></td>
                   <td id="title"><input type="text" placeholder={movie.title} spellCheck="false" value={movie.title}/></td>
                   <td id="year">{movie.year}</td>
                   <td id="runtime">{movie.runtime}</td>
@@ -288,19 +283,7 @@ function Collection() {
                   <td id="genre">{movie.genre}</td>
                   <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
                 </tr>
-            )
-            } else {
-              return (
-                <tr key={index} onClick={changeToTextBox}>
-                  <td id="title">{movie.title}</td>
-                  <td id="year">{movie.year}</td>
-                  <td id="runtime">{movie.runtime}</td>
-                  <td id="format">{movie.format}</td>
-                  <td id="genre">{movie.genre}</td>
-                  <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
-                </tr>
-            )
-            }
+              )
           })}
         </tbody>
       </table>
