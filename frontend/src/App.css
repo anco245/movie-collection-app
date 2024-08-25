@@ -167,12 +167,12 @@ body, html {
 }
 
 .movie-table {
-  table-layout: fixed;
+  table-layout: auto;
   width: 100%;
   border-collapse: collapse;
 }
 
-#title, #year, #runtime, #quality, #location, #pack, #edition, #seen, #type, #genre{
+#year, #runtime, #seen {
   text-align: center;
 }
 
@@ -182,6 +182,16 @@ td {
 
 th {
   font-size: 20px;
+}
+
+tr:hover {
+  background-color: rgba(97, 94, 94, 0.37);
+  cursor: pointer;
+}
+
+.movie-table input {
+  background-color: rgb(31, 30, 30);
+  color: white;
 }
 
 thead th { 

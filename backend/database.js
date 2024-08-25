@@ -10,7 +10,7 @@ const pool = mysql.createPool({
 }).promise();
 
 export async function getCollection() {
-    const [rows] = await pool.query("SELECT * FROM testCollection ORDER BY title ASC");
+    const [rows] = await pool.query("SELECT title, year, runtime, format, genre, seen FROM testCollection ORDER BY title ASC");
     return rows;    
 }
 

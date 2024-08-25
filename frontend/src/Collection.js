@@ -251,10 +251,15 @@ function Collection() {
   console.log("Collection rendered");
 
   const {url, data, setData} = useContext(MyContext);
+  const [isTextBox, setToTextBox] = useState(false);
 
   useEffect(() => {
     getMovies(setData, url);
   }, [setData, url]);
+
+  const changeToTextBox = () => {
+    setToTextBox(true);
+  }
 
   return (
     <div id="movie-container">
@@ -264,32 +269,38 @@ function Collection() {
                 <th>Title</th>
                 <th>Year</th>
                 <th>Runtime</th>
-                <th>Quality</th>
-                <th>Location</th>
-                <th>Pack</th>
-                <th>Edition</th>
+                <th>Format</th>
                 <th>Genre</th>
                 <th>Seen</th>
-                <th>Type</th>
             </tr>
         </thead>
 
         <tbody>
           {data.map((movie, index) => {
-            return (
-              <tr key={index}>
-                <td id="title">{movie.title}</td>
-                <td id="year">{movie.year}</td>
-                <td id="runtime">{movie.runtime}</td>
-                <td id="quality">{movie.quality}</td>
-                <td id="location">{movie.Location}</td>
-                <td id="pack">{movie.pack}</td>
-                <td id="edition">{movie.edition}</td>
-                <td id="genre">{movie.genre}</td>
-                <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
-                <td id="type">{movie.type}</td>  
-              </tr>
+            if(isTextBox)
+            {
+              return (
+                <tr key={index} onClick={changeToTextBox}>
+                  <td id="title"><input type="text" placeholder={movie.title} spellCheck="false" value={movie.title}/></td>
+                  <td id="year">{movie.year}</td>
+                  <td id="runtime">{movie.runtime}</td>
+                  <td id="format">{movie.format}</td>
+                  <td id="genre">{movie.genre}</td>
+                  <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
+                </tr>
             )
+            } else {
+              return (
+                <tr key={index} onClick={changeToTextBox}>
+                  <td id="title">{movie.title}</td>
+                  <td id="year">{movie.year}</td>
+                  <td id="runtime">{movie.runtime}</td>
+                  <td id="format">{movie.format}</td>
+                  <td id="genre">{movie.genre}</td>
+                  <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
+                </tr>
+            )
+            }
           })}
         </tbody>
       </table>
