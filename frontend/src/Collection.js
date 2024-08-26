@@ -275,8 +275,8 @@ function Collection() {
           {data.map((movie, index) => {
               return (
                 <tr key={index}>
-                  <td id="checkBox"><input type="checkbox"/></td>
-                  <td id="title"><input type="text" placeholder={movie.title} spellCheck="false" value={movie.title}/></td>
+                  <td id="editButton"><button>Edit</button></td>
+                  <td id="title">{movie.title}</td>
                   <td id="year">{movie.year}</td>
                   <td id="runtime">{movie.runtime}</td>
                   <td id="format">{movie.format}</td>
