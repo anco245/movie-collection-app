@@ -1,6 +1,6 @@
 import express from 'express';
 import { getCollection, getRandomMovie, getMovieByTitle, getBlurays, 
-        getGraphData, addPhysicalEntry } from './database.js'
+        getGraphData, addPhysicalEntry, updateEntry} from './database.js'
 import cors from 'cors';
 
 const app = express();
@@ -24,10 +24,6 @@ app.get("/movies/titleOfMovie/:title", async (req, res) => {
     res.send(entry);
 })
 
-app.post("/movies/addPhysicalEntry", async (req, res) => {
-    await addPhysicalEntry(req.body);
-})
-
 app.get("/movies/bluray", async (req, res) => {
     const movies = await getBlurays();
     res.send(movies);
@@ -36,6 +32,14 @@ app.get("/movies/bluray", async (req, res) => {
 app.get("/movies/graphdata", async (req, res) => {
     const data = await getGraphData();
     res.send(data);
+})
+
+app.post("/movies/addPhysicalEntry", async (req, res) => {
+    await addPhysicalEntry(req.body);
+})
+
+app.post("/movies/updateEntry", async (req, res) => {
+    await updateEntry(req.body);
 })
 
 app.use((err, req, res, next) => {

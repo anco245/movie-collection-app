@@ -82,34 +82,6 @@ function FiltersContainer() {
   );
 }
 
-function BlurayFilter() {
-  console.log("BlurayFilter rendered");
-
-  const [checkBoxValue, setValue] = useState(false);
-  const {setUrl} = useContext(MyContext);
-  let {url} = useContext(MyContext);
-
-  const handleChange = (event) => {
-    setValue(event.target.checked);
-
-    if(!checkBoxValue)
-    {
-      url = "http://localhost:8080/movies/bluray";
-      setUrl(url);
-    } else if (checkBoxValue) {
-      url = "http://localhost:8080/movies";
-      setUrl(url);
-    }
-  }
-
-  return (
-    <div className="checkBox">
-      <input type="checkbox" id="blurayCheck" name="blurayCheck" checked={checkBoxValue} onChange={handleChange}/>
-      <label htmlFor="blurayCheck">Bluray</label>
-    </div>
-  );
-}
-
 function AddEntryContainer() {
   
   console.log("AddEntryContainer rendered");
@@ -251,44 +223,108 @@ function Collection() {
   console.log("Collection rendered");
 
   const {url, data, setData} = useContext(MyContext);
+  const [editableRowIndex, setEditableRowIndex] = useState(null);
 
   useEffect(() => {
     getMovies(setData, url);
   }, [setData, url]);
+
+  const handleRowClick = (index) => {
+    setEditableRowIndex(index);
+  }
+
+  function updateEntry (movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue) {
+    
+    let valuesToAdd = JSON.stringify({
+      id: movieID,
+      title: titleValue,
+      year: yearValue,
+      runtime: runtimeValue,
+      format: formatValue,
+      genre: genreValue,
+      seen: seenValue
+    });
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', "http://localhost:8080/movies/updateEntry");
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(valuesToAdd);
+  
+    getMovies(setData, "http://localhost:8080/movies")
+
+  }
+
+  const handleSubmit = (movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue) => {
+    updateEntry(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue);
+    setEditableRowIndex(null);
+  }
 
   return (
     <div id="movie-container">
       <table className="movie-table">
         <thead>
             <tr>
-                <th className="emptyCol"></th>
-                <th>Title</th>
-                <th>Year</th>
-                <th>Runtime</th>
-                <th>Format</th>
-                <th>Genre</th>
-                <th>Seen</th>
+                <th className="submitCol"></th>
+                <th className="titleCol">Title</th>
+                <th className="yearCol">Year</th>
+                <th className="runtimeCol">Runtime</th>
+                <th className="formatCol">Format</th>
+                <th className="genreCol">Genre</th>
+                <th className="seenCol">Seen</th>
             </tr>
         </thead>
 
         <tbody>
           {data.map((movie, index) => {
-              return (
-                <tr key={index}>
-                  <td id="editButton"><button>Edit</button></td>
-                  <td id="title">{movie.title}</td>
-                  <td id="year">{movie.year}</td>
-                  <td id="runtime">{movie.runtime}</td>
-                  <td id="format">{movie.format}</td>
-                  <td id="genre">{movie.genre}</td>
-                  <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
-                </tr>
-              )
+
+            let isEditable = (index === editableRowIndex);
+
+            let titleValue = movie.title;
+            let yearValue = movie.year;
+            let runtimeValue = movie.runtime;
+            let formatValue = movie.format;
+            let genreValue = movie.genre;
+            let seenValue = movie.seen;
+            let movieID = movie.id;
+
+            return (
+              <tr key={index} onClick={() => handleRowClick(index) }>
+                <td id="submitButton">{isEditable ? <button onClick={() => handleSubmit(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue)}>Submit</button> : ""}</td>
+                <td id="title" >{isEditable ? <input type="text" placeholder={movie.title} onChange={(e) => titleValue = e.target.value}/> : movie.title}</td>
+                <td id="year">{isEditable ? <input type="text" placeholder={movie.year} onChange={(e) => yearValue = e.target.value}/> : movie.year}</td>
+                <td id="runtime">{isEditable ? <input type="text" placeholder={movie.runtime} onChange={(e) => runtimeValue = e.target.value}/> : movie.runtime}</td>
+                <td id="format">{isEditable ? <input type="text" placeholder={movie.format} onChange={(e) => formatValue = e.target.value}/> : movie.format}</td>
+                <td id="genre">{isEditable ? <input type="text" placeholder={movie.genre} onChange={(e) => genreValue = e.target.value}/> : movie.genre}</td>
+                <td id="seen">{isEditable ? <input type="text" placeholder={movie.seen===1 ? "yes" : "no"} onChange={(e) => seenValue = e.target.value==="yes" ? true : false}/> : movie.seen===1 ? "yes" : "no"}</td>
+              </tr>
+            )
           })}
         </tbody>
       </table>
     </div>
   );
+}
+
+function ToolBar() {
+
+  const {toolBarIsVisable} = useContext(MyContext);
+
+  if(toolBarIsVisable)
+  {
+    return (
+      <div className="toolbarContainer">
+        <div className="toolbar">
+          <button>Button</button>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="toolbarContainer">
+        <div className="toolbar"></div>
+      </div>
+    );
+  }
 }
 
 function AddEntryNotice() {
@@ -319,6 +355,7 @@ function MainContainer() {
   if(currentDisplay === "collection") {
     return (
       <div className="collection">
+        <ToolBar />
         <Collection />
       </div>
     );
@@ -341,11 +378,12 @@ export default function CollectionEntryPoint() {
   const [url, setUrl] = useState("http://localhost:8080/movies");
   const [currentDisplay, setDisplay] = useState("collection");
   const [data, setData] = useState([]);
+  const [toolBarIsVisable, setToolBarIsVisible] = useState(false);
 
   console.log("Entry Point rendered");
 
   return (
-    <MyContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData }}>
+    <MyContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData, toolBarIsVisable, setToolBarIsVisible }}>
       <SidePanelContainer />
       <MainContainer />
     </MyContext.Provider>

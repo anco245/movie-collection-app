@@ -147,9 +147,12 @@ body, html {
 }
 
 
-
-
 /*-------collection--------*/
+
+.toolbarContainer {
+  height: 5%;
+  padding: 10px;
+}
 
 .collection {
   height: 100%;
@@ -157,6 +160,8 @@ body, html {
   right: 0;
   position: fixed;
   background-color: rgb(34, 33, 33);
+  display: flex;
+  flex-direction: column;
 }
 
 #movie-container {
@@ -167,7 +172,7 @@ body, html {
 }
 
 .movie-table {
-  table-layout: auto;
+  table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
 }
@@ -184,17 +189,11 @@ th {
 button:hover {
   background-color: rgba(97, 94, 94, 0.37);
   cursor: pointer;
+  color: white;
 }
 
 tr:hover {
   background-color: rgba(97, 94, 94, 0.37);
-}
-
-
-
-.movie-table input {
-  background-color: rgb(31, 30, 30);
-  color: white;
 }
 
 thead th { 
@@ -207,8 +206,29 @@ thead th {
   top: 80%;
 }
 
-.emptyCol {
+.submitCol {
   background-color: rgb(34, 33, 33);
+  width: 80px;
+}
+
+.titleCol {
+  width: 500px;
+}
+
+.yearCol {
+  width: 70px;
+}
+
+.runtimeCol {
+  width: 100px;
+}
+
+.formatCol {
+  width: 200px;
+}
+
+.seenCol {
+width: 100px;
 }
 
 /*------------- graphs ------------*/
