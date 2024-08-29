@@ -1,11 +1,11 @@
 /* eslint-disable no-octal-escape */
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import './App.css';
 import Graph from './graphs';
 
 export const MyContext = createContext();
 
-function SidePanelContainer() {
+const SidePanelContainer = React.memo(() => {
 
   console.log("SidePanelContainer rendered");
 
@@ -14,27 +14,22 @@ function SidePanelContainer() {
       <IconAndTitle />
       <SearchContainer />
       <FiltersContainer />
-      <AddEntryContainer />
+      <AddEntry />
       <GraphButton />
       <GetRandomMovieButton />
     </div>
   );
-}
+});
 
-function IconAndTitle() {
-
+const IconAndTitle = React.memo(() => {
   console.log("IconAndTitle rendered");
 
-  const{setUrl} = useContext(MyContext);
-
-  const handleClick = () => {
-    setUrl("http://localhost:8080/movies")
-  }
+  const {setToMovies} = useContext(MyContext);
 
   return (
     <div className="iconandtitle">
       <div className="icon">
-        <img onClick={handleClick} src="https://www.e-cookietins.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/1/s/1s_115_movie_reel.png" alt="minimal film reel" height="50px" width="50px" />
+        <img onClick={setToMovies} src="https://www.e-cookietins.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/1/s/1s_115_movie_reel.png" alt="minimal film reel" height="50px" width="50px" />
       </div>
 
       <div className="title">
@@ -42,7 +37,7 @@ function IconAndTitle() {
       </div>
     </div>
   )
-}
+});
 
 function SearchContainer() {
   
@@ -72,7 +67,7 @@ function SearchContainer() {
   )
 }
 
-function FiltersContainer() {
+const FiltersContainer = React.memo(() => {
   console.log("FiltersContainer rendered");
   
   return (
@@ -80,24 +75,13 @@ function FiltersContainer() {
       {/*<BlurayFilter*/}
     </div>
   );
-}
-
-function AddEntryContainer() {
-  
-  console.log("AddEntryContainer rendered");
-
-  return (
-    <div className="addEntry">
-      <AddEntry />
-    </div>
-  );
-}
+});
 
 function AddEntry() {
 
   console.log("AddEntry rendered");
 
-  const {setDisplay, setData} = useContext(MyContext);
+  const {setToEntryNotice, setData} = useContext(MyContext);
 
   const [titleValue, setTitle] = useState("");
   const [formatValue, setFormat] = useState("");
@@ -146,23 +130,25 @@ function AddEntry() {
     xhr.send(valuesToAdd);
 
     getMovies(setData, "http://localhost:8080/movies")
-    setDisplay("addEntryNotice");
+    setToEntryNotice();
   }
 
   return (
-    <div className="mediaTypeDisplay">
-      <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
-      <input type="text" placeholder="Format..." spellCheck="false" value={formatValue} onChange={(e) => setFormat(e.target.value)}/>
-      <input type="text" placeholder="Pack..." spellCheck="false" value={packValue} onChange={(e) => setPack(e.target.value)}/>
-      <input type="text" placeholder="Edition..." spellCheck="false" value={editionValue} onChange={(e) => setEdition(e.target.value)}/>
-      <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
-      <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
-      <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
-      <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
-      <input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
-      <input type="text" placeholder="Country..." spellCheck="false" value={countryValue} onChange={(e) => setCountry(e.target.value)}/>
-      <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
-      <button onClick={handleSubmit}>Submit</button>
+    <div className="addEntry">
+      <div className="mediaTypeDisplay">
+        <input type="text" placeholder="Title..." spellCheck="false" value={titleValue} onChange={(e) => setTitle(e.target.value)}/>
+        <input type="text" placeholder="Format..." spellCheck="false" value={formatValue} onChange={(e) => setFormat(e.target.value)}/>
+        <input type="text" placeholder="Pack..." spellCheck="false" value={packValue} onChange={(e) => setPack(e.target.value)}/>
+        <input type="text" placeholder="Edition..." spellCheck="false" value={editionValue} onChange={(e) => setEdition(e.target.value)}/>
+        <input type="text" placeholder="Year Released..." spellCheck="false" value={yearValue} onChange={(e) => setYear(e.target.value)}/>
+        <input type="text" placeholder="Director..." spellCheck="false" value={directorValue} onChange={(e) => setDirector(e.target.value)}/>
+        <input type="text" placeholder="Runtime..." spellCheck="false" value={runtimeValue} onChange={(e) => setRuntime(e.target.value)}/>
+        <input type="text" placeholder="Genre..." spellCheck="false" value={genreValue} onChange={(e) => setGenre(e.target.value)}/>
+        <input type="text" placeholder="Watched..." spellCheck="false" value={seenValue} onChange={(e) => setSeen(e.target.value)}/>
+        <input type="text" placeholder="Country..." spellCheck="false" value={countryValue} onChange={(e) => setCountry(e.target.value)}/>
+        <input type="text" placeholder="Type..." spellCheck="false" value={typeValue} onChange={(e) => setType(e.target.value)}/>
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
     </div>
   );
 }
@@ -223,8 +209,9 @@ function Collection() {
   console.log("Collection rendered");
 
   const {url, data, setData} = useContext(MyContext);
-  const [editableRowIndex, setEditableRowIndex] = useState(null);
+  const [editableRowIndex, setEditableRowIndex] = useState(-1);
 
+  //whenever url changes, getMovies is called
   useEffect(() => {
     getMovies(setData, url);
   }, [setData, url]);
@@ -255,8 +242,12 @@ function Collection() {
   }
 
   const handleSubmit = (movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue) => {
+
+    console.log("in handle submit");
     updateEntry(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue);
-    setEditableRowIndex(null);
+    console.log("before edit: ", editableRowIndex);
+    setEditableRowIndex(-2);
+    console.log("after edit: ", editableRowIndex);
   }
 
   return (
@@ -277,7 +268,7 @@ function Collection() {
         <tbody>
           {data.map((movie, index) => {
 
-            let isEditable = (index === editableRowIndex);
+            let isEditable = (editableRowIndex === index);
 
             let titleValue = movie.title;
             let yearValue = movie.year;
@@ -289,7 +280,7 @@ function Collection() {
 
             return (
               <tr key={index} onClick={() => handleRowClick(index) }>
-                <td id="submitButton">{isEditable ? <button onClick={() => handleSubmit(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue)}>Submit</button> : ""}</td>
+                <td id="submitButton">{isEditable ? (<button onClick={() => handleSubmit(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue)}>Submit</button>) : ""}</td>
                 <td id="title" >{isEditable ? <input type="text" placeholder={movie.title} onChange={(e) => titleValue = e.target.value}/> : movie.title}</td>
                 <td id="year">{isEditable ? <input type="text" placeholder={movie.year} onChange={(e) => yearValue = e.target.value}/> : movie.year}</td>
                 <td id="runtime">{isEditable ? <input type="text" placeholder={movie.runtime} onChange={(e) => runtimeValue = e.target.value}/> : movie.runtime}</td>
@@ -382,8 +373,12 @@ export default function CollectionEntryPoint() {
 
   console.log("Entry Point rendered");
 
+  const setToMovies = useCallback(() => setUrl("http://localhost:8080/movies"), []);
+  const setToEntryNotice = useCallback(() => setDisplay("addEntryNotice"), []);
+
   return (
-    <MyContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData, toolBarIsVisable, setToolBarIsVisible }}>
+    <MyContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData, toolBarIsVisable, 
+                                  setToolBarIsVisible, setToEntryNotice, setToMovies }}>
       <SidePanelContainer />
       <MainContainer />
     </MyContext.Provider>
