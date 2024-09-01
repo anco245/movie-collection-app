@@ -129,7 +129,7 @@ function AddEntry() {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(valuesToAdd);
 
-    getMovies(setData, "http://localhost:8080/movies")
+    getMoviesAtUrl(setData, "http://localhost:8080/movies")
     setToEntryNotice();
   }
 
@@ -192,7 +192,7 @@ function GetRandomMovieButton() {
   );
 }
 
-function getMovies(setData, url) {
+function getMoviesAtUrl(setData, url) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.onload = function() {
@@ -203,17 +203,50 @@ function getMovies(setData, url) {
   xhr.send();
 }
 
+function getCurrentCollection() {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', "http://localhost:8080/movies");
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const jsonResponse = JSON.parse(xhr.responseText);
+        resolve(jsonResponse);
+      } else {
+        reject(`Request failed with status: ${xhr.status}`);
+      }
+    };
+    xhr.onerror = function() {
+      reject('Network error');
+    };
+    xhr.send();
+  });
+}
+
+async function fetchCollection() {
+  try {
+    const data = await getCurrentCollection();
+    console.log('Received data:', data);
+    return data; // You can return the data here if you need it
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
 
 function Collection() {
 
   console.log("Collection rendered");
 
-  const {url, data, setData} = useContext(MyContext);
-  const [editableRowIndex, setEditableRowIndex] = useState(-1);
+  const {url, setUrl, data, setData} = useContext(MyContext);
+  const [editableRowIndex, setEditableRowIndex] = useState(null);
+
+  useEffect(() => {
+    console.log("state has changed to: ", editableRowIndex);
+  }, [editableRowIndex]);
 
   //whenever url changes, getMovies is called
   useEffect(() => {
-    getMovies(setData, url);
+    getMoviesAtUrl(setData, url);
   }, [setData, url]);
 
   const handleRowClick = (index) => {
@@ -236,15 +269,14 @@ function Collection() {
     xhr.open('POST', "http://localhost:8080/movies/updateEntry");
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(valuesToAdd);
-  
-    getMovies(setData, "http://localhost:8080/movies")
 
+    setUrl("http://localhost:8080/movies");
   }
 
   const handleSubmit = (movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue) => {
 
-    console.log("in handle submit");
     updateEntry(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue);
+
     console.log("before edit: ", editableRowIndex);
     setEditableRowIndex(-2);
     console.log("after edit: ", editableRowIndex);
