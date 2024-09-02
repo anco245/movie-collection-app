@@ -30,6 +30,7 @@ export function Modal({movieToChange}) {
     return (
         <div className="modal-container">
             <div className="modal">
+                <text>Edit Entry</text>
                 <form>
                     <div className="formGroup">
                         <label htmlFor="title">Title</label>

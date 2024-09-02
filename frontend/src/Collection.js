@@ -2,7 +2,8 @@
 import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import './App.css';
 import Graph from './graphs';
-import PencilAndXIcon from './Icons/PencilAndXIcon';
+import PencilIcon from './Icons/PencilIcon';
+import XIcon from './Icons/XIcon';
 import { Modal } from './Modal';
 
 
@@ -240,12 +241,7 @@ function Collection() {
 
   console.log("Collection rendered");
 
-  const {url, setUrl, data, setData, setShowModal, setMovieToChange} = useContext(MyContext);
-  const [editableRowIndex, setEditableRowIndex] = useState(null);
-
-  useEffect(() => {
-    console.log("state has changed to: ", editableRowIndex);
-  }, [editableRowIndex]);
+  const {url, data, setData, setShowModal, setMovieToChange} = useContext(MyContext);
 
   //whenever url changes, getMovies is called
   useEffect(() => {
@@ -255,35 +251,6 @@ function Collection() {
   const handleRowClick = (movie) => {
     setMovieToChange(movie);
     setShowModal(true);
-  }
-
-  function updateEntry (movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue) {
-    
-    let valuesToAdd = JSON.stringify({
-      id: movieID,
-      title: titleValue,
-      year: yearValue,
-      runtime: runtimeValue,
-      format: formatValue,
-      genre: genreValue,
-      seen: seenValue
-    });
-    
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8080/movies/updateEntry");
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(valuesToAdd);
-
-    setUrl("http://localhost:8080/movies");
-  }
-
-  const handleSubmit = (movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue) => {
-
-    updateEntry(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue);
-
-    console.log("before edit: ", editableRowIndex);
-    setEditableRowIndex(-2);
-    console.log("after edit: ", editableRowIndex);
   }
 
   return (
@@ -303,11 +270,9 @@ function Collection() {
 
         <tbody>
           {data.map((movie, index) => {
-            //<button onClick={() => handleSubmit(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue)
-
             return (
               <tr key={index} onClick={() => handleRowClick(movie) }>
-                <td id="action"><PencilAndXIcon /></td>
+                <td id="action"><div className="pencilAndX"><PencilIcon /><XIcon /></div></td>
                 <td id="title">{movie.title}</td>
                 <td id="year">{movie.year}</td>
                 <td id="runtime">{movie.runtime}</td>
