@@ -3,6 +3,7 @@ import React, { useState, useEffect, createContext, useContext, useCallback } fr
 import './App.css';
 import Graph from './graphs';
 import PencilAndXIcon from './Icons/PencilAndXIcon';
+import { Modal } from './Modal';
 
 
 export const MyContext = createContext();
@@ -415,6 +416,7 @@ export default function CollectionEntryPoint() {
                                   setToolBarIsVisible, setToEntryNotice, setToMovies }}>
       <SidePanelContainer />
       <MainContainer />
+      <Modal />
     </MyContext.Provider>
   )
 }

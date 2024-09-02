@@ -235,6 +235,17 @@ thead th {
 width: 100px;
 }
 
+.pencilAndX {
+  display: flex;
+  justify-content: space-around;
+}
+
+.pencilAndX svg{
+  cursor: pointer;
+}
+
+
+
 /*------------- graphs ------------*/
 
 .barGraph {
