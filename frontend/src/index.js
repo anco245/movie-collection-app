@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-//import MainMenuEntryPoint from './MainMenu.js';
 import AppEntryPoint from './App.js';
 //import reportWebVitals from './reportWebVitals.js';
+import CollectionEntryPoint from './Collection.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AppEntryPoint />
+    <CollectionEntryPoint />
   </React.StrictMode>
 );
 

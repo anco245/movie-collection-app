@@ -240,7 +240,7 @@ function Collection() {
 
   console.log("Collection rendered");
 
-  const {url, setUrl, data, setData} = useContext(MyContext);
+  const {url, setUrl, data, setData, setShowModal} = useContext(MyContext);
   const [editableRowIndex, setEditableRowIndex] = useState(null);
 
   useEffect(() => {
@@ -305,23 +305,21 @@ function Collection() {
 
             let isEditable = (editableRowIndex === index);
 
-            let titleValue = movie.title;
-            let yearValue = movie.year;
-            let runtimeValue = movie.runtime;
-            let formatValue = movie.format;
-            let genreValue = movie.genre;
-            let seenValue = movie.seen;
-            let movieID = movie.id;
+            if(isEditable) {
+              setShowModal(true);
+            }
+
+            //<button onClick={() => handleSubmit(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue)
 
             return (
               <tr key={index} onClick={() => handleRowClick(index) }>
-                <td id="action">{isEditable ? (<button onClick={() => handleSubmit(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue)}>Submit</button>) : <PencilAndXIcon />}</td>
-                <td id="title" >{isEditable ? <input type="text" placeholder={movie.title} onChange={(e) => titleValue = e.target.value}/> : movie.title}</td>
-                <td id="year">{isEditable ? <input type="text" placeholder={movie.year} onChange={(e) => yearValue = e.target.value}/> : movie.year}</td>
-                <td id="runtime">{isEditable ? <input type="text" placeholder={movie.runtime} onChange={(e) => runtimeValue = e.target.value}/> : movie.runtime}</td>
-                <td id="format">{isEditable ? <input type="text" placeholder={movie.format} onChange={(e) => formatValue = e.target.value}/> : movie.format}</td>
-                <td id="genre">{isEditable ? <input type="text" placeholder={movie.genre} onChange={(e) => genreValue = e.target.value}/> : movie.genre}</td>
-                <td id="seen">{isEditable ? <input type="text" placeholder={movie.seen===1 ? "yes" : "no"} onChange={(e) => seenValue = e.target.value==="yes" ? true : false}/> : movie.seen===1 ? "yes" : "no"}</td>
+                <td id="action"><PencilAndXIcon /></td>
+                <td id="title">{movie.title}</td>
+                <td id="year">{movie.year}</td>
+                <td id="runtime">{movie.runtime}</td>
+                <td id="format">{movie.format}</td>
+                <td id="genre">{movie.genre}</td>
+                <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
               </tr>
             )
           })}
@@ -405,6 +403,7 @@ export default function CollectionEntryPoint() {
   const [currentDisplay, setDisplay] = useState("collection");
   const [data, setData] = useState([]);
   const [toolBarIsVisable, setToolBarIsVisible] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   console.log("Entry Point rendered");
 
@@ -413,10 +412,10 @@ export default function CollectionEntryPoint() {
 
   return (
     <MyContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData, toolBarIsVisable, 
-                                  setToolBarIsVisible, setToEntryNotice, setToMovies }}>
+                                  setToolBarIsVisible, setToEntryNotice, setToMovies, setShowModal }}>
       <SidePanelContainer />
       <MainContainer />
-      <Modal />
+      {showModal && <Modal />}
     </MyContext.Provider>
   )
 }
