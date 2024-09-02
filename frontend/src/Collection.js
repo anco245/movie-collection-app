@@ -240,7 +240,7 @@ function Collection() {
 
   console.log("Collection rendered");
 
-  const {url, setUrl, data, setData, setShowModal} = useContext(MyContext);
+  const {url, setUrl, data, setData, setShowModal, setMovieToChange} = useContext(MyContext);
   const [editableRowIndex, setEditableRowIndex] = useState(null);
 
   useEffect(() => {
@@ -252,8 +252,9 @@ function Collection() {
     getMoviesAtUrl(setData, url);
   }, [setData, url]);
 
-  const handleRowClick = (index) => {
-    setEditableRowIndex(index);
+  const handleRowClick = (movie) => {
+    setMovieToChange(movie);
+    setShowModal(true);
   }
 
   function updateEntry (movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue) {
@@ -302,17 +303,10 @@ function Collection() {
 
         <tbody>
           {data.map((movie, index) => {
-
-            let isEditable = (editableRowIndex === index);
-
-            if(isEditable) {
-              setShowModal(true);
-            }
-
             //<button onClick={() => handleSubmit(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue)
 
             return (
-              <tr key={index} onClick={() => handleRowClick(index) }>
+              <tr key={index} onClick={() => handleRowClick(movie) }>
                 <td id="action"><PencilAndXIcon /></td>
                 <td id="title">{movie.title}</td>
                 <td id="year">{movie.year}</td>
@@ -404,6 +398,7 @@ export default function CollectionEntryPoint() {
   const [data, setData] = useState([]);
   const [toolBarIsVisable, setToolBarIsVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [movieToChange, setMovieToChange] = useState(null);
 
   console.log("Entry Point rendered");
 
@@ -412,10 +407,11 @@ export default function CollectionEntryPoint() {
 
   return (
     <MyContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData, toolBarIsVisable, 
-                                  setToolBarIsVisible, setToEntryNotice, setToMovies, setShowModal }}>
+                                  setToolBarIsVisible, setToEntryNotice, setToMovies, setShowModal,
+                                  setMovieToChange }}>
       <SidePanelContainer />
       <MainContainer />
-      {showModal && <Modal />}
+      {showModal && <Modal movieToChange={movieToChange}/>}
     </MyContext.Provider>
   )
 }

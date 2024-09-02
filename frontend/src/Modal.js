@@ -1,40 +1,65 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Modal.css";
 
-export const Modal = () => {
+export function Modal({movieToChange}) {
+
+    const [title, setTitle] = useState(movieToChange.title);
+    const [year, setYear] = useState(movieToChange.year);
+    const [runtime, setRuntime] = useState(movieToChange.runtime);
+    const [format, setFormat] = useState(movieToChange.format);
+    const [genre, setGenre] = useState(movieToChange.genre);
+    const [seen, setSeen] = useState(movieToChange.seen);
+
+    function handleSubmit() {
+        let valuesToAdd = JSON.stringify({
+            id: movieToChange.id,
+            title: title,
+            year: year,
+            runtime: runtime,
+            format: format,
+            genre: genre,
+            seen: seen
+          });
+          
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', "http://localhost:8080/movies/updateEntry");
+          xhr.setRequestHeader('Content-Type', 'application/json');
+          xhr.send(valuesToAdd);
+    }
+
     return (
         <div className="modal-container">
             <div className="modal">
                 <form>
                     <div className="formGroup">
                         <label htmlFor="title">Title</label>
-                        <input name="title" />
+                        <input name="title" placeholder={movieToChange.title} onChange={(e) => setTitle(e.target.value)}/>
                     </div>
                     <div className="formGroup">
                         <label htmlFor="year">Year</label>
-                        <input name="year" />
+                        <input name="year" placeholder={movieToChange.year} onChange={(e) => setYear(e.target.value)}/>
                     </div>
                     <div className="formGroup">
                         <label htmlFor="runtime">Runtime</label>
-                        <input name="runtime" />
+                        <input name="runtime" placeholder={movieToChange.runtime} onChange={(e) => setRuntime(e.target.value)}/>
                     </div>
                     <div className="formGroup">
                         <label htmlFor="format">Format</label>
                         <select name="format">
                             <option value="bluray">Bluray</option>
                             <option value="dvd">DVD</option>
-                            <option value="bluray">Movies Anywhere</option>
+                            <option value="moviesAnywhere">Movies Anywhere</option>
                         </select>
                     </div>
                     <div className="formGroup">
                         <label htmlFor="genre">Genre</label>
-                        <input name="genre" />
+                        <input name="genre" placeholder={movieToChange.genre} onChange={(e) => setGenre(e.target.value)}/>
                     </div>
                     <div className="formGroup">
-                        <label htmlFor="seen">Watched<input type="radio" value="watched" checked/></label>
-                        <label htmlFor="seen">Not Yet<input type="radio" value="notYet" /></label>
+                        <label htmlFor="seen">Watched<input type="radio" name="seen" value="watched" checked/></label>
+                        <label htmlFor="seen">Not Yet<input type="radio" name="seen" value="notYet" /></label>
                     </div>
-                    <button type="submit" className="btn">Submit</button>
+                    <button onClick={handleSubmit} className="btn">Submit</button>
                 </form>
             </div>
         </div>
