@@ -177,7 +177,7 @@ body, html {
   border-collapse: collapse;
 }
 
-#year, #runtime, #seen {
+#year, #runtime, #seen, #action{
   text-align: center;
 }
 
@@ -204,6 +204,10 @@ thead th {
 #switchToGraphs {
   position: absolute;
   top: 80%;
+}
+
+.actionCol {
+  width: 115px;
 }
 
 .submitCol {

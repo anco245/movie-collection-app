@@ -2,6 +2,8 @@
 import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import './App.css';
 import Graph from './graphs';
+import PencilAndXIcon from './Icons/PencilAndXIcon';
+
 
 export const MyContext = createContext();
 
@@ -287,7 +289,7 @@ function Collection() {
       <table className="movie-table">
         <thead>
             <tr>
-                <th className="submitCol"></th>
+                <th className="actionCol">Actions</th>
                 <th className="titleCol">Title</th>
                 <th className="yearCol">Year</th>
                 <th className="runtimeCol">Runtime</th>
@@ -312,7 +314,7 @@ function Collection() {
 
             return (
               <tr key={index} onClick={() => handleRowClick(index) }>
-                <td id="submitButton">{isEditable ? (<button onClick={() => handleSubmit(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue)}>Submit</button>) : ""}</td>
+                <td id="action">{isEditable ? (<button onClick={() => handleSubmit(movieID, titleValue, yearValue, runtimeValue, formatValue, genreValue, seenValue)}>Submit</button>) : <PencilAndXIcon />}</td>
                 <td id="title" >{isEditable ? <input type="text" placeholder={movie.title} onChange={(e) => titleValue = e.target.value}/> : movie.title}</td>
                 <td id="year">{isEditable ? <input type="text" placeholder={movie.year} onChange={(e) => yearValue = e.target.value}/> : movie.year}</td>
                 <td id="runtime">{isEditable ? <input type="text" placeholder={movie.runtime} onChange={(e) => runtimeValue = e.target.value}/> : movie.runtime}</td>
