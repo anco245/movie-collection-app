@@ -3,11 +3,26 @@ import React, { useState, useEffect, createContext, useContext, useCallback } fr
 import './App.css';
 import Graph from './graphs';
 import PencilIcon from './Icons/PencilIcon';
-import XIcon from './Icons/XIcon';
 import { Modal } from './Modal';
 
-
 export const MyContext = createContext();
+
+const XIcon = React.memo(({param}) => {
+  const {setShowModal} = useContext(MyContext);
+
+  function handleClick() {
+    //entryToDelete(param);
+    //setShowDeleteModal(true);
+  }
+
+  return (
+      <div className="CollectionXIcon" onClick={handleClick}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+          </svg>
+      </div>
+  );
+});
 
 const SidePanelContainer = React.memo(() => {
 
@@ -241,17 +256,12 @@ function Collection() {
 
   console.log("Collection rendered");
 
-  const {url, data, setData, setShowModal, setMovieToChange} = useContext(MyContext);
+  const {url, data, setData} = useContext(MyContext);
 
   //whenever url changes, getMovies is called
   useEffect(() => {
     getMoviesAtUrl(setData, url);
   }, [setData, url]);
-
-  const handleRowClick = (movie) => {
-    setMovieToChange(movie);
-    setShowModal(true);
-  }
 
   return (
     <div id="movie-container">
@@ -271,8 +281,8 @@ function Collection() {
         <tbody>
           {data.map((movie, index) => {
             return (
-              <tr key={index} onClick={() => handleRowClick(movie) }>
-                <td id="action"><div className="pencilAndX"><PencilIcon /><XIcon /></div></td>
+              <tr key={index}>
+                <td id="action"><div className="pencilAndX"><PencilIcon param={movie}/><XIcon param={movie}/></div></td>
                 <td id="title">{movie.title}</td>
                 <td id="year">{movie.year}</td>
                 <td id="runtime">{movie.runtime}</td>

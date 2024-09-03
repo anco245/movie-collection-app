@@ -11,7 +11,9 @@
 
 .modal {
     border-radius: 5px;
-    padding: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
     background-color: white;
     width: 25em;
 }
@@ -32,4 +34,13 @@
     display: block;
     margin: auto;
     text-align: center;
+    padding: 10px;
+}
+
+.XIconContainer {
+    display: flex;
+}
+
+.ModalXIcon {
+    cursor: pointer;
 }

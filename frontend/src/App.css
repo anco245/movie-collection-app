@@ -210,11 +210,6 @@ thead th {
   width: 115px;
 }
 
-.submitCol {
-  background-color: rgb(34, 33, 33);
-  width: 80px;
-}
-
 .titleCol {
   width: 500px;
 }
@@ -246,6 +241,10 @@ width: 100px;
 }
 
 .btn {
+  cursor: pointer;
+}
+
+.XIcon {
   cursor: pointer;
 }
 

@@ -1,6 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
+
+import { MyContext } from '../Collection';
 
 export default function XIcon() {
+
+    const {setShowModal} = useContext(MyContext);
+
     return (
         <div className="XIcon">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
