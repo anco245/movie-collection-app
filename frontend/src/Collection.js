@@ -3,7 +3,8 @@ import React, { useState, useEffect, createContext, useContext, useCallback } fr
 import './App.css';
 import Graph from './graphs';
 import PencilIcon from './Icons/PencilIcon';
-import { Modal } from './Modal';
+import TrashIcon from './Icons/TrashIcon';
+import { EditModal } from './EditModal';
 
 export const MyContext = createContext();
 
@@ -282,7 +283,7 @@ function Collection() {
           {data.map((movie, index) => {
             return (
               <tr key={index}>
-                <td id="action"><div className="pencilAndX"><PencilIcon param={movie}/><XIcon param={movie}/></div></td>
+                <td id="action"><div className="pencilAndX"><PencilIcon param={movie}/><TrashIcon param={movie}/></div></td>
                 <td id="title">{movie.title}</td>
                 <td id="year">{movie.year}</td>
                 <td id="runtime">{movie.runtime}</td>
@@ -372,7 +373,7 @@ export default function CollectionEntryPoint() {
   const [currentDisplay, setDisplay] = useState("collection");
   const [data, setData] = useState([]);
   const [toolBarIsVisable, setToolBarIsVisible] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [movieToChange, setMovieToChange] = useState(null);
 
   console.log("Entry Point rendered");
@@ -382,11 +383,11 @@ export default function CollectionEntryPoint() {
 
   return (
     <MyContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData, toolBarIsVisable, 
-                                  setToolBarIsVisible, setToEntryNotice, setToMovies, setShowModal,
+                                  setToolBarIsVisible, setToEntryNotice, setToMovies, setShowEditModal,
                                   setMovieToChange }}>
       <SidePanelContainer />
       <MainContainer />
-      {showModal && <Modal movieToChange={movieToChange}/>}
+      {showEditModal && <EditModal movieToChange={movieToChange}/>}
     </MyContext.Provider>
   )
 }

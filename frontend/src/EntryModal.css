@@ -1,4 +1,4 @@
-.modal-container {
+.entry-modal-container {
     position: fixed;
     z-index: 1;
     width: 100%;
@@ -9,7 +9,7 @@
     background-color: rgba(0, 0, 0, 0.712);
 }
 
-.modal {
+.entryModal {
     border-radius: 5px;
     padding-left: 2rem;
     padding-right: 2rem;
@@ -18,7 +18,7 @@
     width: 25em;
 }
 
-.modal .btn {
+.entryModal .btn {
     display: block;
     margin: auto;
     border-radius: 6px;
@@ -30,7 +30,7 @@
     margin-bottom: 5px;
 }
 
-.modal text {
+.entryModal text {
     display: block;
     margin: auto;
     text-align: center;

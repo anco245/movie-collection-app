@@ -1,25 +1,9 @@
 import React, { useState, useContext } from 'react'
 import { MyContext } from './Collection';
-import "./Modal.css";
+import "./EntryModal.css";
+import XIcon from './Icons/XIcon';
 
-function XIcon() {
-
-    const {setShowModal} = useContext(MyContext);
-
-    function handleClick() {
-        setShowModal(false);
-    }
-
-    return (
-        <div className="XIcon" onClick={handleClick}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-            </svg>
-        </div>
-    );
-}
-
-export function Modal({movieToChange}) {
+export function EditModal({movieToChange}) {
 
     const [title, setTitle] = useState(movieToChange.title);
     const [year, setYear] = useState(movieToChange.year);
@@ -50,8 +34,8 @@ export function Modal({movieToChange}) {
     }
 
     return (
-        <div className="modal-container">
-            <div className="modal">
+        <div className="entry-modal-container">
+            <div className="entryModal">
                 <div className="ModalXContainer"><XIcon /></div>
                 <text>Edit Entry</text>
                 <form>

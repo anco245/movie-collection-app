@@ -3,11 +3,11 @@ import { MyContext } from '../Collection';
 
 export default function PencilIcon({param}) {
 
-    const {setShowModal, setMovieToChange} = useContext(MyContext);
+    const {setShowEditModal, setMovieToChange} = useContext(MyContext);
 
     function handleClick() {
         setMovieToChange(param);
-        setShowModal(true);
+        setShowEditModal(true);
     }
 
     return (
