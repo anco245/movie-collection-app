@@ -5,6 +5,7 @@ import Graph from './graphs';
 import PencilIcon from './Icons/PencilIcon';
 import TrashIcon from './Icons/TrashIcon';
 import { EditModal } from './EditModal';
+import { DeleteModal } from './DeleteModal';
 
 export const MyContext = createContext();
 
@@ -374,6 +375,7 @@ export default function CollectionEntryPoint() {
   const [data, setData] = useState([]);
   const [toolBarIsVisable, setToolBarIsVisible] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [movieToChange, setMovieToChange] = useState(null);
 
   console.log("Entry Point rendered");
@@ -384,10 +386,11 @@ export default function CollectionEntryPoint() {
   return (
     <MyContext.Provider value={{ url, setUrl, currentDisplay, setDisplay, data, setData, toolBarIsVisable, 
                                   setToolBarIsVisible, setToEntryNotice, setToMovies, setShowEditModal,
-                                  setMovieToChange }}>
+                                  setMovieToChange, setShowDeleteModal }}>
       <SidePanelContainer />
       <MainContainer />
       {showEditModal && <EditModal movieToChange={movieToChange}/>}
+      {showDeleteModal && <DeleteModal movieToDelete={movieToChange}/>}
     </MyContext.Provider>
   )
 }
