@@ -118,3 +118,13 @@ export async function updateEntry(given) {
                         given["genre"], given["seen"],
                         given["id"]]);
 }
+
+export async function deleteEntry(given) {
+
+    let q = `
+        DELETE FROM testCollection
+        WHERE id = ?
+    `
+
+    await pool.query(q, [given["id"]]);
+}

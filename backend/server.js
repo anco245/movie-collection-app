@@ -1,6 +1,6 @@
 import express from 'express';
 import { getCollection, getRandomMovie, getMovieByTitle, getBlurays, 
-        getGraphData, addPhysicalEntry, updateEntry} from './database.js'
+        getGraphData, addPhysicalEntry, updateEntry, deleteEntry} from './database.js'
 import cors from 'cors';
 
 const app = express();
@@ -40,6 +40,10 @@ app.post("/movies/addPhysicalEntry", async (req, res) => {
 
 app.post("/movies/updateEntry", async (req, res) => {
     await updateEntry(req.body);
+})
+
+app.post("/movies/deleteEntry", async (req, res) => {
+    await deleteEntry(req.body);
 })
 
 app.use((err, req, res, next) => {

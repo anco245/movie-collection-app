@@ -6,27 +6,23 @@ import XIcon from './Icons/XIcon';
 export function DeleteModal({movieToDelete}) {
 
     function handleSubmit() {
-        let valuesToAdd = JSON.stringify({
-            id: movieToDelete.id,
-            title: movieToDelete.title,
-            year: movieToDelete.movieyear,
-            runtime: movieToDelete.runtime,
-            format: movieToDelete.format,
-            genre: movieToDelete.genre,
-            seen: movieToDelete.seen
+        let valueToAdd = JSON.stringify({
+            id: movieToDelete.id
           });
           
           const xhr = new XMLHttpRequest();
           xhr.open('POST', "http://localhost:8080/movies/deleteEntry");
           xhr.setRequestHeader('Content-Type', 'application/json');
-          xhr.send(valuesToAdd);
+          xhr.send(valueToAdd);
     }
+
+    const deleteText = "Are you sure you want to delete this entry?\nThere's no turning back!!!!"
 
     return (
         <div className="entry-modal-container">
             <div className="entryModal">
                 <div className="ModalXContainer"><XIcon /></div>
-                <text>Delete Entry</text>
+                <text>{deleteText}</text>
                 <form>
                     <div className="formGroup">
                         <label htmlFor="title">Title: {movieToDelete.title}</label>

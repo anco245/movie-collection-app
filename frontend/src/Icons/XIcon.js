@@ -3,7 +3,7 @@ import { MyContext } from '../Collection';
 
 export default function XIcon() {
 
-    const {showEditModal, setShowEditModal, showDeleteModal, setShowDeleteModal} = useContext(MyContext);
+    const {setShowEditModal, setShowDeleteModal} = useContext(MyContext);
 
     function handleClick() {
 
