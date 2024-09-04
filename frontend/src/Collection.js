@@ -207,37 +207,6 @@ function getMoviesAtUrl(setData, url) {
   xhr.send();
 }
 
-/*
-function getCurrentCollection() {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', "http://localhost:8080/movies");
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        const jsonResponse = JSON.parse(xhr.responseText);
-        resolve(jsonResponse);
-      } else {
-        reject(`Request failed with status: ${xhr.status}`);
-      }
-    };
-    xhr.onerror = function() {
-      reject('Network error');
-    };
-    xhr.send();
-  });
-}
-
-async function fetchCollection() {
-  try {
-    const data = await getCurrentCollection();
-    console.log('Received data:', data);
-    return data; // You can return the data here if you need it
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-*/
-
 
 function Collection() {
 

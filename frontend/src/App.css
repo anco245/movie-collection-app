@@ -197,7 +197,8 @@ tr:hover {
 }
 
 thead th { 
-  position: sticky; top: 0; 
+  position: sticky; 
+  top: 0;
   background-color: rgb(34, 33, 33);
 }
 
