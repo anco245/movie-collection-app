@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react'
-import { MyContext } from './Collection';
+import React, { useState } from 'react'
 import "./EntryModal.css";
 import XIcon from './Icons/XIcon';
 
@@ -29,8 +28,13 @@ export function EditModal({movieToChange}) {
           xhr.send(valuesToAdd);
     }
 
-    function handleCheckChange() {
+    function handleCheckChange(e) {
+        console.log("value: ", e.target.value)
+        setSeen(parseInt(e.target.value));
+    }
 
+    function handleFormatChange(e) {
+        setFormat(e.target.value);
     }
 
     return (
@@ -53,10 +57,10 @@ export function EditModal({movieToChange}) {
                     </div>
                     <div className="formGroup">
                         <label htmlFor="format">Format</label>
-                        <select name="format">
+                        <select name="format" value={format} onChange={handleFormatChange}>
                             <option value="bluray">Bluray</option>
                             <option value="dvd">DVD</option>
-                            <option value="moviesAnywhere">Movies Anywhere</option>
+                            <option value="Movies Anywhere">Movies Anywhere</option>
                         </select>
                     </div>
                     <div className="formGroup">
@@ -64,8 +68,8 @@ export function EditModal({movieToChange}) {
                         <input name="genre" placeholder={movieToChange.genre} onChange={(e) => setGenre(e.target.value)}/>
                     </div>
                     <div className="formGroup">
-                        <label htmlFor="seen">Watched<input type="radio" name="seen" value="watched" checked onChange={handleCheckChange}/></label>
-                        <label htmlFor="seen">Not Yet<input type="radio" name="seen" value="notYet" /></label> 
+                        <label htmlFor="seen">Watched<input type="radio" className="seenVal" name="seen" value={1} checked={seen === 1} onChange={handleCheckChange}/></label>
+                        <label htmlFor="seen">Not Yet<input type="radio" className="seenVal" name="seen" value={0} checked={seen === 0} onChange={handleCheckChange}/></label> 
                     </div>
                     <button onClick={handleSubmit} className="btn">Submit</button>
                 </form>

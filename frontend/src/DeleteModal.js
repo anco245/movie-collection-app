@@ -1,5 +1,3 @@
-import React, { useState, useContext } from 'react'
-import { MyContext } from './Collection';
 import "./EntryModal.css";
 import XIcon from './Icons/XIcon';
 
@@ -40,7 +38,7 @@ export function DeleteModal({movieToDelete}) {
                         <label htmlFor="genre">Genre: {movieToDelete.genre}</label>
                     </div>
                     <div className="formGroup">
-                        <label htmlFor="genre">Seen: {movieToDelete.seen === true ? "yes" : "no"}</label>
+                        <label htmlFor="genre">Seen: {movieToDelete.seen === 1 ? "yes" : "no"}</label>
                     </div>
                     <button onClick={handleSubmit} className="btn">Submit</button>
                 </form>
