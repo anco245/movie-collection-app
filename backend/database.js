@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 
 export async function getCollection() {
     //const [rows] = await pool.query("SELECT id, title, year, runtime, format, genre, seen FROM testCollection ORDER BY title ASC");
-    const [rows] = await pool.query("SELECT id, title, year, runtime, format, genre, seen FROM collection ORDER BY title ASC");
+    const [rows] = await pool.query("SELECT id, title, year, runtime, format, location, seen FROM collection ORDER BY title ASC");
     return rows;    
 }
 
@@ -49,6 +49,12 @@ export async function addPhysicalEntry(given) {
     {
         insertInto.push("title");
         values.push(given["title"]);
+    }
+
+    if(given["location"] !== "undefined")
+    {
+        insertInto.push("location");
+        values.push(given["location"]);
     }
 
     if (given["format"] !== "undefined") {
@@ -114,7 +120,7 @@ export async function updateEntry(given) {
 
     let q = `
         UPDATE collection
-        SET title = ?, year = ?, runtime = ?, format = ?, genre = ?, seen = ?
+        SET title = ?, location = ?, year = ?, runtime = ?, format = ?, genre = ?, seen = ?
         WHERE id = ?
     `
 
@@ -126,7 +132,7 @@ export async function updateEntry(given) {
     `
     */
 
-    await pool.query(q, [given["title"], given["year"], 
+    await pool.query(q, [given["title"], given["location"], given["year"], 
                         given["runtime"], given["format"],
                         given["genre"], given["seen"],
                         given["id"]]);

@@ -2,21 +2,19 @@ import React, { useState } from 'react'
 import "./EntryModal.css";
 import XIcon from './Icons/XIcon';
 
-export function EditModal({movieToChange}) {
+export function InfoModal({movieToView}) {
 
-    const [title, setTitle] = useState(movieToChange.title);
-    const [year, setYear] = useState(movieToChange.year);
-    const [runtime, setRuntime] = useState(movieToChange.runtime);
-    const [format, setFormat] = useState(movieToChange.format);
-    const [genre, setGenre] = useState(movieToChange.genre);
-    const [seen, setSeen] = useState(movieToChange.seen);
-    const [location, setLocation] = useState(movieToChange.location)
+    const [title, setTitle] = useState(movieToView.title);
+    const [year, setYear] = useState(movieToView.year);
+    const [runtime, setRuntime] = useState(movieToView.runtime);
+    const [format, setFormat] = useState(movieToView.format);
+    const [genre, setGenre] = useState(movieToView.genre);
+    const [seen, setSeen] = useState(movieToView.seen);
 
     function handleSubmit() {
         let valuesToAdd = JSON.stringify({
-            id: movieToChange.id,
+            id: movieToView.id,
             title: title,
-            location: location,
             year: year,
             runtime: runtime,
             format: format,
@@ -47,23 +45,26 @@ export function EditModal({movieToChange}) {
                 <form>
                     <div className="formGroup">
                         <label htmlFor="title">Title</label>
-                        <input name="title" placeholder={movieToChange.title} onChange={(e) => setTitle(e.target.value)}/>
+                        <input name="title" placeholder={movieToView.title} onChange={(e) => setTitle(e.target.value)}/>
                     </div>
                     <div className="formGroup">
                         <label htmlFor="location">Location</label>
-                        <input name="location" placeholder={movieToChange.location} onChange={(e) => setLocation(e.target.value)}/>
+                        <input name="location" placeholder={movieToView.title} onChange={(e) => setTitle(e.target.value)}/>
                     </div>
                     <div className="formGroup">
-                        <label htmlFor="year">Year</label>
-                        <input name="year" placeholder={movieToChange.year} onChange={(e) => setYear(e.target.value)}/>
+                        <label htmlFor="year">Year:{movieToView.year}</label>
                     </div>
                     <div className="formGroup">
                         <label htmlFor="runtime">Runtime</label>
-                        <input name="runtime" placeholder={movieToChange.runtime} onChange={(e) => setRuntime(e.target.value)}/>
+                        <input name="runtime" placeholder={movieToView.runtime} onChange={(e) => setRuntime(e.target.value)}/>
+                    </div>
+                    <div className="formGroup">
+                        <label htmlFor="director">Director</label>
+                        <input name="director" placeholder={movieToView.director}/>
                     </div>
                     <div className="formGroup">
                         <label htmlFor="format">Format</label>
-                        <select name="format" value={format} onChange={handleFormatChange}>
+                        <select name="format" value={format}>
                             <option value="bluray">Bluray</option>
                             <option value="dvd">DVD</option>
                             <option value="Movies Anywhere">Movies Anywhere</option>
@@ -71,13 +72,12 @@ export function EditModal({movieToChange}) {
                     </div>
                     <div className="formGroup">
                         <label htmlFor="genre">Genre</label>
-                        <input name="genre" placeholder={movieToChange.genre} onChange={(e) => setGenre(e.target.value)}/>
+                        <input name="genre" placeholder={movieToView.genre} />
                     </div>
                     <div className="formGroup">
                         <label htmlFor="seen">Watched<input type="radio" className="seenVal" name="seen" value={1} checked={seen === 1} onChange={handleCheckChange}/></label>
                         <label htmlFor="seen">Not Yet<input type="radio" className="seenVal" name="seen" value={0} checked={seen === 0} onChange={handleCheckChange}/></label> 
                     </div>
-                    <button onClick={handleSubmit} className="btn">Submit</button>
                 </form>
             </div>
         </div>

@@ -230,7 +230,7 @@ function Collection() {
                 <th className="yearCol">Year</th>
                 <th className="runtimeCol">Runtime</th>
                 <th className="formatCol">Format</th>
-                <th className="genreCol">Genre</th>
+                <th className="locationCol">Location</th>
                 <th className="seenCol">Seen</th>
             </tr>
         </thead>
@@ -244,7 +244,7 @@ function Collection() {
                 <td id="year">{movie.year}</td>
                 <td id="runtime">{movie.runtime}</td>
                 <td id="format">{movie.format}</td>
-                <td id="genre">{movie.genre}</td>
+                <td id="location">{movie.location}</td>
                 <td id="seen">{movie.seen===1 ? "yes" : "no"}</td>
               </tr>
             )
