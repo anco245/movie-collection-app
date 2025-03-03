@@ -10,33 +10,33 @@ const pool = mysql.createPool({
 }).promise();
 
 export async function getCollection() {
-    const [rows] = await pool.query("SELECT id, title, year, runtime, format, genre, seen FROM testCollection ORDER BY title ASC");
-    //const [rows] = await pool.query("SELECT id, title, year, runtime, format, genre, seen FROM collection ORDER BY title ASC");
+    //const [rows] = await pool.query("SELECT id, title, year, runtime, format, genre, seen FROM testCollection ORDER BY title ASC");
+    const [rows] = await pool.query("SELECT id, title, year, runtime, format, genre, seen FROM collection ORDER BY title ASC");
     return rows;    
 }
 
 export async function getRandomMovie() {
-    const [entry] = await pool.query("SELECT * FROM testCollection WHERE type = ? order By RAND() LIMIT 1", ["Movie"]);
-    //const [entry] = await pool.query("SELECT * FROM collection WHERE type = ? order By RAND() LIMIT 1", ["Movie"]);
+    //const [entry] = await pool.query("SELECT * FROM testCollection WHERE type = ? order By RAND() LIMIT 1", ["Movie"]);
+    const [entry] = await pool.query("SELECT * FROM collection WHERE type = ? order By RAND() LIMIT 1", ["Movie"]);
     return entry;
 }
 
 export async function getMovieByTitle(givenTitle) {
     const x = "%" + givenTitle + "%";
-    const [entry] = await pool.query("SELECT * FROM testCollection WHERE title like ?", [x]);
-    //const [entry] = await pool.query("SELECT * FROM collection WHERE title like ?", [x]);
+    //const [entry] = await pool.query("SELECT * FROM testCollection WHERE title like ?", [x]);
+    const [entry] = await pool.query("SELECT * FROM collection WHERE title like ?", [x]);
     return entry;
 }
 
 export async function getBlurays() {
-    const [entry] = await pool.query("SELECT * FROM testCollection WHERE format = ? ORDER BY title ASC", ["bluray"]);
-    //const [entry] = await pool.query("SELECT * FROM collection WHERE format = ? ORDER BY title ASC", ["bluray"]);
+    //const [entry] = await pool.query("SELECT * FROM testCollection WHERE format = ? ORDER BY title ASC", ["bluray"]);
+    const [entry] = await pool.query("SELECT * FROM collection WHERE format = ? ORDER BY title ASC", ["bluray"]);
     return entry;
 }
 
 export async function getGraphData() {
-    const [data] = await pool.query("SELECT FLOOR( year / 10) * 10 AS decade, COUNT(*) AS movie_count FROM testCollection GROUP BY decade order by decade asc");
-    //const [data] = await pool.query("SELECT FLOOR( year / 10) * 10 AS decade, COUNT(*) AS movie_count FROM collection GROUP BY decade order by decade asc");
+    //const [data] = await pool.query("SELECT FLOOR( year / 10) * 10 AS decade, COUNT(*) AS movie_count FROM testCollection GROUP BY decade order by decade asc");
+    const [data] = await pool.query("SELECT FLOOR( year / 10) * 10 AS decade, COUNT(*) AS movie_count FROM collection GROUP BY decade order by decade asc");
     return data;
 }
 
@@ -104,8 +104,8 @@ export async function addPhysicalEntry(given) {
     let questions = [];
     insertInto.map(() => {questions.push("?")});
 
-    //let q = `INSERT INTO collection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
-    let q = `INSERT INTO testcollection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
+    let q = `INSERT INTO collection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
+    //let q = `INSERT INTO testcollection(${insertInto.join(", ")}) VALUES(${questions.join(", ")})`;
 
     await pool.query(q, values);
 };
@@ -134,8 +134,8 @@ export async function updateEntry(given) {
 
 export async function deleteEntry(given) {
 
-    let q = "DELETE FROM testCollection WHERE id = ?"
-    //let q = "DELETE FROM collection WHERE id = ?"
+    //let q = "DELETE FROM testCollection WHERE id = ?"
+    let q = "DELETE FROM collection WHERE id = ?"
 
     await pool.query(q, [given["id"]]);
 }

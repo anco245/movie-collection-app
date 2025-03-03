@@ -4,6 +4,7 @@ import './App.css';
 import Graph from './graphs';
 import PencilIcon from './Icons/PencilIcon';
 import TrashIcon from './Icons/TrashIcon';
+import InfoIcon from './Icons/InfoIcon';
 import { EditModal } from './EditModal';
 import { DeleteModal } from './DeleteModal';
 
@@ -238,7 +239,7 @@ function Collection() {
           {data.map((movie, index) => {
             return (
               <tr key={index}>
-                <td id="action"><div className="pencilAndX"><PencilIcon param={movie}/><TrashIcon param={movie}/></div></td>
+                <td id="action"><div className="pencilXInfo"><PencilIcon param={movie}/><TrashIcon param={movie}/><InfoIcon param={movie}/></div></td>
                 <td id="title">{movie.title}</td>
                 <td id="year">{movie.year}</td>
                 <td id="runtime">{movie.runtime}</td>

@@ -231,13 +231,15 @@ thead th {
 width: 100px;
 }
 
-.pencilAndX {
+
+
+.pencilXInfo {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
 }
 
-.pencilAndX svg{
+.pencilXInfo svg{
   cursor: pointer;
 }
 
